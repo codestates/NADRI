@@ -23,7 +23,7 @@
 ![Diagram](https://user-images.githubusercontent.com/77206786/147662970-3afbc2e2-1c67-47df-bef3-460604650380.png)
 
 
-## [와이어프레임 (Figma Link)](https://www.figma.com/community/file/1058002951187434196)
+## [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
 
 ## DB 스키마
 (DB스키마 이미지 추가하기)
