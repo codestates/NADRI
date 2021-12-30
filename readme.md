@@ -52,6 +52,6 @@
 ## [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
 
 ## DB 스키마
-(DB스키마 이미지 추가하기)
+(https://user-images.githubusercontent.com/77206786/147723153-94e20387-8d2e-43e7-b04d-1926b50ca89d.png)
 
 ## [API 문서 (Gitbook Link)](https://localhost-5.gitbook.io/untitled/api/auth)
