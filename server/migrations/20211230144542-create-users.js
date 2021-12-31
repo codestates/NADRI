@@ -9,22 +9,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       nickname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       image: {
         type: Sequelize.STRING
       },
-      createdAt: {
-        type: Sequelize.DATE
+      admin: {
+        type: Sequelize.BOOLEAN
       },
-      updatedAt: {
-        type: Sequelize.DATE
+      oauth: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

@@ -67,17 +67,6 @@ module.exports = {
       },
       onDelete: 'cascade',
       onUpdate: 'cascade'
-    }),
-    await queryInterface.addConstraint('posts', {
-      fields: ['userId'],
-      type: 'foreign key',
-      name: 'FK_posts_userId',
-      references: {
-        table: 'users',
-        field: 'id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
     })
   },
 
@@ -88,6 +77,5 @@ module.exports = {
     await queryInterface.removeConstraint('user_post_likes', 'FK_likes_userId');
     await queryInterface.removeConstraint('user_post_likes', 'FK_likes_postId');
     await queryInterface.removeConstraint('posts', 'FK_posts_categoryId');
-    await queryInterface.removeConstraint('posts', 'FK_posts_userId');
   }
 };
