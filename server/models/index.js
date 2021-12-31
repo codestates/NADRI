@@ -47,9 +47,6 @@ posts.belongsToMany( users, { through: 'user_post_likes', foreignKey: 'postId' }
 posts.belongsTo(categories)
 categories.hasMany(posts, { foreignKey: 'categoryId'})
 
-posts.belongsTo(users)
-users.hasMany(posts, {foreignKey: 'userId'})
-
 // DB 관계설정 끝
 
 module.exports = db;
