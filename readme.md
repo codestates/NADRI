@@ -51,7 +51,7 @@
 
 ## [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
 
-## [플로우 차트 (Miro Link)](https://miro.com/app/board/uXjVOYL1SGM=/?invite_link_id=688206967644)
+## [플로우 차트 (Miro Link)](https://miro.com/app/board/uXjVOYL1SGM=/?invite_link_id=579220943873)
 
 ## DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
