@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
+import Login from './Login';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -74,24 +75,26 @@ const HeaderContent = styled.div`
 `
 
 export default function Header () {
+
+  function openLoginModal() {
+    <Login />
+  }
+
   return (
     <StyledHeader>
-
         <Logo>
           <Link to="/">
             <img src="NADRI.png" alt="logo" />
           </Link>
         </Logo>
-
         <Search>
           <input className='searchBar' type={'text'} />
           <div className='searchLogo'>
             <input type={'image'} src='search.jpg'/>
           </div>
         </Search>
-
         <HeaderContent>
-          <div>로그인</div>
+          <div onClick={openLoginModal()}>로그인</div>
           <div>회원가입</div>
         </HeaderContent>
     </StyledHeader>

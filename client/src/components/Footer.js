@@ -23,7 +23,7 @@ const FooterContainer = styled.footer`
   }
 
   &>:last-child {
-    margin-left: 74px;
+    margin-left: 76px;
   }
 `
 
