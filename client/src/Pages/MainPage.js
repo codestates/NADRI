@@ -3,15 +3,13 @@ import { Routes, Route, useNavigate, Navigate, BrowserRouter, Link } from 'react
 import styled from "styled-components";
 import Footer from "../components/Footer";
 const MainContainer = styled.div`
-  
+  font-size: 50px;
 `
 
 export default function Main () {
 
   return (
     <MainContainer>
-      <Header />
-      <Footer />
     </MainContainer>
   )
 } 

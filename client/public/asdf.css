@@ -1,3 +1,11 @@
 div {
   cursor: pointer;
+  position: relative;
+  flex-direction: column;
+  display: inline-block;
+  flex-wrap: wrap;
+  justify-content: start;
+  text-decoration: none;
+  transition: all 0.5s;
+  justify-content: start;
 }
