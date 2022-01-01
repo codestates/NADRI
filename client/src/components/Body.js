@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import { Routes, Route, useNavigate, Navigate, BrowserRouter, Link } from 'react-router-dom';
 
 export default function Body () {
   return (
     <div>
-      body
+      <Routes>
+        <Route path='/'element={<MainPage/>} />
+      </Routes>
     </div>
   )
 }
