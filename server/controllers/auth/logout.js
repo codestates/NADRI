@@ -4,16 +4,17 @@ module.exports = (req, res) => {
   const isVaildToken = chkValid(req);
 
   if (!isVaildToken) {
-    return res.status(401).send({ message: "Unauthorized Request" });
+    return res.sendStatus(401)
   }
 
   try {
     res.clearCookie('authorization', {
+      httpOnly: true,
       secure: true,
-      sameSite: none,
+      sameSite: 'none',
     });
-    res.status(200).send({ message: "ok" });
+    res.sendStatus(200)
   } catch (error) {
-    res.status(500).send({ message: "Internel Server Error" });
+    res.sendStatus(500)
   }
 };

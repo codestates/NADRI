@@ -1,5 +1,5 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 module.exports = async (req, res) => {
   // 이메일 주소와 비밀번호는 env에 저장
@@ -11,8 +11,8 @@ module.exports = async (req, res) => {
 
   // Nodemailer transport를 생성
   let transport = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
+    service: 'gmail',
+    host: 'smtp.gmail.com',
     secure: true,
     auth: {
       user: EMAIL,
@@ -26,9 +26,9 @@ module.exports = async (req, res) => {
   // 전송할 메일 내용 작성
   await transport.sendMail(
     {
-      from: "NADRI Team",
+      from: 'NADRI Team',
       to: receiverEmail,
-      subject: "NADRI 가입을 위한 인증번호입니다.",
+      subject: 'NADRI 가입을 위한 인증번호입니다.',
       html: `
             <h1>인증번호는 ${randomStr} 입니다.</h1>
         `,
@@ -37,13 +37,10 @@ module.exports = async (req, res) => {
       //에러 발생시 오류 로그 및 응답 반환
       if (err) {
         console.log(err);
-        return res.status(400).json({ message: "Check email address" });
+        return res.status(400).json({ message: 'Check email address' });
       }
       console.log(`Email Sent: ${info.response}`);
-      res.status(200).json({
-        code: randomStr,
-        message: "ok",
-      });
+      res.status(200).json({ code: randomStr });
       transport.close();
     }
   );
