@@ -24,6 +24,7 @@ const ItemContainer = styled.div`
 const ItemImg = styled.div`
   width: 8rem;
   border: 1px solid black;
+  border-radius: 5px;
   > img {
     display: block;
     width: 100%;
@@ -33,18 +34,21 @@ const ItemImg = styled.div`
 
 const ItemInfo = styled.div`
   width: 20rem;
+  cursor: grab;
   .title {
     display: flex;
     align-items: center;
     width: 100%;
     height: 2rem;
     border: 1px solid black;
+    border-radius: 5px;
     margin-bottom: 1rem;
     padding: 0.2rem 0.2rem;
   }
 
   .desc {
     height: 5rem;
+    border-radius: 5px;
     border: 1px solid black;
     padding: 0.2rem 0.2rem;
   }
