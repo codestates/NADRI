@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
-import loginReducer from './loginReducer'
+import {loginReducer, signupReducer} from './Modal'
 
-const rootReducer = combineReducers({loginReducer})
+const rootReducer = combineReducers({loginReducer, signupReducer})
 
 export default rootReducer

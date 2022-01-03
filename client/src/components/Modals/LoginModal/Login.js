@@ -1,37 +1,44 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import {
-  LoginModalContainer,
+  ModalBackdrop,
   LoginModalBackdrop,
   LoginModalView,
-  LoginModalLogo,
+  ModalLogo,
   ModalHead,
   ModalInput,
   Oauth
-} from "./ModalStyles"
+} from "./LoginStyled"
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal } from '../../redux/actions';
+import { loginModal, signupModal } from '../../../redux/actions';
 
 export default function Login () {
   const dispatch = useDispatch()
-  const LoginModalstate = useSelector(state => state.loginReducer.state);
 
-  function openLoginModal () {
-    dispatch(loginModal(LoginModalstate))
+  const loginState = useSelector(state => state.loginReducer);
+  const signupState = useSelector(state => state.signupReducer);
+
+  function ModalHandler (e) {
+    if(e.target.textContent === '회원가입하기!') {
+      dispatch(loginModal(loginState))
+      dispatch(signupModal(signupState))
+      return;
+    }
+    dispatch(signupModal(loginState))
   }
 
   return (
-    <LoginModalBackdrop onClick={openLoginModal}>
+    <ModalBackdrop onClick={ModalHandler}>
       <LoginModalView onClick={(e) => e.stopPropagation()}>
 
-        <LoginModalLogo>
+        <ModalLogo>
           <div><img src="/NADRI.png" /></div>
-        </LoginModalLogo>
+        </ModalLogo>
 
         <ModalHead>
-          <span onClick={openLoginModal}>&#x2716;</span>
+          <span onClick={ModalHandler}>&#x2716;</span>
           <h1>로그인</h1>
-          <p>회원이 아니신가요? &#xa0;<span>회원가입하기!</span></p>
+          <p>회원이 아니신가요? &#xa0;<span onClick={(e) => ModalHandler(e)}>회원가입하기!</span></p>
         </ModalHead>
 
         <ModalInput>
@@ -49,6 +56,6 @@ export default function Login () {
           <div><img src="kakao.png" />카카오톡 로그인</div>
         </Oauth>
       </LoginModalView>
-    </LoginModalBackdrop>
+    </ModalBackdrop>
   )
 }

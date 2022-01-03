@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginModalBackdrop = styled.div`
+export const ModalBackdrop = styled.div`
   width: 100vw;
   height: 100%;
   position: fixed;
@@ -13,16 +13,16 @@ export const LoginModalBackdrop = styled.div`
   text-align: center;
 `
 
-export const LoginModalView = styled.div`
+export const SignupModalView = styled.div`
   width: 33rem;
-  height: 41rem;
+  height: 50rem;
   background-color: white;
   border-radius: 10px;
   padding: 35px 80px;
   position: relative;
 `
 
-export const LoginModalLogo = styled.div`
+export const ModalLogo = styled.div`
   >div {
     width: 20rem;
     margin: 0 auto 1rem;
@@ -65,22 +65,40 @@ export const ModalHead = styled.div`
 
 export const ModalInput = styled.div`
   margin: 2rem 0 1rem;
+  label {
+    text-align: left;
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+
+  input {
+    width: 100%;
+    border-radius: 5px;
+    height: 2.5rem;
+    border: 2px solid rgb(233, 236, 239);
+    outline: none;
+    padding-left: 10px;
+    margin-bottom: 1rem;
+  }
 
   > form {
-    > label {
-      text-align: left;
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    > input {
-      width: 100%;
-      border-radius: 5px;
-      height: 2.5rem;
-      border: 2px solid rgb(233, 236, 239);
-      outline: none;
-      padding-left: 10px;
-      margin-bottom: 1rem;
+    .emailInput {
+      
+      >div {
+        display: flex;
+        justify-content: space-between;
+        >input {
+          width: 75%;
+        }
+        > button {
+          width: 20%;
+          border: 2px solid rgb(233, 236, 239);
+          background-color: white;
+          height: 2.5rem;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+      }
     }
   }
 `

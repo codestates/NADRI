@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal } from '../redux/actions';
+import { loginModal, signupModal } from '../redux/actions';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -77,10 +77,17 @@ const HeaderContent = styled.div`
 
 export default function Header () {
   const dispatch = useDispatch()
-  const LoginModalstate = useSelector(state => state.loginReducer.state);
-  
-  function openLoginModal () {
-    dispatch(loginModal(LoginModalstate))
+
+  const LoginModalState = useSelector(state => state.loginReducer);
+  const SignupModalState = useSelector(state => state.signupReducer);
+
+  function ModalHandler (e) {
+    if (e.target.textContent === '로그인') {
+      dispatch(loginModal(LoginModalState))
+    }
+    else if (e.target.textContent ==='회원가입') {
+      dispatch(signupModal(SignupModalState))
+    }
   }
   
   return (
@@ -97,8 +104,8 @@ export default function Header () {
         </div>
       </Search>
       <HeaderContent>
-        <div onClick={openLoginModal}>로그인</div>
-        <div>회원가입</div>
+        <div onClick={(e)=>ModalHandler(e)}>로그인</div>
+        <div onClick={(e)=>ModalHandler(e)}>회원가입</div>
       </HeaderContent>
     </StyledHeader>
   )

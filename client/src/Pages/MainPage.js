@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 
 const MainContainer = styled.div`
-  font-size: 50px;
   padding: 0 9vw;
 `
 
@@ -12,22 +11,7 @@ export default function Main () {
 
   return (
     <MainContainer>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
-      asdf<br/>
+      
     </MainContainer>
   )
 } 
