@@ -11,6 +11,10 @@ export const ModalBackdrop = styled.div`
   align-items: center;
   background-color: rgba(0,0,0,0.4);
   text-align: center;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export const SignupModalView = styled.div`
