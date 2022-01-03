@@ -11,8 +11,15 @@ const ItemContainer = styled.div`
   padding: 1rem;
   gap: 2rem;
 
+  & {
+    .imgContainer {
+      transition: transform 0.2s linear;
+      // border: 1px solid black;
+      transform: scale(1);
+    }
+  }
+
   &:hover {
-    
     .imgContainer {
       transition: all 0.2s linear;
       border:none;
