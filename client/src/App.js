@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Header from './components/Header';
+import Body from './components/Body'
+import Footer from './components/Footer';
+import Login from './components/Modals/LoginModal/Login'
+import Signup from './components/Modals/SignupModal/Signup'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+  const LoginModalstate = useSelector(state => state.loginReducer);
+  const SignupModalstate = useSelector(state => state.signupReducer);
+
+  // useEffect(() => { 새로고침 스크롤 TOP
+  //   window.onbeforeunload = function pushRefresh() {
+  //     window.scrollTo(0, 0);
+  //   };
+  // }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Body />
+      <Footer />
+      {
+        LoginModalstate ? <Login />
+        : ''
+      }
+      {
+        SignupModalstate ? <Signup />
+        : ''
+      }
     </div>
   );
 }
