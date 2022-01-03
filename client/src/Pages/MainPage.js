@@ -39,6 +39,7 @@ const ContentNav = styled.nav`
   align-items:center;
   padding: 0 2rem;
   margin-bottom: 3rem;
+  cursor: grab;
 
   > select {
     height: 2rem;
