@@ -27,7 +27,7 @@ module.exports = {
       return verify(authorization, process.env.ACCESS_SECRET);
     } catch (err) {
       console.log('AccessToken ERROR');
-      return err;
+      return null;
     }
   },
 };

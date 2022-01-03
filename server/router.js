@@ -31,15 +31,6 @@ const upload = multer({ dest: 'uploads/' });
 
 // 라우터 입력 시작
 
-router.post(
-  '/post',
-  upload.fields([
-    { name: 'image', maxCount: 4 },
-    { name: 'content', maxCount: 1 },
-  ]),
-  controllers.post
-); // 이미지 업로드 테스트 중
-
 // auth 라우터
 router.post('/auth/code', controllers.code);
 router.post('/auth/login', controllers.login);
@@ -57,6 +48,22 @@ router.delete('/comment/:id', controllers.comment.deleteComment); // 특정 댓�
 // like 라우터
 router.get('like', controllers.like.getLike)
 router.post('like/:id', controllers.like.postLike)
+
+// post 라우터
+router.post(
+  '/post',
+  upload.fields([
+    { name: 'image', maxCount: 4 },
+    { name: 'title', maxCount: 1 },
+    { name: 'content', maxCount: 1 },
+    { name: 'lat', maxCount: 1 },
+    { name: 'lng', maxCount: 1 },
+    { name: 'address', maxCount: 1 },
+    { name: 'public', maxCount: 1 },
+    { name: 'categoryId', maxCount: 1 },
+  ]),
+  controllers.post.upload
+); // 게시글 업로드
 
 // 라우터 입력 끝
 
