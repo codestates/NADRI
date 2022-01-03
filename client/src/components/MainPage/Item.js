@@ -10,6 +10,15 @@ const ItemContainer = styled.div`
   margin-bottom: 3rem;
   padding: 1rem;
   gap: 2rem;
+
+  &:hover {
+    
+    .imgContainer {
+      transition: all 0.2s linear;
+      border:none;
+      transform: scale(1.4);
+    }
+  }
 `
 
 const ItemImg = styled.div`
@@ -45,7 +54,7 @@ export default function Item ({info}) {
   return (
     <div>
       <ItemContainer>
-        <ItemImg>
+        <ItemImg className="imgContainer">
           <img src={`${info.img}`}></img>
         </ItemImg>
 

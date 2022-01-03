@@ -13,7 +13,7 @@ const MainContainer = styled.div`
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
-  
+
   .map {
     width: 45rem;
     height: 50rem;
