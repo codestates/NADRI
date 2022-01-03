@@ -13,7 +13,6 @@ const MainContainer = styled.div`
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
   
   .map {
     width: 45rem;
@@ -25,7 +24,7 @@ const MainContainer = styled.div`
   .contentContainer {
     width: 45rem;
     height: 50rem;
-    padding: 1rem 3rem;
+    padding: 0 3rem 1rem;
   }
 
   
@@ -49,7 +48,7 @@ const ContentNav = styled.nav`
 `
 
 const ItemContainer = styled.div`
-  height: 40rem;
+  height: 44rem;
   border: 1px solid black;
   overflow: auto;
   padding: 1rem;
