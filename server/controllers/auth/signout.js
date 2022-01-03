@@ -15,8 +15,12 @@ module.exports = async (req, res) => {
   try {
     users.destroy({where: {email: userData.email}})
     .then(() => {
-      res.clearCookie('authorization', {secure: true, sameSite: 'none'})
-      return res.sendStatus(200)
+      res.clearCookie('authorization', {
+        httpOnly: true,
+        secure: true, 
+        sameSite: 'none',
+      })
+      return res.status(200).send({message: 'User deleted'})
     })
   } catch (err) {
     return res.sendStatus(500)
