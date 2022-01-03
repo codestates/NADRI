@@ -16,7 +16,7 @@ const MainContainer = styled.div`
   gap: 1rem;
   
   .map {
-    width: 50rem;
+    width: 45rem;
     height: 50rem;
     border-radius: 15px;
     z-index: 0;
@@ -25,8 +25,10 @@ const MainContainer = styled.div`
   .contentContainer {
     width: 45rem;
     height: 50rem;
-    padding: 0 3rem;
+    padding: 1rem 3rem;
   }
+
+  
 `
 
 const ContentNav = styled.nav`
@@ -50,7 +52,8 @@ const ItemContainer = styled.div`
   height: 40rem;
   border: 1px solid black;
   overflow: auto;
-  
+  padding: 1rem;
+  border-radius: 10px;
   &::-webkit-scrollbar{
     width: 10px;
 }
@@ -58,7 +61,6 @@ const ItemContainer = styled.div`
   &::-webkit-scrollbar-thumb{
       height: 17%;
       background-color: #d3d3d3;
-      // border: 1px solid black;
       border-radius: 10px;    
   }
 
@@ -107,9 +109,11 @@ export default function Main () {
           </select>
         </ContentNav>
 
-        <ItemContainer>
-        {dummy.map((info,idx) => <Item key={idx} info={info}/>)}
-        </ItemContainer>
+        
+          <ItemContainer>
+          {dummy.map((info,idx) => <Item key={idx} info={info}/>)}
+          </ItemContainer>
+        
       </div>
     </MainContainer>
   )
