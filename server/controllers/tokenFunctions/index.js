@@ -16,7 +16,7 @@ module.exports = {
       // 이거...맞나?
       httpOnly: true,
       secure: true,
-      sameSite: false,
+      sameSite: 'none',
     });
   },
   chkValid: (req) => {
