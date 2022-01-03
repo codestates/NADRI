@@ -22,10 +22,11 @@ module.exports = async (req, res) => {
     const payLoad = userInfo.dataValues;
     delete payLoad.password
 
+    console.log(payLoad)
     const aToken = mkAccessToken(payLoad)
     sendAccessToken(res, aToken)
-    res.sendStatus(200)
+    res.status(200).json({data: payLoad})
   } catch (err) {
-    res.status(500).json({message: 'Internel Server Error'})
+    res.sendStatus(500)
   }
 };

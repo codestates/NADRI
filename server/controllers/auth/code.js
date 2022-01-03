@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
 
   // 타겟 이메일 추출
   let receiverEmail = req.body.email;
-
+// console.log(receiverEmail)
   // Nodemailer transport를 생성
   let transport = nodemailer.createTransport({
     service: 'gmail',

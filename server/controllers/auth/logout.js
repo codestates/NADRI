@@ -13,7 +13,7 @@ module.exports = (req, res) => {
       secure: true,
       sameSite: 'none',
     });
-    res.sendStatus(200)
+    res.status(200).send({message: 'Logout successful'})
   } catch (error) {
     res.sendStatus(500)
   }
