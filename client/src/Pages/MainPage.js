@@ -13,7 +13,7 @@ const MainContainer = styled.div`
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
-  
+
   .map {
     width: 45rem;
     height: 50rem;
@@ -39,6 +39,7 @@ const ContentNav = styled.nav`
   align-items:center;
   padding: 0 2rem;
   margin-bottom: 3rem;
+  cursor: grab;
 
   > select {
     height: 2rem;
