@@ -1,5 +1,6 @@
 export const LOGIN_CLICK = 'LOGIN_CLICK'
 export const SIGNUP_CLICK = 'SIGNUP_CLICK'
+export const AUTH_REQUEST = 'AUTAUTH_REQUEST'
 
 export const loginModal = (LoginModalState) => {
   return {
@@ -15,6 +16,15 @@ export const signupModal = (SignupModalState) => {
     type: SIGNUP_CLICK,
     payload: {
       SignupModalState
+    }
+  }
+}
+
+export const authState = (authState) => {
+  return {
+    type: AUTH_REQUEST,
+    payload: {
+      authState
     }
   }
 }

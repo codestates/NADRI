@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import {
   ModalBackdrop,
@@ -11,12 +12,40 @@ import {
 } from "./LoginStyled"
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal } from '../../../redux/actions';
+import axios from "axios";
 
 export default function Login () {
-  const dispatch = useDispatch()
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: ''
+  })
 
+  const dispatch = useDispatch()
   const loginState = useSelector(state => state.loginReducer);
   const signupState = useSelector(state => state.signupReducer);
+  const authState = useSelector(state => state.changeAuthState)
+
+  function onChange (e) {
+    const {name, value} = e.target
+
+    setInputs({
+      ...inputs,
+      [name]: value
+    })
+  }
+
+  function postLogin () {
+    const {email, password} = inputs
+
+    axios({
+      method: 'POST',
+      url: 'https://localhost:8443/auth/login',
+      headers: {
+        accept: 'application/json'
+      },
+      data: {email, password}
+    }) // 회원가입 하고 여기부터 다신
+  }
 
   function ModalHandler (e) {
     if(e.target.textContent === '회원가입하기!') {
@@ -26,6 +55,8 @@ export default function Login () {
     }
     dispatch(signupModal(loginState))
   }
+  
+
 
   return (
     <ModalBackdrop onClick={ModalHandler}>
@@ -44,9 +75,9 @@ export default function Login () {
         <ModalInput>
           <form>
             <label htmlFor="email">이메일</label>
-            <input type={"text"}></input>
+            <input type={"text"} name="email" onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input type={"password"}></input>
+            <input type={"password"} name="password" onChange={onChange}></input>
           </form>
         </ModalInput>
 
