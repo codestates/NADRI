@@ -14,7 +14,6 @@ const ItemContainer = styled.div`
   & {
     .imgContainer {
       transition: transform 0.2s linear;
-      // border: 1px solid black;
       transform: scale(1);
     }
   }
