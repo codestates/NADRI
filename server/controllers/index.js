@@ -13,5 +13,8 @@ module.exports = {
   like: require('./like'),
 
   // post
-  post: require('./post')
+  post: require('./post'),
+
+  // me
+  me: require('./me'),
 };
