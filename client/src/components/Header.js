@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal } from '../redux/actions';
+import { loginModal, signupModal, authState } from '../redux/actions';
+
+import axios from 'axios'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -80,6 +82,8 @@ export default function Header () {
 
   const LoginModalState = useSelector(state => state.loginReducer);
   const SignupModalState = useSelector(state => state.signupReducer);
+  const authState = useSelector(state => state.changeAuthState);
+  console.log(authState)
 
   function ModalHandler (e) {
     if (e.target.textContent === '로그인') {
@@ -88,6 +92,17 @@ export default function Header () {
     else if (e.target.textContent ==='회원가입') {
       dispatch(signupModal(SignupModalState))
     }
+  }
+
+  function logout () {
+    axios({
+      method: 'POST',
+      url: `https://localhost:8443/auth/logout`
+    })
+    .then((res) => {
+      dispatch(authState(authState))
+      console.log(res)
+    })
   }
   
   return (
@@ -103,10 +118,19 @@ export default function Header () {
           <input type={'image'} src='search.jpg'/>
         </div>
       </Search>
-      <HeaderContent>
-        <div onClick={(e)=>ModalHandler(e)}>로그인</div>
-        <div onClick={(e)=>ModalHandler(e)}>회원가입</div>
-      </HeaderContent>
+        {
+          authState ?
+          <HeaderContent>
+          <div onClick={(e)=>ModalHandler(e)}>새글 쓰기</div>
+          <div onClick={(e)=>ModalHandler(e)}>마이페이지</div>
+          <div onClick={logout}>로그아웃</div>
+          </HeaderContent>
+          :
+          <HeaderContent>
+          <div onClick={(e)=>ModalHandler(e)}>로그인</div>
+          <div onClick={(e)=>ModalHandler(e)}>회원가입</div>
+          </HeaderContent>
+        }
     </StyledHeader>
   )
   

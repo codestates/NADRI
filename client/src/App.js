@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 function App() {
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
+  const curAuthState = useSelector(state => state.changeAuthState);
+
 
   // useEffect(() => { 새로고침 스크롤 TOP
   //   window.onbeforeunload = function pushRefresh() {
