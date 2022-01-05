@@ -11,7 +11,10 @@ function App() {
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  console.log(curAuthState)
+  const userInfo = useSelector(state => state.getUserInfo);
+  const store = useSelector(state => state)
+  console.log(store)
+  
   // useEffect(() => { 새로고침 스크롤 TOP
   //   window.onbeforeunload = function pushRefresh() {
   //     window.scrollTo(0, 0);
