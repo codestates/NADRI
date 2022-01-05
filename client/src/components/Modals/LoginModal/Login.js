@@ -59,7 +59,7 @@ export default function Login () {
       dispatch(signupModal(SignupModalstate))
       return;
     }
-    dispatch(signupModal(LoginModalstate))
+    dispatch(loginModal(LoginModalstate))
   }
   
 
