@@ -7,6 +7,6 @@ export const changeAuthState = (state=false, action) => {
       break;
 
       default :
-      return false
+      return state
   }
 }

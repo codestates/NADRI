@@ -8,7 +8,7 @@ export const loginReducer = (state=false, action) => {
       break;
 
     default :
-    return false
+    return state
   }
   
 }
@@ -20,7 +20,7 @@ export const signupReducer = (state=false, action) => {
       break;
 
     default :
-    return false
+    return state
   }
   
 }

@@ -84,7 +84,6 @@ export default function Header () {
   const LoginModalState = useSelector(state => state.loginReducer);
   const SignupModalState = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  console.log(curAuthState)
 
   function ModalHandler (e) {
     if (e.target.textContent === '로그인') {
@@ -96,14 +95,12 @@ export default function Header () {
   }
 
   function logout () {
-
     axios.post(
       "https://localhost:8443/auth/logout",
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     )
     .then((res) => {
       dispatch(authState(curAuthState))
-      console.log(curAuthState)
     })
   }
   
@@ -123,8 +120,8 @@ export default function Header () {
         {
           curAuthState ?
           <HeaderContent>
-          <div onClick={(e)=>ModalHandler(e)}>새글 쓰기</div>
-          <div onClick={(e)=>ModalHandler(e)}>마이페이지</div>
+          <div>새글 쓰기</div>
+          <Link to ='/mypage'><div>마이페이지</div></Link>
           <div onClick={logout}>로그아웃</div>
           </HeaderContent>
           :
