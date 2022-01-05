@@ -130,7 +130,7 @@ export default function Header () {
         {
           curAuthState ?
           <HeaderContent>
-          <div>새글 쓰기</div>
+          <Link to ='/post'><div>새글 쓰기</div></Link>
           <Link to ='/mypage'><div>마이페이지</div></Link>
           <div onClick={logout}>로그아웃</div>
           </HeaderContent>
