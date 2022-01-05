@@ -5,6 +5,9 @@ module.exports = {
   logout: require('./auth/logout'),
   signup: require('./auth/signup'),
   signout: require('./auth/signout'),
+  // oauth
+  google: require('./auth/google'),
+  kakao: require('./auth/kakao'),
 
   // comment
   comment: require('./comment'),

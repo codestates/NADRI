@@ -10,12 +10,17 @@ require('dotenv').config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(
   cors({
     /* 나중에  추가하기 */
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    /*세부 설정 오류시 수정 필요*/
   })
 );
+
+app.use(cookieParser());
 
 app.use(router);
 

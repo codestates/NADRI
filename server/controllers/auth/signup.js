@@ -26,10 +26,10 @@ module.exports = async (req, res) => {
   
     const userData = created.dataValues
     delete userData.password
-    console.log(userData)
+    // console.log(userData)
     const accessToken = mkAccessToken(created.dataValues)
     sendAccessToken(res, accessToken)
-    console.log(accessToken)
+    // console.log(accessToken)
     res.status(201).json({data: userData})
     
   } catch (error) {
