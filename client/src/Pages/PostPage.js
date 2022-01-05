@@ -1,6 +1,11 @@
 /*global kakao */
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+
+const PostContainer = styled.div`
+  padding: 3rem 9vw;
+`
 
 export default function PostPage () {
 
@@ -151,7 +156,7 @@ export default function PostPage () {
   };
 
   return (
-    <div className="App">
+    <PostContainer>
       <form className="contentForm">
 
         <div id="map" style={{ width: "500px", height: "500px", zIndex: 1 }}></div>
@@ -206,6 +211,6 @@ export default function PostPage () {
         <button onClick={() => console.log(value)}>ㅡㅡ</button>
         <span>{value.address}</span>
       </div>
-    </div>
+    </PostContainer>
   );
 }
