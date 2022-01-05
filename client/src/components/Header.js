@@ -86,7 +86,7 @@ export default function Header () {
   const curAuthState = useSelector(state => state.changeAuthState);
   const gLoginState = useSelector(state => state.gLoginReducer);
   const kLoginState = useSelector(state => state.kLoginReducer)
-  console.log('현재 로그인 상태: '+curAuthState)
+  // console.log('현재 로그인 상태: '+curAuthState)
 
   function ModalHandler (e) {
     if (e.target.textContent === '로그인') {
@@ -105,7 +105,7 @@ export default function Header () {
     )
     .then((res) => {
       dispatch(authState(curAuthState))
-      console.log(curAuthState)
+      // console.log(curAuthState)
       if(gLoginState===true){
         dispatch(gLogIn(gLoginState))
       }

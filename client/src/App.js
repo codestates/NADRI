@@ -16,7 +16,7 @@ function App() {
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  console.log('app.js의 시작 로그인 상태 :'+curAuthState)
+  // console.log('app.js의 시작 로그인 상태 :'+curAuthState)
 
   const gLoginState = useSelector(state => state.gLoginReducer)
   const kLoginState = useSelector(state => state.kLoginReducer)
@@ -41,8 +41,8 @@ function App() {
   useEffect(() => {
     if(authorizationCode){
       // console.log(authorizationCode)
-      console.log('구글 로그인 클릭 상태: '+gLoginState)
-      console.log('카카오 로그인 클릭 상태: '+kLoginState)
+      // console.log('구글 로그인 클릭 상태: '+gLoginState)
+      // console.log('카카오 로그인 클릭 상태: '+kLoginState)
 
       if(gLoginState===true){
         getGoogleAccessToken(authorizationCode)
@@ -61,7 +61,7 @@ function App() {
       authorizationCode
     })
     .then((result) => {
-      console.dir(result)
+      // console.dir(result)
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
       // console.log(curAuthState)
@@ -78,7 +78,7 @@ function App() {
       authorizationCode
     })
     .then((result) =>{
-      console.dir(result)
+      // console.dir(result)
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
       // console.log(curAuthState)
