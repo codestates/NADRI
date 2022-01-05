@@ -89,6 +89,10 @@ const Profile = styled.div`
   }
 `
 
+function moveTop () {
+  window.screenTop(0, 0)
+}
+
 
 
 export default function Footer () {

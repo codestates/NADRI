@@ -3,6 +3,7 @@ export const SIGNUP_CLICK = 'SIGNUP_CLICK'
 export const G_LOGIN_CLICK = 'G_LOGIN_CLICK'
 export const K_LOGIN_CLICK = 'K_LOGIN_CLICK' 
 export const AUTH_REQUEST = 'AUTH_REQUEST'
+export const SETUSERINFO = 'SETUSERINFO'
 
 export const loginModal = (LoginModalState) => {
   return {
@@ -46,6 +47,15 @@ return {
     type: AUTH_REQUEST,
     payload: {
       authState
+    }
+  }
+}
+
+export const userInfo = (userInfo) => {
+  return {
+    type: SETUSERINFO,
+    payload: {
+      userInfo
     }
   }
 }

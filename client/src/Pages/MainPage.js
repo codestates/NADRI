@@ -1,7 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
+import { Link } from "react-router-dom";
 
 const options = {
   //지도를 생성할 때 필요한 기본 옵션
@@ -10,6 +12,7 @@ const options = {
 };
 
 const MainContainer = styled.div`
+  height: 100%;
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
@@ -26,7 +29,6 @@ const MainContainer = styled.div`
     height: 50rem;
     padding: 0 3rem 1rem;
   }
-
   
 `
 

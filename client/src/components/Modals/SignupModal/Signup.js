@@ -9,8 +9,8 @@ import {
   ModalInput,
   Oauth
 } from "../SignupModal/SignupStyled"
-import {useDispatch, useSelector} from 'react-redux'
-import { signupModal, loginModal, authState } from '../../../redux/actions';
+import {connectAdvanced, useDispatch, useSelector} from 'react-redux'
+import { signupModal, loginModal, authState, userInfo } from '../../../redux/actions';
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +24,10 @@ export default function Signup () {
   })
 
   const dispatch = useDispatch()
-  const loginState = useSelector(state => state.loginReducer);
-  const signupState = useSelector(state => state.signupReducer);
+  const LoginModalstate = useSelector(state => state.loginReducer);
+  const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
+  // const curUserInfo = useSelector(state => state.getUserInfo);
 
   function onChange (e) {
     const {name, value} = e.target
@@ -36,13 +37,13 @@ export default function Signup () {
     })
   }
 
-  function postSignup () {
-    const {email, nickname, password, passwordCheck} = inputs
+  async function postSignup () {
+    const {email, nickname, password, passwordCheck} = inputs // 여기서 password추출
     
     if(password !== passwordCheck) return alert("비밀번호를 확인하세요")
     // if (Object.values(inputs).some((e) => e === '')) return alert("정보를 전부 입력했는지 확인하세요") 이거 다시 작업해야함
     
-    axios({
+    await axios({
       method: 'POST',
       url: `https://localhost:8443/auth/signup`,
       headers: {
@@ -52,9 +53,11 @@ export default function Signup () {
     })
     .then((res) => {
       if(res.status === 201) {
+        const {email, nickname} = res.data.data
         dispatch(authState(curAuthState))
+        dispatch(userInfo({email, nickname}))
+        dispatch(signupModal(SignupModalstate))
         alert('회원가입이 완료되었습니다.')
-        // dispatch(signupModal(signupState)) 애는 주석처리 했는데 왜 작동이 되는건지..
         navigate('/')
       }
     })
@@ -66,11 +69,11 @@ export default function Signup () {
   
   function ModalHandler (e) {
     if(e.target.textContent === '로그인하기!') {
-      dispatch(signupModal(signupState))
-      dispatch(loginModal(loginState))
+      dispatch(signupModal(SignupModalstate))
+      dispatch(loginModal(LoginModalstate))
       return;
     }
-    dispatch(signupModal(signupState))
+    dispatch(signupModal(SignupModalstate))
   }
 
   return (

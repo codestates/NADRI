@@ -1,6 +1,7 @@
 import { combineReducers } from "redux"
 import {loginReducer, signupReducer, gLoginReducer, kLoginReducer} from './Modal'
 import { changeAuthState } from "./auth"
+import { getUserInfo } from "./userinfo"
 // redux-persist 코드
 import { persistReducer } from 'redux-persist'
 // localStorage 에 저장
@@ -15,7 +16,14 @@ const persistConfig = {
     whitelist: ['gLoginReducer', 'kLoginReducer']
 }
 
-const rootReducer = combineReducers({loginReducer, signupReducer, changeAuthState, gLoginReducer, kLoginReducer})
+const rootReducer = combineReducers({
+    loginReducer, 
+    signupReducer, 
+    changeAuthState, 
+    gLoginReducer, 
+    kLoginReducer, 
+    getUserInfo
+})
 
 export default persistReducer(persistConfig, rootReducer)
 // export default rootReducer

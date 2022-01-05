@@ -10,8 +10,8 @@ import {
   ModalInput,
   Oauth
 } from "./LoginStyled"
-import {useDispatch, useSelector, connect} from 'react-redux'
-import { loginModal, signupModal, gLogIn, kLogIn } from '../../../redux/actions';
+import {useDispatch, useSelector} from 'react-redux'
+import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../../../redux/actions';
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
@@ -21,14 +21,14 @@ export default function Login () {
     email: '',
     password: ''
   })
-  
-  const dispatch = useDispatch()
-  const loginState = useSelector(state => state.loginReducer);
-  const signupState = useSelector(state => state.signupReducer);
-  const authState = useSelector(state => state.changeAuthState)
-  const gLoginState = useSelector(state => state.gLoginReducer);
-  const kLoginState = useSelector(state => state.kLoginReducer)
 
+  const dispatch = useDispatch()
+  const LoginModalstate = useSelector(state => state.loginReducer);
+  const SignupModalstate = useSelector(state => state.signupReducer);
+  const curAuthState = useSelector(state => state.changeAuthState);
+  const userInfo = useSelector(state => state.getUserInfo);
+  const gLoginState = useSelector(state => state.gLoginReducer);
+  const kLoginState = useSelector(state => state.kLoginReducer);
 
   function onChange (e) {
     const {name, value} = e.target
@@ -41,7 +41,6 @@ export default function Login () {
 
   function postLogin () {
     const {email, password} = inputs
-
     axios({
       method: 'POST',
       url: 'https://localhost:8443/auth/login',
@@ -49,16 +48,25 @@ export default function Login () {
         accept: 'application/json'
       },
       data: {email, password}
-    }) // 회원가입 하고 여기부터 다신
+    })
+    .then((res) => {
+      if(res.status = 200) {
+        dispatch(authState(curAuthState))
+        dispatch(loginModal(LoginModalstate))
+      }
+    })
+    .catch((err) => {
+      console.log('postLogin Err')
+    })
   }
 
   function ModalHandler (e) {
     if(e.target.textContent === '회원가입하기!') {
-      dispatch(loginModal(loginState))
-      dispatch(signupModal(signupState))
+      dispatch(loginModal(LoginModalstate))
+      dispatch(signupModal(SignupModalstate))
       return;
     }
-    dispatch(loginModal(loginState))
+    dispatch(loginModal(LoginModalstate))
   }
 
   const onClickGoogle = async () => {
@@ -99,7 +107,7 @@ export default function Login () {
         </ModalInput>
 
         <Oauth>
-          <div>로그인</div>
+          <div onClick={postLogin}>로그인</div>
           <div>
             <button onClick={onClickGoogle}>
             <img src="google.png" alt="구글 로그인" />구글 로그인
