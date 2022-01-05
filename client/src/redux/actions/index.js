@@ -2,7 +2,6 @@ export const LOGIN_CLICK = 'LOGIN_CLICK'
 export const SIGNUP_CLICK = 'SIGNUP_CLICK'
 export const G_LOGIN_CLICK = 'G_LOGIN_CLICK'
 export const K_LOGIN_CLICK = 'K_LOGIN_CLICK' 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const AUTH_REQUEST = 'AUTH_REQUEST'
 
 export const loginModal = (LoginModalState) => {
@@ -42,14 +41,6 @@ export const kLogIn = (kLoginState) => {
   }
 }
 
-export const logIn = (loginState) => {
-  return {
-    type: LOGIN_SUCCESS,
-    payload: {
-      loginState
-    }
-  }
-}
 export const authState = (authState) => {  
 return {
     type: AUTH_REQUEST,

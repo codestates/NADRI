@@ -69,7 +69,7 @@ module.exports = {
             console.log(payLoad)
             const aToken = mkAccessToken(payLoad)
             console.log(aToken)
-            console.log('kakao result 구간 통과')
+            console.log('=====kakao result 구간 통과=====')
             sendAccessToken(res, aToken)
             res.sendStatus(200)
         })

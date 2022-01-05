@@ -29,6 +29,7 @@ export default function Login () {
   const gLoginState = useSelector(state => state.gLoginReducer);
   const kLoginState = useSelector(state => state.kLoginReducer)
 
+
   function onChange (e) {
     const {name, value} = e.target
 
@@ -57,7 +58,7 @@ export default function Login () {
       dispatch(signupModal(signupState))
       return;
     }
-    dispatch(signupModal(loginState))
+    dispatch(loginModal(loginState))
   }
 
   const onClickGoogle = async () => {
