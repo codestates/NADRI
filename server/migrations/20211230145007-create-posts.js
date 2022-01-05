@@ -24,11 +24,11 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       lat: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(17, 14),
         allowNull: false,
       },
       lng: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(17, 14),
         allowNull: false,
       },
       address: {
