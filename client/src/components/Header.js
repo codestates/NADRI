@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal, authState } from '../redux/actions';
+import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
 import axios from 'axios'
 
 axios.defaults.withCredentials = true;
@@ -84,6 +84,9 @@ export default function Header () {
   const LoginModalState = useSelector(state => state.loginReducer);
   const SignupModalState = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
+  const gLoginState = useSelector(state => state.gLoginReducer);
+  const kLoginState = useSelector(state => state.kLoginReducer)
+  // console.log('현재 로그인 상태: '+curAuthState)
 
   function ModalHandler (e) {
     if (e.target.textContent === '로그인') {
@@ -101,6 +104,13 @@ export default function Header () {
     )
     .then((res) => {
       dispatch(authState(curAuthState))
+      // console.log(curAuthState)
+      if(gLoginState===true){
+        dispatch(gLogIn(gLoginState))
+      }
+      if(kLoginState===true){
+        dispatch(kLogIn(kLoginState))
+      }
     })
   }
   

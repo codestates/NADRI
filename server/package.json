@@ -24,9 +24,8 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
-    "sequelize": "^6.12.4"
-  },
-  "devDependencies": {
+    "qs": "^6.10.2",
+    "sequelize": "^6.12.4",
     "sequelize-cli": "^6.3.0"
   }
 }

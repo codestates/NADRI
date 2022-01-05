@@ -32,11 +32,18 @@ const upload = multer({ dest: "uploads/" });
 // 라우터 입력 시작
 
 // auth 라우터
-router.post("/auth/code", controllers.code);
-router.post("/auth/login", controllers.login);
-router.post("/auth/logout", controllers.logout);
-router.post("/auth/signup", controllers.signup);
-router.delete("/auth/signout", controllers.signout);
+
+router.post('/auth/code', controllers.code);
+router.post('/auth/login', controllers.login);
+router.post('/auth/logout', controllers.logout);
+router.post('/auth/signup', controllers.signup);
+router.delete('/auth/signout', controllers.signout);
+// google oauth
+router.get('/auth/google', controllers.google.googleLogin)
+router.post('/auth/googleCallback', controllers.google.googleCallback)
+// kakao oauth
+router.get('/auth/kakao', controllers.kakao.kakaoLogin)
+router.post('/auth/kakaoCallback', controllers.kakao.kakaoCallback)
 
 // comment 라우터
 router.get("/comment", controllers.comment.getUserComment); // 사용자 전체 댓글 조회

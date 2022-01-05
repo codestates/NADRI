@@ -11,8 +11,10 @@ import {
   Oauth
 } from "./LoginStyled"
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal,authState } from '../../../redux/actions';
-import axios from "axios";
+import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../../../redux/actions';
+
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 export default function Login () {
   const [inputs, setInputs] = useState({
@@ -25,6 +27,8 @@ export default function Login () {
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
   const userInfo = useSelector(state => state.getUserInfo);
+  const gLoginState = useSelector(state => state.gLoginReducer);
+  const kLoginState = useSelector(state => state.kLoginReducer);
 
   function onChange (e) {
     const {name, value} = e.target
@@ -51,6 +55,9 @@ export default function Login () {
         dispatch(loginModal(LoginModalstate))
       }
     })
+    .catch((err) => {
+      console.log('postLogin Err')
+    })
   }
 
   function ModalHandler (e) {
@@ -60,6 +67,18 @@ export default function Login () {
       return;
     }
     dispatch(loginModal(LoginModalstate))
+  }
+
+  const onClickGoogle = async () => {
+    // console.log(e)
+    dispatch(gLogIn(gLoginState))
+    window.location.href = 'https://localhost:8443/auth/google';
+    // window.location.href = '/';
+  };
+
+  const onClickKakao = async () => {
+    dispatch(kLogIn(kLoginState))
+    window.location.href = 'https://localhost:8443/auth/kakao';
   }
   
 
@@ -89,8 +108,16 @@ export default function Login () {
 
         <Oauth>
           <div onClick={postLogin}>로그인</div>
-          <div><img src="google.png" />구글 로그인</div>
-          <div><img src="kakao.png" />카카오톡 로그인</div>
+          <div>
+            <button onClick={onClickGoogle}>
+            <img src="google.png" alt="구글 로그인" />구글 로그인
+            </button>
+            </div>
+          <div>
+            <button onClick={onClickKakao}>
+            <img src="kakao.png" />카카오톡 로그인
+            </button>
+            </div>
         </Oauth>
       </LoginModalView>
     </ModalBackdrop>

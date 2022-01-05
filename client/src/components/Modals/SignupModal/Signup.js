@@ -27,7 +27,7 @@ export default function Signup () {
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  const userInfo = useSelector(state => state.getUserInfo);
+  // const curUserInfo = useSelector(state => state.getUserInfo);
 
   function onChange (e) {
     const {name, value} = e.target

@@ -109,6 +109,16 @@ export const Oauth = styled.div`
       left: 10px;
       width:30px;
     }
+    button {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      font-size: 20px;
+      font-weight: 700;
+      border: 0;
+      outline: 0;
+      color: rgb(73, 80, 87);
+    }
   }
 
   & > div:first-child {
@@ -117,10 +127,14 @@ export const Oauth = styled.div`
   }
 
   & > div:nth-child(2) {
-    
+    button {
+      background: rgb(255,255,255);
+    }
   }
 
   & > div:last-child {
-    background-color: rgb(255, 231, 16)
+    button{
+      background-color: rgb(255, 231, 16)
+    }
   }
 `
