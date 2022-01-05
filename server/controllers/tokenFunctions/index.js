@@ -12,15 +12,16 @@ module.exports = {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '14d' });
   },
   sendAccessToken: (res, accessToken) => {
+    console.log(accessToken)
     res.cookie('authorization', accessToken, {
       // 이거...맞나?
-      httpOnly: true,
+      sameSite:'none',
       secure: true,
-      sameSite: 'none',
+      httpOnly: true
     });
   },
   chkValid: (req) => {
-    console.log(req.cookies);
+    // console.log(req.cookies);
     const authorization = req.cookies['authorization'];
     if (!authorization) return null;
     try {

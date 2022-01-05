@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal, authState } from '../redux/actions';
-
 import axios from 'axios'
+
+axios.defaults.withCredentials = true;
 
 const StyledHeader = styled.header`
   display: flex;
@@ -82,8 +83,8 @@ export default function Header () {
 
   const LoginModalState = useSelector(state => state.loginReducer);
   const SignupModalState = useSelector(state => state.signupReducer);
-  const authState = useSelector(state => state.changeAuthState);
-  console.log(authState)
+  const curAuthState = useSelector(state => state.changeAuthState);
+  console.log(curAuthState)
 
   function ModalHandler (e) {
     if (e.target.textContent === '로그인') {
@@ -95,13 +96,14 @@ export default function Header () {
   }
 
   function logout () {
-    axios({
-      method: 'POST',
-      url: `https://localhost:8443/auth/logout`
-    })
+
+    axios.post(
+      "https://localhost:8443/auth/logout",
+      { headers: { "Content-Type": "application/json" }, withCredentials: true }
+    )
     .then((res) => {
-      dispatch(authState(authState))
-      console.log(res)
+      dispatch(authState(curAuthState))
+      console.log(curAuthState)
     })
   }
   
@@ -119,7 +121,7 @@ export default function Header () {
         </div>
       </Search>
         {
-          authState ?
+          curAuthState ?
           <HeaderContent>
           <div onClick={(e)=>ModalHandler(e)}>새글 쓰기</div>
           <div onClick={(e)=>ModalHandler(e)}>마이페이지</div>

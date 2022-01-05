@@ -2,7 +2,7 @@ const { chkValid } = require("../tokenFunctions");
 
 module.exports = (req, res) => {
   const isVaildToken = chkValid(req);
-  console.log(isVaildToken)
+  // console.log(req.cookies)
   if (!isVaildToken) {
     return res.sendStatus(401)
   }
