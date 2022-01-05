@@ -10,9 +10,11 @@ import {
   ModalInput,
   Oauth
 } from "./LoginStyled"
-import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal } from '../../../redux/actions';
-import axios from "axios";
+import {useDispatch, useSelector, connect} from 'react-redux'
+import { loginModal, signupModal, gLogIn, kLogIn } from '../../../redux/actions';
+
+import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 export default function Login () {
   const [inputs, setInputs] = useState({
@@ -24,6 +26,8 @@ export default function Login () {
   const loginState = useSelector(state => state.loginReducer);
   const signupState = useSelector(state => state.signupReducer);
   const authState = useSelector(state => state.changeAuthState)
+  const gLoginState = useSelector(state => state.gLoginReducer);
+  const kLoginState = useSelector(state => state.kLoginReducer)
 
   function onChange (e) {
     const {name, value} = e.target
@@ -55,6 +59,18 @@ export default function Login () {
     }
     dispatch(signupModal(loginState))
   }
+
+  const onClickGoogle = async () => {
+    // console.log(e)
+    dispatch(gLogIn(gLoginState))
+    window.location.href = 'https://localhost:8443/auth/google';
+    // window.location.href = '/';
+  };
+
+  const onClickKakao = async () => {
+    dispatch(kLogIn(kLoginState))
+    window.location.href = 'https://localhost:8443/auth/kakao';
+  }
   
 
 
@@ -83,8 +99,16 @@ export default function Login () {
 
         <Oauth>
           <div>로그인</div>
-          <div><img src="google.png" />구글 로그인</div>
-          <div><img src="kakao.png" />카카오톡 로그인</div>
+          <div>
+            <button onClick={onClickGoogle}>
+            <img src="google.png" alt="구글 로그인" />구글 로그인
+            </button>
+            </div>
+          <div>
+            <button onClick={onClickKakao}>
+            <img src="kakao.png" />카카오톡 로그인
+            </button>
+            </div>
         </Oauth>
       </LoginModalView>
     </ModalBackdrop>
