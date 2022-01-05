@@ -12,6 +12,7 @@ const options = {
 };
 
 const MainContainer = styled.div`
+  height: 100%;
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
@@ -28,7 +29,6 @@ const MainContainer = styled.div`
     height: 50rem;
     padding: 0 3rem 1rem;
   }
-
   
 `
 
