@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
 import axios from 'axios'
@@ -80,6 +80,7 @@ const HeaderContent = styled.div`
 
 export default function Header () {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const LoginModalState = useSelector(state => state.loginReducer);
   const SignupModalState = useSelector(state => state.signupReducer);
@@ -111,6 +112,7 @@ export default function Header () {
       if(kLoginState===true){
         dispatch(kLogIn(kLoginState))
       }
+      navigate('/')
     })
   }
   
