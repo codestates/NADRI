@@ -47,6 +47,8 @@ module.exports = {
     // find가 빈 배열이면 = 없는 포스트면 404를 반환
     if (!find[0]) return res.sendStatus(404)
 
+    // 이미지 주소를 변환 > 로컬이면 uploads/~~, S3면 숫자정보
+
     // 포스트의 정보 반환
     res.status(200).json({data: find[0]})
 
