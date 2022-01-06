@@ -59,7 +59,9 @@ module.exports = {
                 email: kakaoUserInfo.data.kakao_account.email,
                 password: kakaoUserInfo.data.id,
                 nickname: kakaoUserInfo.data.kakao_account.profile.nickname,
-                image: kakaoUserInfo.data.kakao_account.profile.profile_image_url
+                image: kakaoUserInfo.data.kakao_account.profile.profile_image_url,
+                admin: false,
+                oauth: true,
             },
         })
         .then(([result, created]) => {
