@@ -94,8 +94,6 @@ module.exports = {
     if (userData.id !== find.userId) return res.status(400).json({ message: "Bad Request3" });
 
     try {
-      // 심각: findOne 인데도 userId postId 같으면 전부 변경됨. 아니...
-      // 기본적으로 찾아오는 기준이 id인데 왜 바뀌지?
       // await find.update({comment: req.body.comment})
       // await find.save()
 

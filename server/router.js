@@ -73,7 +73,20 @@ router.post(
   ]),
   controllers.post.uploadPost
 ); // 게시글 업로드
-router.patch('/post/:id', controllers.post.patchPost)
+router.patch(
+  "/post/:id",
+  upload.fields([
+    { name: "image", maxCount: 4 },
+    { name: "title", maxCount: 1 },
+    { name: "content", maxCount: 1 },
+    { name: "lat", maxCount: 1 },
+    { name: "lng", maxCount: 1 },
+    { name: "address", maxCount: 1 },
+    { name: "public", maxCount: 1 },
+    { name: "categoryId", maxCount: 1 },
+  ]),
+  controllers.post.patchPost
+);
 router.delete('/post/:id', controllers.post.deletePost)
 
 router.get("/auth/me", controllers.me.getUserInform);
