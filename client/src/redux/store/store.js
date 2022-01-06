@@ -8,7 +8,7 @@ import logger from 'redux-logger'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 // 개발 단계 끝나면 주석처리 할것 아래 코드
-const enhancer = composeWithDevTools(applyMiddleware(logger))
+// const enhancer = composeWithDevTools(applyMiddleware(logger))
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
@@ -16,7 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 
 const store = createStore(
   rootReducer,
-  enhancer, //! 개발 단계 끝나면 주석 처리 할 것
+  // enhancer, //! 개발 단계 끝나면 주석 처리 할 것
   // composeEnhancers(applyMiddleware(thunk))
 );
 

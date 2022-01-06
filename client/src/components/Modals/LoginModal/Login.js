@@ -11,7 +11,8 @@ import {
   Oauth
 } from "./LoginStyled"
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../../../redux/actions';
+import { loginModal, signupModal, authState, gLogIn, kLogIn, userInfo } from '../../../redux/actions';
+import { useNavigate } from "react-router-dom";
 
 import axios from 'axios'
 axios.defaults.withCredentials = true;
@@ -21,12 +22,13 @@ export default function Login () {
     email: '',
     password: ''
   })
-
+  const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  const userInfo = useSelector(state => state.getUserInfo);
+  const curUserInfo = useSelector(state => state.getUserInfo);
   const gLoginState = useSelector(state => state.gLoginReducer);
   const kLoginState = useSelector(state => state.kLoginReducer);
 
@@ -50,13 +52,18 @@ export default function Login () {
       data: {email, password}
     })
     .then((res) => {
+      const {nickname, createdAt, email} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
+        dispatch(userInfo({email, nickname, createdAt}))
         dispatch(loginModal(LoginModalstate))
+        alert('로그인이 완료되었습니다.')
+        navigate('/')
       }
     })
     .catch((err) => {
-      console.log('postLogin Err')
+      alert('잘못된 로그인입니다.')
+      console.log(err)
     })
   }
 

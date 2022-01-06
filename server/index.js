@@ -15,7 +15,7 @@ app.use(
     /* 나중에  추가하기 */
     origin: ["http://localhost:3000"],
     credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
+    methods: ["GET", "POST", "OPTIONS", "DELETE"],
     /*세부 설정 오류시 수정 필요*/
   })
 );

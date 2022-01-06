@@ -37,13 +37,13 @@ export default function Signup () {
     })
   }
 
-  async function postSignup () {
-    const {email, nickname, password, passwordCheck} = inputs // 여기서 password추출
+  function postSignup () {
+    const {email, nickname, password, passwordCheck} = inputs
     
     if(password !== passwordCheck) return alert("비밀번호를 확인하세요")
     // if (Object.values(inputs).some((e) => e === '')) return alert("정보를 전부 입력했는지 확인하세요") 이거 다시 작업해야함
     
-    await axios({
+    axios({
       method: 'POST',
       url: `https://localhost:8443/auth/signup`,
       headers: {
@@ -53,9 +53,9 @@ export default function Signup () {
     })
     .then((res) => {
       if(res.status === 201) {
-        const {email, nickname} = res.data.data
+        const {email, nickname, createdAt} = res.data.data
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname}))
+        dispatch(userInfo({email, nickname, createdAt}))
         dispatch(signupModal(SignupModalstate))
         alert('회원가입이 완료되었습니다.')
         navigate('/')
