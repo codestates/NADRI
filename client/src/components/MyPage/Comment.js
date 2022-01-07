@@ -10,6 +10,7 @@ const ItemContainer = styled.div`
   margin-bottom: 3rem;
   padding: 1rem;
   gap: 2rem;
+  border-radius: 10px;
 
   & {
     .imgContainer {

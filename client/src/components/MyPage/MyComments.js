@@ -4,7 +4,7 @@ import commentsDummy from '../../assets/comments'
 import Comment from './Comment'
 
 const MyCommentsContainer = styled.div`
-
+  
 `
 
 export default function MyComments() {

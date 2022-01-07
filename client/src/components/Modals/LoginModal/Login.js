@@ -107,9 +107,9 @@ export default function Login () {
         <ModalInput>
           <form>
             <label htmlFor="email">이메일</label>
-            <input type={"text"} name="email" onChange={onChange}></input>
+            <input autocomplete="off" type={"text"} name="email" onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input type={"password"} name="password" onChange={onChange}></input>
+            <input autocomplete="off" type={"password"} name="password" onChange={onChange}></input>
           </form>
         </ModalInput>
 
