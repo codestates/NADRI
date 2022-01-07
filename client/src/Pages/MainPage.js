@@ -56,9 +56,10 @@ const ItemContainer = styled.div`
   overflow: auto;
   padding: 1rem;
   border-radius: 10px;
+  
   &::-webkit-scrollbar{
     width: 10px;
-}
+  }
 
   &::-webkit-scrollbar-thumb{
       height: 17%;

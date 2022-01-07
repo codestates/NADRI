@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
@@ -57,6 +58,11 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: center;
   font-size: 1.2rem;
+
+  a {
+    color: black;
+  }
+
   div {
     width: 5rem;
     height: 3rem;
