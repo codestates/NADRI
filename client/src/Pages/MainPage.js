@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
+import DetailPage from "./DetailPage";
 
 const options = {
   //지도를 생성할 때 필요한 기본 옵션
@@ -114,7 +115,9 @@ export default function Main () {
 
         
           <ItemContainer>
-          {dummy.map((info,idx) => <Item key={idx} info={info}/>)}
+          {dummy.map((info,idx) => 
+          <Item key={idx} info={info} />
+          )}
           </ItemContainer>
         
       </div>
