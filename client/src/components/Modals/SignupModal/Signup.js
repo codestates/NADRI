@@ -39,13 +39,13 @@ export default function Signup () {
     })
   }
 
-  async function postSignup () {
-    const {email, nickname, password, passwordCheck} = inputs // 여기서 password추출
+  function postSignup () {
+    const {email, nickname, password, passwordCheck} = inputs
     
     if(password !== passwordCheck) return alert("비밀번호를 확인하세요")
     // if (Object.values(inputs).some((e) => e === '')) return alert("정보를 전부 입력했는지 확인하세요") 이거 다시 작업해야함
     
-    await axios({
+    axios({
       method: 'POST',
       url: `https://localhost:8443/auth/signup`,
       headers: {
@@ -55,9 +55,9 @@ export default function Signup () {
     })
     .then((res) => {
       if(res.status === 201) {
-        const {email, nickname} = res.data.data
+        const {email, nickname, createdAt} = res.data.data
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname}))
+        dispatch(userInfo({email, nickname, createdAt}))
         dispatch(signupModal(SignupModalstate))
         alert('회원가입이 완료되었습니다.')
         navigate('/')
@@ -103,20 +103,20 @@ export default function Signup () {
               <div className="emailInput">
                 <label htmlFor="email">이메일</label>
                 <div>
-                  <input type={"text"} name="email" onChange={onChange}></input>
+                  <input autocomplete="off" type={"text"} name="email" onChange={onChange}></input>
                   <button type="button">중복확인</button>
                 </div>
                 <div>
-                  <input type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함"></input>
+                  <input autocomplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함"></input>
                   <button type="button">인증확인</button>
                 </div>
               </div>
             <label htmlFor="nickname">닉네임</label>
-            <input type={"text"} name="nickname" onChange={onChange}></input>
+            <input autocomplete="off" type={"text"} name="nickname" onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input type={"password"} name="password" onChange={onChange}></input>
+            <input autocomplete="off" type={"password"} name="password" onChange={onChange}></input>
             <label htmlFor="password">비밀번호 확인</label>
-            <input type={"password"} onChange={onChange} name="passwordCheck"></input>
+            <input autocomplete="off" type={"password"} onChange={onChange} name="passwordCheck"></input>
           </form>
         </ModalInput>
 
