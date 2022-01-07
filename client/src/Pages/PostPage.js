@@ -2,12 +2,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import {useNavigate} from 'react-router-dom'
 
 const PostContainer = styled.div`
   padding: 3rem 9vw;
 `
 
 export default function PostPage () {
+  const navigate = useNavigate()
 
   const [value, setValue] = useState({
     title: "",
@@ -63,7 +65,8 @@ export default function PostPage () {
     setImageUrl(urlArr);
   };
 
-  const uploadImage = () => {
+  const uploadImage = (e) => {
+    e.preventDefault()
     const postData = uploadImg;
 
     const val = Object.keys(value);
@@ -81,10 +84,12 @@ export default function PostPage () {
     })
       .then((result) => {
         console.log(result);
+        navigate('/')
       })
       .catch((error) => {
         console.log(error);
       });
+
   };
 
   useEffect(() => {
@@ -156,10 +161,12 @@ export default function PostPage () {
   };
 
   return (
-    <PostContainer>
-      <form className="contentForm">
 
-        <div id="map" style={{ width: "500px", height: "500px", zIndex: 1 }}></div>
+    <PostContainer>
+      <form className="contentForm" onSubmit={(e) => {e.preventDefault()}} >
+
+
+        <div id="map" style={{ width: "500px", height: "500px", zIndex: 0 }}></div>
 
         <div id="preview">
           {/* 미리보기 다시 만들어야 할듯 1장일때랑 여러장일때랑 차이가 있어야 함... */}
@@ -198,11 +205,10 @@ export default function PostPage () {
             }
             value={"1"}
           >
-            <option value="1">테스트</option>
-            <option value="2">여행</option>
-            <option value="3">카페</option>
-            <option value="4">맛집</option>
-            <option value="5">산책</option>
+            <option value="1">여행</option>
+            <option value="2">카페</option>
+            <option value="3">맛집</option>
+            <option value="4">산책</option>
           </select>
         </div>
       </form>

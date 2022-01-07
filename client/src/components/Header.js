@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
 import axios from 'axios'
