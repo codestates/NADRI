@@ -17,11 +17,6 @@ const FooterContainer = styled.footer`
     text-decoration: none;
   }
 
-  a:hover {
-    color: #05050f;
-    transition: all 0.1s;
-  }
-
   &>:last-child {
     margin-left: 76px;
   }
@@ -78,7 +73,6 @@ const Profile = styled.div`
   }
 
   &>:last-child {
-    transition: all 0.3s;
     .name {
       font-size: 16px;
     }
