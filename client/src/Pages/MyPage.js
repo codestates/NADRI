@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import MyPosts from "../components/MyPage/MyPosts";
 import ChageUserInfo from "../components/MyPage/ChangeUserInfo";
 import Sidebar from "../components/MyPage/Sidebar";
-import MyComments from "../components/MyPage/MyComments";
+import Comment from "../components/MyPage/Comment";
+import commentsDummy from "../assets/comments";
 import dummy from "../assets/dummy";
 
 
@@ -111,7 +112,7 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      return <MyComments />
+      return commentsDummy.map((comment, idx) => <Comment key={idx} comment={comment} />)
     }
   }
 

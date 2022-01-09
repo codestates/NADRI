@@ -18,7 +18,7 @@ function App() {
   const curAuthState = useSelector(state => state.changeAuthState);
   const curUserInfo = useSelector(state => state.getUserInfo);
   const store = useSelector(state => state)
-  console.log(store)
+  // console.log(store)
   // console.log('app.js의 시작 로그인 상태 :'+curAuthState)
 
   const gLoginState = useSelector(state => state.gLoginReducer)
