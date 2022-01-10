@@ -52,6 +52,9 @@ module.exports = {
                 email: googleUserInfo.data.email,
                 password: googleUserInfo.data.id,
                 nickname: googleUserInfo.data.name,
+                image: '',
+                admin: false,
+                oauth: true,
             },
         })
         .then(([result, created]) => {

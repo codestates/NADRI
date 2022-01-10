@@ -15,6 +15,7 @@ const PreviewImg = styled.div`
   align-items: center;
   font-size: 1.5rem;
   cursor: pointer;
+
   #delImg {
     cursor: pointer;
     position: absolute;

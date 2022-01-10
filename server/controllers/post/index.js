@@ -1,7 +1,9 @@
 /*
   form을 통한 이미지 파일 업로드 테스트 파일
 */
-const { posts } = require("../../models");
+
+const { QueryTypes } = require("sequelize");
+const { posts, comments, user_post_likes, sequelize } = require("../../models");
 const { chkValid } = require("../tokenFunctions");
 const aws = require("aws-sdk");
 aws.config = require("../../config/awsconfig.js");
@@ -14,19 +16,51 @@ module.exports = {
 
     // 처음에는 자기위치 기준 5km 안의 좌표를 보여주고
     // 클릭해서 위치 지정이 되면 그 좌표를 기준으로 변경
+
+    // 단계별 구현
+    // step1: 일단 모든 게시글 (+ 각 게시글의 like 개수 + 각 게시글의 comment 개수 보내기)
+    // step2: 좌표값 기준으로 +- 1? (경/위도 차이를 고려해야 함)
+    // step3: 카카오 api로 각 좌표 사이의 거리(폴리라인?응용?) 해서 보여주기?
+
+    // step1
+    let find = await sequelize.query(`
+      SELECT id, title, image, content, lat, lng, address, public, categoryId FROM posts WHERE posts.public = 1
+    `, { type: QueryTypes.SELECT })
+
+    // 비공개 게시글은 그냥 메인화면에서 아예 안보이게 하는게 맞나?
+
+    res.status(200).json({data: find})
   },
 
   getOnePost: async (req, res) => {
+    // 댓글 / like 개수 카운트 서브쿼리 추가 필요
+    // 500 오류 추가 필요
+    // 작성자인지 여부 확인 > 맞으면 전체정보
+    // 작성자가 아닌데 비공개면 400 bad req 반환?
+
     // 전달받은 파라미터로 포스트가 존재하는지 확인
+    const id = req.params.id
+    const find = await sequelize.query(`
+      SELECT * FROM posts WHERE posts.id = ${id} AND posts.public = 1
+    `, { type: QueryTypes.SELECT })
+
+    // find가 빈 배열이면 = 없는 포스트면 404를 반환
+    if (!find[0]) return res.sendStatus(404)
+
+    // 이미지 주소를 변환 > 로컬이면 uploads/~~, S3면 숫자정보
+
+    // 포스트의 정보 반환
+    res.status(200).json({data: find[0]})
+
     // 찾은 포스트의 like 개수 찾기
     // 찾은 포스트의 댓글 찾기
-    // 만든 정보 전달하기
+    // 만든 정보 전달하기(이미지 어떻게 전달할지 생각해야 함.)
   },
 
   uploadPost: async (req, res) => {
     // 유저정보 인증: 로그인페이지 작동하면 주석 해제
-    // const userData = chkValid(req);
-    // if (!userData) return res.status(400).json({ message: 'Invalid Token' });
+    const userData = chkValid(req);
+    if (!userData) return res.status(400).json({ message: 'Invalid Token' });
 
     // req.files > 이미지 정보 저장
     // req.body > 텍스트가 저장된 필드 전부 (주의: 뭔지모를 객체 하나 있어서 req를 분해할당해야 활용에 지장 없을듯)

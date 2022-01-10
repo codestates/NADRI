@@ -119,12 +119,12 @@ export default function Login () {
             <button onClick={onClickGoogle}>
             <img src="google.png" alt="구글 로그인" />구글 로그인
             </button>
-            </div>
+          </div>
           <div>
             <button onClick={onClickKakao}>
             <img src="kakao.png" />카카오톡 로그인
             </button>
-            </div>
+          </div>
         </Oauth>
       </LoginModalView>
     </ModalBackdrop>

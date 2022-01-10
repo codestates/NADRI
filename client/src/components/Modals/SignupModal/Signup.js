@@ -10,7 +10,7 @@ import {
   Oauth
 } from "../SignupModal/SignupStyled"
 import {connectAdvanced, useDispatch, useSelector} from 'react-redux'
-import { signupModal, loginModal, authState, userInfo } from '../../../redux/actions';
+import { signupModal, loginModal, authState, userInfo, gLogIn, kLogIn} from '../../../redux/actions';
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +28,8 @@ export default function Signup () {
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
   // const curUserInfo = useSelector(state => state.getUserInfo);
+  const gLoginState = useSelector(state => state.gLoginReducer);
+  const kLoginState = useSelector(state => state.kLoginReducer);
 
   function onChange (e) {
     const {name, value} = e.target
@@ -76,6 +78,16 @@ export default function Signup () {
     dispatch(signupModal(SignupModalstate))
   }
 
+  const onClickGoogle = async () => {
+    dispatch(gLogIn(gLoginState))
+    window.location.href = 'https://localhost:8443/auth/google';
+  };
+
+  const onClickKakao = async () => {
+    dispatch(kLogIn(kLoginState))
+    window.location.href = 'https://localhost:8443/auth/kakao';
+  }
+
   return (
     <ModalBackdrop onClick={ModalHandler}>
       <SignupModalView onClick={(e) => e.stopPropagation()}>
@@ -110,8 +122,16 @@ export default function Signup () {
 
         <Oauth>
           <div onClick={postSignup}>회원가입</div>
-          <div><img src="google.png" />구글 로그인</div>
-          <div><img src="kakao.png" />카카오톡 로그인</div>
+          <div>
+            <button onClick={onClickGoogle}>
+            <img src="google.png" alt="구글 로그인" />구글 로그인
+            </button>
+          </div>
+          <div>
+            <button onClick={onClickKakao}>
+            <img src="kakao.png" />카카오톡 로그인
+            </button>
+          </div>
         </Oauth>
       </SignupModalView>
     </ModalBackdrop>

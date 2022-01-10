@@ -30,6 +30,7 @@ export const BottomContainer = styled.div`
   width: 100%;
   border: 1px solid black;
   display: flex;
+  
 `
 
 export const TextInputContainer = styled.div`
