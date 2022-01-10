@@ -2,7 +2,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-<<<<<<< HEAD:client/src/Pages/PostPage/PostPage.js
 import {
   PostContainer,
   TopContainer,
@@ -12,13 +11,7 @@ import {
   CheckboxContainer} from './StyledPostPage'
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
-=======
 import {useNavigate} from 'react-router-dom'
-
-const PostContainer = styled.div`
-  padding: 3rem 9vw;
-`
->>>>>>> 453cb6ae09af8a3e2204b47e6648b4d94480bd62:client/src/Pages/PostPage.js
 
 export default function PostPage () {
   const navigate = useNavigate()
@@ -227,32 +220,8 @@ export default function PostPage () {
           <button onClick={() => console.log(value)}>ㅡㅡ</button>
           <span>{value.address}</span>
         </div>
-<<<<<<< HEAD:client/src/Pages/PostPage/PostPage.js
       </CheckboxContainer>
       </BottomContainer>
-=======
-
-        <div className="category">
-          <select
-            className="w150"
-            onChange={(e) =>
-              handleValue({ id: "categoryId", value: e.target.value })
-            }
-            value={"1"}
-          >
-            <option value="1">여행</option>
-            <option value="2">카페</option>
-            <option value="3">맛집</option>
-            <option value="4">산책</option>
-          </select>
-        </div>
-      </form>
-
-      <div>
-        <button onClick={() => console.log(value)}>ㅡㅡ</button>
-        <span>{value.address}</span>
-      </div>
->>>>>>> 453cb6ae09af8a3e2204b47e6648b4d94480bd62:client/src/Pages/PostPage.js
     </PostContainer>
   );
 }
