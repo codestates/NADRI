@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 
-const PostContainer = styled.div`
+export const PostContainer = styled.div`
   display: flex;
   border: 1px solid black;
   border-radius: 10px;
@@ -27,7 +27,7 @@ const PostContainer = styled.div`
   }
 `
 
-const PostImg = styled.div`
+export const PostImg = styled.div`
   width: 8rem;
   border: 1px solid black;
   border-radius: 5px;
@@ -38,7 +38,7 @@ const PostImg = styled.div`
   }
 `
 
-const PostInfo = styled.div`
+export const PostInfo = styled.div`
   width: 20rem;
   cursor: grab;
   .title {

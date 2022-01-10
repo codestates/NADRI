@@ -34,7 +34,6 @@ const MyPageSideBar = styled.div`
 export default function Sidebar({setCurContent}) {
 
   const [signOut, setSignOut] = useState(false)
-  console.log(signOut)
 
   function signOutHandler() {
     setSignOut(!signOut)
