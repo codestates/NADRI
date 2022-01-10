@@ -20,7 +20,7 @@ const PreviewImg = styled.div`
   background-image: url(default-image.jpg);
   background-size: cover;
   ${(props) => {
-    if(props.Img[0] && props.Img[1] === undefined) {
+    if(props.Img[0] && props.Img[1] === undefined) { // 자기 앞에 사진이 있고 자기 자리엔 사진이 없을 경우?
       return (
         `
         transition: all 0.3s;
@@ -30,11 +30,11 @@ const PreviewImg = styled.div`
         `
       )
     }
-    else if(props.Img[0] && props.Img[1]) {
+    else if(props.Img[0] && props.Img[1]) { // 
       return (
         `
         transition: all 0.3s;
-        background-image: url(${props.Img[1]});
+        background-image: url(${props.Img[1][0]});
         background-size: contain;
         `
       )
@@ -63,19 +63,10 @@ const PreviewImg = styled.div`
   }
 `
 
-export default function PreviewBottom ({allImg, img, onChange, setPreviewImg, setUploadImg}) {
+export default function PreviewBottom ({allImg, img, picChange, removeImg}) {
   const photoInput = useRef();
   const handleClick = () => {
     photoInput.current.click();
-  }
-
-  const delImg = () => {
-    let delTarget = img[1]
-    let newImgArr = allImg.filter((el) => {
-      return el !== delTarget
-    })
-    setPreviewImg(newImgArr)
-    setUploadImg(newImgArr)
   }
   
   return (
@@ -83,12 +74,12 @@ export default function PreviewBottom ({allImg, img, onChange, setPreviewImg, se
       {
         img[1] === undefined ?
         <PreviewImg Img={img} >
-        <input ref={photoInput} type="file" accept="image/*" multiple onChange={onChange} />
+        <input ref={photoInput} type="file" accept="image/*" multiple onChange={picChange} />
         <img src="plus.svg" alt="" onClick={handleClick} />
         </PreviewImg>
         :
         <PreviewImg Img={img}>
-        <span id="delImg" onClick={delImg}>&#10005;</span>
+          <span id="delImg" onClick={(e) => removeImg(e, img[1])}>&#10005;</span>
         </PreviewImg>
       }
     </>

@@ -8,13 +8,13 @@ const RestImgContainer = styled.div`
   gap: 1rem;
 `
 
-export default function PreviewBottom({Img, onChange, setPreviewImg, setUploadImg}) {
+export default function PreviewBottom({Img, picChange, removeImg}) {
   
   return (
     <RestImgContainer id="RestImgContainer">
-      <PreviewBottomItem allImg={Img} img={[Img[0],Img[1]]} setPreviewImg={setPreviewImg} setUploadImg={setUploadImg} onChange={onChange}/>
-      <PreviewBottomItem allImg={Img} img={[Img[1],Img[2]]} setPreviewImg={setPreviewImg} setUploadImg={setUploadImg} onChange={onChange}/>
-      <PreviewBottomItem allImg={Img} img={[Img[2],Img[3]]} setPreviewImg={setPreviewImg} setUploadImg={setUploadImg} onChange={onChange}/>
+      <PreviewBottomItem allImg={Img} img={[Img[0],Img[1]]} picChange={picChange} removeImg={removeImg} />
+      <PreviewBottomItem allImg={Img} img={[Img[1],Img[2]]} picChange={picChange} removeImg={removeImg} />
+      <PreviewBottomItem allImg={Img} img={[Img[2],Img[3]]} picChange={picChange} removeImg={removeImg} />
     </RestImgContainer>
   )
 }
