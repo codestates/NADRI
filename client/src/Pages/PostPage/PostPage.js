@@ -2,16 +2,28 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+<<<<<<< HEAD:client/src/Pages/PostPage/PostPage.js
+import {
+  PostContainer,
+  TopContainer,
+  UploadContainer,
+  BottomContainer,
+  TextInputContainer,
+  CheckboxContainer} from './StyledPostPage'
+import Preview from "../../components/PostPage/Preview";
+import PreviewBottom from "../../components/PostPage/PreviewBottom";
+=======
 import {useNavigate} from 'react-router-dom'
 
 const PostContainer = styled.div`
   padding: 3rem 9vw;
 `
+>>>>>>> 453cb6ae09af8a3e2204b47e6648b4d94480bd62:client/src/Pages/PostPage.js
 
 export default function PostPage () {
   const navigate = useNavigate()
 
-  const [value, setValue] = useState({
+  const [value, setValue] = useState({ // posting할 post 데이터들
     title: "",
     content: "",
     lat: 0,
@@ -36,17 +48,31 @@ export default function PostPage () {
       [`${target.id}`]: target.value,
     })};
   };
-
+// -----------------------------------------------------------------------
   // 미리보기 저장할 state
-  const [imageUrl, setImageUrl] = useState([]);
+  const [previewImg, setPreviewImg] = useState([]); // 화면에 보이는 img를 인코딩한 값이 담긴 배열
 
-  // 업로드할 이미지 state 설정
-  const [uploadImg, setUploadImg] = useState(null);
+  // 업로드할 이미지 state
+  const [uploadImg, setUploadImg] = useState(null); // 서버에 보내야될 img가 담겨있는 FormData객체?
 
-  const onChnage = (event) => {
-    const formData = new FormData(),
-      urlArr = [];
+  const onChange = (event) => {
+    const formData = new FormData()
 
+    // 미리보기는 배열로 만들어 여러 장 저장 가능하게 구현
+    if(event.target.files.length >=5) {
+      alert('사진은 4개까지만 올릴 수 있어요 😢')
+      return ;
+    }
+    
+    for (let i = 0; i < event.target.files.length; i++) {
+      previewImg.push(URL.createObjectURL(event.target.files[i]));
+    }
+    // 미리보기 state를 저장
+    
+    setPreviewImg(previewImg);
+
+    /* ============================================== */
+    
     // 이미지 개수만큼 반복해서 formData에 이미지를 저장
     for (let i = 0; i < event.target.files.length; i++) {
       formData.append("image", event.target.files[i]);
@@ -54,16 +80,8 @@ export default function PostPage () {
 
     // state에 이미지 저장
     setUploadImg(formData);
-
-    /* ============================================== */
-    // 미리보기는 배열로 만들어 여러 장 저장 가능하게 구현
-    for (let i = 0; i < event.target.files.length; i++) {
-      urlArr.push(URL.createObjectURL(event.target.files[i]));
-    }
-
-    // 미리보기 state를 저장
-    setImageUrl(urlArr);
   };
+  // -----------------------------------------------------------------------
 
   const uploadImage = (e) => {
     e.preventDefault()
@@ -73,8 +91,6 @@ export default function PostPage () {
     for (let i = 0; i < val.length; i++) {
       postData.append(`${val[i]}`, value[val[i]]);
     }
-
-    console.log(value);
 
     axios({
       method: "post",
@@ -159,43 +175,62 @@ export default function PostPage () {
       setLocation(latlng)
     });
   };
-
   return (
 
     <PostContainer>
-      <form className="contentForm" onSubmit={(e) => {e.preventDefault()}} >
 
+      <TopContainer>
+        <UploadContainer>
+          <Preview Img={previewImg} onChange={onChange} setPreviewImg={setPreviewImg} setUploadImg={setUploadImg}/>
+          <PreviewBottom Img={previewImg} onChange={onChange} setPreviewImg={setPreviewImg} setUploadImg={setUploadImg}/>
+        </UploadContainer>
+        <div id="map"></div>
+      </TopContainer>
 
-        <div id="map" style={{ width: "500px", height: "500px", zIndex: 0 }}></div>
-
-        <div id="preview">
-          {/* 미리보기 다시 만들어야 할듯 1장일때랑 여러장일때랑 차이가 있어야 함... */}
-          {imageUrl.map((e) => (<img src={e} key={imageUrl.indexOf(e)} style={{ width: "500px" }} />))}
-        </div>
-
-        <div id="uploadImage">
-          <input type="file" id="image" accept="image/*" multiple onChange={onChnage} />
-        </div>
-
-        <div>
+      <BottomContainer>
+        <TextInputContainer>
           <input id="title" onChange={(event) => handleValue(event.target)} />
-        </div>
-
-        <div id="content">
+        
           <pre><textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} /></pre>
-        </div>
+        </TextInputContainer>
+
+        <CheckboxContainer>
+          <div>
+            <button onClick={uploadImage}>업로드</button>
+          </div>
+
+          <div className="checkbox">
+            <input
+              type="checkbox"
+              onClick={() => handleValue({ id: "public", value: !value.public })}
+            />
+            <span>{value.public ? "공개" : "비공개"}</span>
+          </div>
+
+          <div className="category">
+            <select
+              className="w150"
+              onChange={(e) =>
+                handleValue({ id: "categoryId", value: e.target.value })
+              }
+              value={"1"}
+            >
+              <option value="1">테스트</option>
+              <option value="2">여행</option>
+              <option value="3">카페</option>
+              <option value="4">맛집</option>
+              <option value="5">산책</option>
+            </select>
+          </div>
 
         <div>
-          <button onClick={uploadImage}>업로드</button>
+          <button onClick={() => console.log(value)}>ㅡㅡ</button>
+          <span>{value.address}</span>
         </div>
-
-        <div className="checkbox">
-          <input
-            type="checkbox"
-            onClick={() => handleValue({ id: "public", value: !value.public })}
-          />
-          <span>{value.public ? "공개" : "비공개"}</span>
-        </div>
+<<<<<<< HEAD:client/src/Pages/PostPage/PostPage.js
+      </CheckboxContainer>
+      </BottomContainer>
+=======
 
         <div className="category">
           <select
@@ -217,6 +252,7 @@ export default function PostPage () {
         <button onClick={() => console.log(value)}>ㅡㅡ</button>
         <span>{value.address}</span>
       </div>
+>>>>>>> 453cb6ae09af8a3e2204b47e6648b4d94480bd62:client/src/Pages/PostPage.js
     </PostContainer>
   );
 }

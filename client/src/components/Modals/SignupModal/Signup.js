@@ -103,20 +103,20 @@ export default function Signup () {
               <div className="emailInput">
                 <label htmlFor="email">이메일</label>
                 <div>
-                  <input autocomplete="off" type={"text"} name="email" onChange={onChange}></input>
+                  <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
                   <button type="button">중복확인</button>
                 </div>
                 <div>
-                  <input autocomplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함"></input>
+                  <input autoComplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함"></input>
                   <button type="button">인증확인</button>
                 </div>
               </div>
             <label htmlFor="nickname">닉네임</label>
-            <input autocomplete="off" type={"text"} name="nickname" onChange={onChange}></input>
+            <input autoComplete="off" type={"text"} name="nickname" onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input autocomplete="off" type={"password"} name="password" onChange={onChange}></input>
+            <input autoComplete="off" type={"password"} name="password" onChange={onChange}></input>
             <label htmlFor="password">비밀번호 확인</label>
-            <input autocomplete="off" type={"password"} onChange={onChange} name="passwordCheck"></input>
+            <input autoComplete="off" type={"password"} onChange={onChange} name="passwordCheck"></input>
           </form>
         </ModalInput>
 
