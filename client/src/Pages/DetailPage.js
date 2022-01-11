@@ -122,7 +122,7 @@ export default function DetailPage ( ) {
 
     const [data, setData] = useState({})
     
-    const { id, img, spotDesc, spotTitle } =location.state
+    const { id, image, content, title } =location.state
 
     // 추후 api 요청시 dummy 부분의 변경등 필요
     const  getItemByNo = (id) => {
@@ -145,12 +145,12 @@ export default function DetailPage ( ) {
             {/* <div> */}
             
                 <Title>
-                    {spotTitle}
+                    {title}
                 </Title>
             
                 <ImgContainer>
                     <div className="mainImg">
-                        <img src={img}></img>
+                        <img src={image[0]}></img>
                     </div>
                     <div className="imgThumbnail">
                         <span>이미지 썸네일 공간</span>
@@ -158,7 +158,7 @@ export default function DetailPage ( ) {
                 </ImgContainer>
                 <ContentContainer>
                     <div className="contentDesc">
-                        {spotDesc}
+                        {content}
                     </div>
                     <div className="contentToolbar">
                         <span>컨텐츠 툴바 들어갈 자리</span>

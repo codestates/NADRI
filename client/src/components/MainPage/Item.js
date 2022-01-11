@@ -63,7 +63,7 @@ const ItemInfo = styled.div`
 export default function Item ({point}) {
   return (
     <div>
-      <Link to={`/detail/${info.id}`} state={info}>
+      <Link to={`/detail/${point.id}`} state={point}>
       <ItemContainer>
         <ItemImg className="imgContainer">
           <img src={point ? point.image[0] : null}></img>
