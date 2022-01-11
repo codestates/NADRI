@@ -60,17 +60,17 @@ const ItemInfo = styled.div`
   }
 `
 
-export default function Item ({info}) {
+export default function Item ({point}) {
   return (
     <div>
       <ItemContainer>
         <ItemImg className="imgContainer">
-          <img src={`${info.img}`}></img>
+          <img src={point ? point.image[0] : null}></img>
         </ItemImg>
 
         <ItemInfo>
-          <div className="title">{info.spotTitle}</div>
-          <div className="desc">{info.spotDesc}</div>
+          <div className="title">{point ? point.title : null}</div>
+          <div className="desc">{point ? point.content : null}</div>
         </ItemInfo>
       </ItemContainer>
     </div>
