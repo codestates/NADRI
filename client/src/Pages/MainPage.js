@@ -6,6 +6,7 @@ import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import DetailPage from "./DetailPage";
 
 const MainContainer = styled.div`
   height: 100%;

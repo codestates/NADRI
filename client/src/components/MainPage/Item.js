@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 
 
 const ItemContainer = styled.div`
@@ -63,6 +63,7 @@ const ItemInfo = styled.div`
 export default function Item ({point}) {
   return (
     <div>
+      <Link to={`/detail/${info.id}`} state={info}>
       <ItemContainer>
         <ItemImg className="imgContainer">
           <img src={point ? point.image[0] : null}></img>
@@ -73,6 +74,7 @@ export default function Item ({point}) {
           <div className="desc">{point ? point.content : null}</div>
         </ItemInfo>
       </ItemContainer>
+      </Link>
     </div>
   )
 }
