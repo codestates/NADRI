@@ -27,6 +27,22 @@ const MainContainer = styled.div`
     padding: 0 3rem 1rem;
   }
   
+  @media screen and (max-width: 1380px) {
+    display: flex;
+    flex-direction: column;
+    
+    #map {
+      width: 100%;
+      height: 30rem;
+      margin-bottom: 30px;
+    }
+
+    .contentContainer {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
 `
 
 const ContentNav = styled.nav`
