@@ -68,7 +68,7 @@ const UserProfileContainer = styled.div`
 
 const UserMainContents = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   .content-container {
     width: 45rem;

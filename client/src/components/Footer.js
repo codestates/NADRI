@@ -26,12 +26,7 @@ const Logo = styled.div`
   width: 15rem;
   margin: 0;
 
-  > a {
-    width: 20rem;
-    height: auto;
-  }
-
-  > a img {
+  img {
     display: block;
     width: 100%;
     height: auto;
@@ -90,19 +85,16 @@ const Profile = styled.div`
   }
 `
 
-function moveTop () {
-  window.screenTop(0, 0)
-}
+
 
 
 
 export default function Footer () {
+
   return (
     <FooterContainer>
       <Logo>
-        <Link to="/">
           <img src="NADRI.png" alt="footer-logo" />
-        </Link>
       </Logo>
 
       <MemberContainer>

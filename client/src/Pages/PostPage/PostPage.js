@@ -62,7 +62,7 @@ export default function PostPage () {
     // value state를 조정하는 함수. 좌표/주소는 한번에 처리해야 해서 복잡해짐
     // id가 loc이면 한번에 업데이트
     // console.log(target)
-
+    console.log({...value})
     if (target.id === 'loc') {
       setValue({
         ...value,
