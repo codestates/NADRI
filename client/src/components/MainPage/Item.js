@@ -12,14 +12,14 @@ const ItemContainer = styled.div`
   gap: 2rem;
 
   & {
-    .imgContainer {
+    .img {
       transition: transform 0.2s linear;
       transform: scale(1);
     }
   }
 
   &:hover {
-    .imgContainer {
+    .img {
       transition: all 0.2s linear;
       border:none;
       transform: scale(1.4);
@@ -31,11 +31,15 @@ const ItemImg = styled.div`
   width: 8rem;
   border: 1px solid black;
   border-radius: 5px;
-  > img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+
+  ${(props) => {
+    return (
+      `
+      background-image: url(${props.img});
+      background-size: cover;
+      `
+    )
+  }}
 `
 
 const ItemInfo = styled.div`
@@ -60,19 +64,16 @@ const ItemInfo = styled.div`
   }
 `
 
-export default function Item ({info}) {
+export default function Item ({point}) {
   return (
-    <div>
       <ItemContainer>
-        <ItemImg className="imgContainer">
-          <img src={`${info.img}`}></img>
+        <ItemImg className="img" img={point.image[0]}>
         </ItemImg>
 
         <ItemInfo>
-          <div className="title">{info.spotTitle}</div>
-          <div className="desc">{info.spotDesc}</div>
+          <div className="title">{point ? point.title : null}</div>
+          <div className="desc">{point ? point.content : null}</div>
         </ItemInfo>
       </ItemContainer>
-    </div>
   )
 }

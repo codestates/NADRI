@@ -9,23 +9,23 @@ aws.config = require("./config/awsconfig.js");
 const s3 = new aws.S3();
 
 // 로컬에 저장하기 (테스트용, 폴더가 존재해야 업로드됩니다! 없으면 오류발생)
-const upload = multer({ dest: "uploads/" });
+// const upload = multer({ dest: "uploads/" });
 
 // S3에 업로드하기 (지갑을 지켜주세요)
 // 사용하려면 config폴더에 awsconfig파일이 있어야 합니다(이미 3퍼 넘게 써버림 ㅎㅎ;)
-// const upload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: 'nadri',
-//         acl: 'public-read-write',
-//         key: function(req, file, cb) {
-//             cb(null, Math.floor(Math.random() * 1000).toString() + Date.now() + '.' + file.originalname.split('.').pop());
-//         }
-//     }),
-//     limits: {
-//         fileSize: 1000 * 1000 * 10
-//     }
-// });
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'nadri',
+        acl: 'public-read-write',
+        key: function(req, file, cb) {
+            cb(null, Math.floor(Math.random() * 1000).toString() + Date.now() + '.' + file.originalname.split('.').pop());
+        }
+    }),
+    limits: {
+        fileSize: 1000 * 1000 * 10
+    }
+});
 
 /* ================================================================ */
 

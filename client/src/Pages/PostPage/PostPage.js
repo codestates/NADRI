@@ -16,12 +16,15 @@ import {useNavigate} from 'react-router-dom'
 export default function PostPage () {
   const navigate = useNavigate()
 
-  const [value, setValue] = useState({
-    // 정보 저장하는 state
-    image: [],
+  const [loc, setLoc] = useState({
     lat: 0,
     lng: 0,
     address: '',
+  })
+
+  const [value, setValue] = useState({
+    // 정보 저장하는 state
+    image: [],
     title: '',
     content: '',
     public: false,
@@ -62,21 +65,15 @@ export default function PostPage () {
     // value state를 조정하는 함수. 좌표/주소는 한번에 처리해야 해서 복잡해짐
     // id가 loc이면 한번에 업데이트
     // console.log(target)
-    console.log({...value})
-    if (target.id === 'loc') {
-      setValue({
-        ...value,
-        lat: target.lat,
-        lng: target.lng,
-        address: target.add
-      });
-    } else {
       setValue({
         ...value,
         [`${target.id}`]: target.value,
       });
-    }
   };
+
+  const handleLoc = (data) => {
+    setLoc(data)
+  }
 
   const submit = async () => {
     // 포스트 게시하는 함수
@@ -85,6 +82,9 @@ export default function PostPage () {
     for (let i = 0; i < value.image.length; i++) {
       formData.append('image', value.image[i][1]);
     }
+    formData.append('address', loc.address)
+    formData.append('lat', loc.lat)
+    formData.append('lng', loc.lng)
 
     const val = Object.keys(value);
     for (let i = 0; i < val.length; i++) {
@@ -104,6 +104,8 @@ export default function PostPage () {
       .catch((error) => {
         console.log(error);
       });
+    
+    navigate('/') // 리턴된 페이지로 이동?
   };
 
   useEffect(() => {
@@ -125,8 +127,7 @@ export default function PostPage () {
       locData.getLat(),
       function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
-          handleValue({id: 'loc', lat: locData.Ma, lng: locData.La, add: result[0].address.address_name});
-          // console.log(value)
+          handleLoc({lat: locData.Ma, lng: locData.La, address: result[0].address.address_name});
         }
       }
     );
@@ -212,8 +213,8 @@ export default function PostPage () {
           </div>
 
         <div>
-          <button onClick={() => console.log(value)}>ㅡㅡ</button>
-          <span>{value.address}</span>
+          <button onClick={() => console.log(value, loc)}>ㅡㅡ</button>
+          <span>{loc.address}</span>
         </div>
       </CheckboxContainer>
       </BottomContainer>

@@ -33,6 +33,20 @@ module.exports = {
     `, { type: QueryTypes.SELECT })
 
     // 비공개 게시글은 그냥 메인화면에서 아예 안보이게 하는게 맞나?
+    find.map((point) => {
+      point.image = point.image.split(",");
+      point.image.pop();
+
+      if (point.image[0].split("/")[0] === "uploads") {
+        console.log("로컬 이미지 확인");
+        point.image = point.image.map(
+          (e) => (e = path.join(__dirname, "../../") + e)
+        );
+      } else {
+        console.log("S3 버킷 이미지");
+        point.image = point.image.map((e) => (e = process.env.AWS_LOCATION + e));
+      }
+    });
 
     res.status(200).json({data: find})
   },
@@ -55,11 +69,11 @@ module.exports = {
     // find에 값이 있으면 [0]번을 꺼내 재할당
     find = find[0];
     
-    // public이 false이면 인증정보 확인
-    if (!find.public) {
-      const userData = chkValid(req)
-      if (!userData || find.userId !== userData.id) return res.sendStatus(400)
-    }
+    // // public이 false이면 인증정보 확인
+    // if (!find.public) {
+    //   const userData = chkValid(req)
+    //   if (!userData || find.userId !== userData.id) return res.sendStatus(400)
+    // }
 
     // 받아온 userInfo로유저와 작성자가 동일한지 체크  
     const comment = await sequelize.query(`

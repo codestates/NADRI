@@ -1,5 +1,7 @@
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
 const ChageUserInfoContainer = styled.div`
   display: flex;
@@ -24,6 +26,7 @@ const ChageUserInfoContainer = styled.div`
       margin-bottom: 3rem;
 
       > img {
+        cursor: pointer;
         width: 25px;
       }
     }
@@ -80,25 +83,45 @@ const InputUserInfo = styled.div`
 `
 
 export default function ChageUserInfo () {
+
+  const [input, setInput] = useState({
+    nickName: '',
+    password: '',
+    passwordCheck: ''
+  })
+
+  function getUserInfo(e) {
+    const {name, value} = e.target
+    setInput({
+      ...input,
+      [name]: value
+    })
+    console.log(input)
+  }
+
+  function changeUserInfo() {
+    console.log(changeUserInfo)
+  }
+
   return (
     <ChageUserInfoContainer>
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"><img src="/gitHubLogo.png" alt="user-profile-img" /></div>
-        <img src="/edit.png" /> {/* 여기 나중에 input태그 추가해야할듯 */}
+        <img src="/edit.png" onClick={changeUserInfo}/> {/* 여기 나중에 input태그 추가해야할듯 */}
       </div>
       <InputContainer>
         <InputUserInfo>
           <label htmlFor="nickname">닉네임</label>
-          <input type={"text"} name="nickname"></input>
+          <input type={"text"} name="nickname" onChange={(e) => getUserInfo(e)}></input>
           <button type="button">변경</button>
         </InputUserInfo>
         <InputUserInfo>
           <label htmlFor="password">비밀번호</label>
-          <input type={"password"} name="password"></input>
+          <input type={"password"} name="password" onChange={(e) => getUserInfo(e)}></input>
         </InputUserInfo>
         <InputUserInfo>
           <label htmlFor="passwordCheck">비밀번호 확인</label>
-          <input type={"password"} name="passwordCheck"></input>
+          <input type={"password"} name="passwordCheck" onChange={(e) => getUserInfo(e)}></input>
           <button type="button">변경</button>
         </InputUserInfo>
       </InputContainer>
