@@ -58,7 +58,7 @@ export default function SignoutModal({signOutHandler}) {
   }
 
   function SignoutPost () {
-    axios.delete('https://localhost:8443/auth/signout')
+    axios.delete(`${process.env.REACT_APP_API_URL}/auth/signout`)
     .then((res) => {
       signoutCheckHandler()
     })

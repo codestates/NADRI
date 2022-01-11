@@ -95,7 +95,7 @@ export default function PostPage () {
 
     axios({
       method: 'POST',
-      url: 'https://localhost:8443/post',
+      url: `${process.env.REACT_APP_API_URL}/post`,
       data: formData, // 어떤 레퍼런스는 files로 하던데 죽어도 안되서 변경
       headers: { 'content-type': 'multipart/form-data' },
     })
