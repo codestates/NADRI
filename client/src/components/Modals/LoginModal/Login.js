@@ -45,7 +45,7 @@ export default function Login () {
     const {email, password} = inputs
     axios({
       method: 'POST',
-      url: 'https://localhost:8443/auth/login',
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
       headers: {
         accept: 'application/json'
       },
@@ -79,13 +79,13 @@ export default function Login () {
   const onClickGoogle = async () => {
     // console.log(e)
     dispatch(gLogIn(gLoginState))
-    window.location.href = 'https://localhost:8443/auth/google';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
     // window.location.href = '/';
   };
 
   const onClickKakao = async () => {
     dispatch(kLogIn(kLoginState))
-    window.location.href = 'https://localhost:8443/auth/kakao';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
   
 

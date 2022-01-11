@@ -105,7 +105,7 @@ export default function Header () {
 
   function logout () {
     axios.post(
-      "https://localhost:8443/auth/logout",
+      `${process.env.REACT_APP_API_URL}/auth/logout`,
       { headers: { "Content-Type": "application/json" }, withCredentials: true }
     )
     .then((res) => {

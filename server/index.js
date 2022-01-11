@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
-// const port = 8443
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const fs = require('fs');
-const https = require('https');
+const http = require('http');
 const router = require('./router');
+const server = http.createServer(app);
 require('dotenv').config();
 
 app.use(express.json());
@@ -13,7 +12,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     /* 나중에  추가하기 */
-    origin: ["http://localhost:3000"],
+    // origin: true,
+    origin: [`${process.env.CLIENT_URI}`],
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE"],
     /*세부 설정 오류시 수정 필요*/
@@ -28,23 +28,15 @@ app.get('/', (req, res) => {
   res.send('Welcome to NADRI server!');
 });
 
-const HTTPS_PORT = process.env.HTTPS_PORT || 8080;
+const HTTP_PORT = process.env.HTTP_PORT || 8080;
 
-let server;
-if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
-  const privateKey = fs.readFileSync(__dirname + '/key.pem', 'utf8');
-  const certificate = fs.readFileSync(__dirname + '/cert.pem', 'utf8');
-  const credentials = { key: privateKey, cert: certificate };
 
-  server = https.createServer(credentials, app);
+//  aws의 ALB Idle timeout은 60초보다 긴 65초, 66초로 설정
+server.keepAliveTimeout = 65000;
+server.headersTimeout = 66000;
 
-  server.listen(HTTPS_PORT, () =>
-    console.log(`https server runnning on port ${HTTPS_PORT}`)
+// let server; 
+app.listen(HTTP_PORT, () =>
+    console.log(`http server runnning on port ${HTTP_PORT}`)
   );
-} else {
-  server = app.listen(HTTPS_PORT, () =>
-    console.log(`http server runnning on port ${HTTPS_PORT}`)
-  );
-}
-
-module.exports = server;
+// module.exports = server;

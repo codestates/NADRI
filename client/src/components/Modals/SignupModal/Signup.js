@@ -47,7 +47,7 @@ export default function Signup () {
     
     axios({
       method: 'POST',
-      url: `https://localhost:8443/auth/signup`,
+      url: `${process.env.REACT_APP_API_URL}/auth/signup`,
       headers: {
         accept: 'application/json'
       },
@@ -80,12 +80,12 @@ export default function Signup () {
 
   const onClickGoogle = async () => {
     dispatch(gLogIn(gLoginState))
-    window.location.href = 'https://localhost:8443/auth/google';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
     dispatch(kLogIn(kLoginState))
-    window.location.href = 'https://localhost:8443/auth/kakao';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
 
   return (

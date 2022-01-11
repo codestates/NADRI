@@ -156,7 +156,7 @@ export default function Main () {
 
     setAddress(new kakao.maps.LatLng(lat, lng))
 
-    const postData = await axios.get('https://localhost:8443/post')
+    const postData = await axios.get(`${process.env.REACT_APP_API_URL}/post`)
     handlePoints(postData.data.data)
 
     const points = []
