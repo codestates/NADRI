@@ -1,15 +1,11 @@
+/*global kakao */
 import React from "react";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
-
-const options = {
-  //지도를 생성할 때 필요한 기본 옵션
-  center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-  level: 3, //지도의 레벨(확대, 축소 정도)
-};
+import axios from 'axios'
 
 const MainContainer = styled.div`
   height: 100%;
@@ -17,7 +13,7 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  .map {
+  #map {
     width: 45rem;
     height: 50rem;
     border-radius: 15px;
@@ -73,7 +69,17 @@ const ItemContainer = styled.div`
 `
 
 export default function Main () {
-  const container = useRef(null);
+
+  const [loc, setLoc] = useState({
+    lat: 0,
+    lng: 0,
+    address: '',
+  })
+
+  const [points, setPoints] = useState([])
+  const handlePoints = (data) => {
+    setPoints(data)
+  }
 
   const [curCategory, setCurCategory] = useState('가까운 지점')
 
@@ -94,13 +100,90 @@ export default function Main () {
   }
 
   useEffect(() => { // 나중에 curCategory에 따라 지도를 다시 불러오는 작업을 해줘야 할듯
-    new window.kakao.maps.Map(container.current, options); //지도 생성 및 객체 리턴
-    return () => {};
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('위치 확인에 성공하였습니다.')
+      kakaoInit([position.coords.latitude, position.coords.longitude], true)
+    }, (error) => {
+      console.log('현재 위치 확인이 불가한 상황입니다.')
+      kakaoInit([37.5655493, 126.9777104], false)
+    })
+    // console.log(points)
   }, []);
+
+  // useEffect(() => {
+  //   mkMarker()
+  // }, [points])
+
+  // const mkMarker = () => {
+  //   console.log(points)
+  //   const positions = []
+  //   points.map(e => {
+
+  //   })
+  // }
+
+  // 주소 받아오는 함수
+  const geocoder = new kakao.maps.services.Geocoder();
+  const setAddress = (locData) => {
+    geocoder.coord2Address(
+      locData.getLng(),
+      locData.getLat(),
+      function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          setLoc({lat: locData.Ma, lng: locData.La, address: result[0].address.address_name});
+        }
+      }
+    );
+  };
+
+  const kakaoInit = async ([lat, lng]) => {
+    // 지도 생성
+    const map = new kakao.maps.Map(document.getElementById('map'), {
+      center: new kakao.maps.LatLng(lat, lng),
+      level: 7,
+    });
+    map.addControl(
+      new kakao.maps.ZoomControl(),
+      kakao.maps.ControlPosition.RIGHT
+    );
+
+    // 마커 생성
+    let marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(lat, lng),
+    });
+    // 마커를 지도에 표시
+    marker.setMap(map);
+
+    setAddress(new kakao.maps.LatLng(lat, lng))
+
+    const postData = await axios.get('https://localhost:8443/post')
+    handlePoints(postData.data.data)
+
+    const points = []
+    postData.data.data.map(e => {
+      const {title, lat, lng} = e
+      points.push({title, latlng: new kakao.maps.LatLng(lat, lng)})
+    })
+    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    const imageSize = new kakao.maps.Size(24, 35)
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+
+    for (let i of points) {
+      // console.log(i);
+      const marker = new kakao.maps.Marker({
+        map,
+        position: i.latlng,
+        title: i.title,
+        image: markerImage,
+      });
+
+      // 인포윈도우 추가하기
+    }
+  }
 
   return (
     <MainContainer>
-      <div className="map" ref={container}></div>
+      <div id="map"></div>
 
       <div className="contentContainer">
         <ContentNav>
@@ -114,9 +197,8 @@ export default function Main () {
 
         
           <ItemContainer>
-          {dummy.map((info,idx) => <Item key={idx} info={info}/>)}
+          {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
           </ItemContainer>
-        
       </div>
     </MainContainer>
   )

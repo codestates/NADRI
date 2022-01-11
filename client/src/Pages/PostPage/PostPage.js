@@ -105,6 +105,8 @@ export default function PostPage () {
       .catch((error) => {
         console.log(error);
       });
+    
+    navigate('/') // 리턴된 페이지로 이동?
   };
 
   useEffect(() => {
