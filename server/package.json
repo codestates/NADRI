@@ -1,0 +1,31 @@
+{
+  "name": "nadri_server",
+  "version": "1.0.0",
+  "description": "codestates final project",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1048.0",
+    "axios": "^0.24.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.2",
+    "nodemon": "^2.0.15",
+    "qs": "^6.10.2",
+    "sequelize": "^6.12.4",
+    "sequelize-cli": "^6.3.0"
+  }
+}
