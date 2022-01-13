@@ -244,8 +244,8 @@ export default function Header () {
     <StyledHeader>
       <Logo>
         <Link to="/">
-          <img className="pcImg" src="nadri-footer-img.png" alt="logo" />
-          <img className="mobileImg" src="nadri-logo-small.png" alt="mLogo" />
+          <img className="pcImg" src="/img/nadri-footer-img.png" alt="logo" />
+          <img className="mobileImg" src="/img/nadri-logo-small.png" alt="mLogo" />
         </Link>
       </Logo>
       <Search>

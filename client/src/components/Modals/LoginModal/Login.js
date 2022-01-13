@@ -96,7 +96,7 @@ export default function Login () {
       <LoginModalView onClick={(e) => e.stopPropagation()}>
 
         <ModalLogo>
-          <div><img src="/nadri-footer-img.png" /></div>
+          <div><img src="/img/nadri-footer-img.png" /></div>
         </ModalLogo>
 
         <ModalHead>

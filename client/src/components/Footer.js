@@ -117,7 +117,7 @@ export default function Footer () {
     <FooterContainer>
       <Logo>
         <Link to="/">
-          <img src="nadri-footer-img.png" alt="footer-logo" />
+          <img src="/img/nadri-footer-img.png" alt="footer-logo" />
         </Link>
       </Logo>
 
@@ -125,7 +125,7 @@ export default function Footer () {
         <Profile>
           <div className='repo'>
             <a href='https://github.com/LeeTaeGwan' target={"_blank"}>
-              <img src='gitHubLogo.png' alt=''/>
+              <img src='/img/gitHubLogo.png' alt=''/>
             </a>
           </div>
           <div>
@@ -141,7 +141,7 @@ export default function Footer () {
         <Profile>
           <div className='repo'>
             <a href='https://github.com/LittleBiber' target={"_blank"}>
-              <img src='gitHubLogo.png'/>
+              <img src='/img/gitHubLogo.png'/>
             </a>
           </div>
           <div>
@@ -157,7 +157,7 @@ export default function Footer () {
         <Profile>
           <div className='repo'>
             <a href='https://github.com/racyde' target={"_blank"}>
-              <img src='gitHubLogo.png'/>
+              <img src='/img/gitHubLogo.png'/>
             </a>
           </div>
           <div>
@@ -175,7 +175,7 @@ export default function Footer () {
       <Profile>
           <div className='repo'>
             <a href='https://github.com/codestates/NADRI' target={"_blank"}>
-              <img src='gitHubLogo.png'/>
+              <img src='/img/gitHubLogo.png'/>
             </a>
           </div>
           <a href='https://github.com/codestates/NADRI' target={"_blank"}>

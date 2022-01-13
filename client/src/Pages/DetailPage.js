@@ -132,6 +132,7 @@ export default function DetailPage() {
   const [text, setText] = useState("");
 
   const handleText = (value) => {
+    // console.log(value)
     setText(value);
   };
 
