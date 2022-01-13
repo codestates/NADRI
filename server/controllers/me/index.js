@@ -30,7 +30,7 @@ module.exports = {
     try {
       // 인증 완료 > 정보 업데이트
       let path = null
-      if (Boolean(req.files.profile)) {
+      if (Boolean(req.files)) {
         const image = req.files['profile'];
         if (!!image.location) path = image.map((img) => img.key);
         else path = image.map((img) => img.path)

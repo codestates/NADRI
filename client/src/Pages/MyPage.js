@@ -120,7 +120,7 @@ export default function MyPage() {
   return (
   <MypageContainer>
     <UserProfileContainer>
-      <div className="user-profile-picture"><img src="/gitHubLogo.png"></img></div>
+      <div className="user-profile-picture"><img src="/img/gitHubLogo.png"></img></div>
       <div className="user-profile-info">
         <div className="user-profile-header">
           <div>닉네임</div>

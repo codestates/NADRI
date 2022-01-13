@@ -15,7 +15,7 @@ app.use(
     // origin: true,
     origin: [`${process.env.CLIENT_URI}`],
     credentials: true,
-    methods: ["GET", "POST", "OPTIONS", "DELETE"],
+    methods: ["GET", "POST", "OPTIONS", "DELETE", "PATCH"],
     /*세부 설정 오류시 수정 필요*/
   })
 );

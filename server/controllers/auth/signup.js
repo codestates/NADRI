@@ -1,5 +1,5 @@
 const { users } = require('../../models');
-const { mkAccessToken, sendAccessToken } = require('../tokenFunctions');
+const { mkAccessToken, sendAccessToken, encryptPW } = require('../tokenFunctions');
 require('dotenv').config;
 
 module.exports = async (req, res) => {
@@ -14,12 +14,16 @@ module.exports = async (req, res) => {
   if (find) return res.status(400).json({message: 'Already Signed Up!'})
 
   try {
+    const hashed = encryptPW(password)
+    console.log('hashPW', hashed)
+
     const created = await users.create({
       // 클라이언트 단에서 비번을 해싱해서 보내는게 맞지 않을까?
       // 받아온 값으로 bcrypt를 돌린다던가
     
-      nickname, email, password, // 기본 입력값
-      image: '', // 기본 이미지를 버킷에 넣고 주소 저장하기 (지갑을 지켜주세요...)
+      nickname, email,
+      password: hashed,
+      image: '2111641961096892.jpeg,', // 기본 이미지를 버킷에 넣고 주소 저장하기 (지갑을 지켜주세요...)
       admin: false, // 어드민 권한은 기본적으로 false 주기
       oauth: false, // 일반 회원가입이므로 false
     })

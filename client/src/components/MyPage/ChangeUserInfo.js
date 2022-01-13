@@ -33,7 +33,7 @@ const ChageUserInfoContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-contnet: center;
+  justify-content: center;
   margin-bottom: 1.7rem;
 `
 
@@ -83,8 +83,8 @@ export default function ChageUserInfo () {
   return (
     <ChageUserInfoContainer>
       <div className="user-profile-img-edit">
-        <div className="user-profile-picture"><img src="/gitHubLogo.png" alt="user-profile-img" /></div>
-        <img src="/edit.png" /> {/* 여기 나중에 input태그 추가해야할듯 */}
+        <div className="user-profile-picture"><img src="/img/gitHubLogo.png" alt="user-profile-img" /></div>
+        <img src="/img/edit.png" /> {/* 여기 나중에 input태그 추가해야할듯 */}
       </div>
       <InputContainer>
         <InputUserInfo>

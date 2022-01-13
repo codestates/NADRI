@@ -101,27 +101,27 @@ export default function Footer () {
     <FooterContainer>
       <Logo>
         <Link to="/">
-          <img src="NADRI.png" alt="footer-logo" />
+          <img src="/img/NADRI.png" alt="footer-logo" />
         </Link>
       </Logo>
 
       <MemberContainer>
         <Profile>
-          <div className='repo'><a href='https://github.com/LeeTaeGwan' target={"_blank"}><img src='gitHubLogo.png' alt=''/></a></div>
+          <div className='repo'><a href='https://github.com/LeeTaeGwan' target={"_blank"}><img src='/img/gitHubLogo.png' alt=''/></a></div>
           <div><span className='name'>이태관</span> <span className='info'>Front end<br/> freshman1998 @ naver.com</span></div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/LittleBiber' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
+          <div className='repo'><a href='https://github.com/LittleBiber' target={"_blank"}><img src='/img/gitHubLogo.png'/></a></div>
           <div><span className='name'>김상형</span> <span className='info'>Back end<br/> rlatkdgud98 @ naver.com</span></div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/racyde' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
+          <div className='repo'><a href='https://github.com/racyde' target={"_blank"}><img src='/img/gitHubLogo.png'/></a></div>
           <div><span className='name'>이상민</span> <span className='info'>Back end<br/> racyde @ naver.com</span></div>
         </Profile>
       </MemberContainer>
 
       <Profile>
-          <div className='repo'><a href='https://github.com/codestates/NADRI' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
+          <div className='repo'><a href='https://github.com/codestates/NADRI' target={"_blank"}><img src='/img/gitHubLogo.png'/></a></div>
           <a href='https://github.com/codestates/NADRI' target={"_blank"}>NADRI GitHub Repository</a>
       </Profile>
     </FooterContainer>

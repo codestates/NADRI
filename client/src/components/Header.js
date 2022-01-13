@@ -125,13 +125,13 @@ export default function Header () {
     <StyledHeader>
       <Logo>
         <Link to="/">
-          <img src="NADRI.png" alt="logo" />
+          <img src="/img/NADRI.png" alt="logo" />
         </Link>
       </Logo>
       <Search>
         <input className='searchBar' type={'text'} />
         <div className='searchLogo'>
-          <input type={'image'} src='search.jpg'/>
+          <input type={'image'} src='/img/search.jpg'/>
         </div>
       </Search>
         {
