@@ -59,7 +59,7 @@ const ChageUserInfoContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-contnet: center;
+  justify-content: center;
   margin-bottom: 1.7rem;
 `
 
@@ -211,7 +211,7 @@ export default function ChageUserInfo () {
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"></div>
         <input type={'file'} ref={profileImg} onChange={picChange}/>
-        <img src="/edit.png" onClick={handleClick} />
+        <img src="/img/edit.png" onClick={handleClick} />
       </div>
 
       <InputContainer>

@@ -8,12 +8,12 @@ import {
   UploadContainer,
   BottomContainer,
   TextInputContainer,
-  CheckboxContainer} from './StyledPostPage'
+  CheckboxContainer} from './StyledEditPage'
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
 import {useNavigate} from 'react-router-dom'
 
-export default function PostPage () {
+export default function EditPage () {
   const navigate = useNavigate()
 
   const [loc, setLoc] = useState({
@@ -59,28 +59,21 @@ export default function PostPage () {
 
   };
 
-  const removeImg = (event, curImg) => {
+  const removeImg = (event) => {
     // 이미지를 제거하는 함수
     // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
 
-    URL.revokeObjectURL(event.target.src); // 제거할 링크를 revoke시켜 메모리 낭비를 방지(해야 한다네요)
-    // tmp.splice(event.target.id + 1, 1);
-    // console.log(event.target)
-
-    const delImage = curImg
-    const newImgArr = value.image.filter(x => {
-      return x !== delImage
+    const removeTarget = value.image[event.target.id]
+    URL.revokeObjectURL(removeTarget[0]) // 먼저 blob 의 링크를 revoke
+    const newImgArr = value.image.filter(e => {
+      return e[0] !== removeTarget[0]
     })
-
-    handleValue({ id: 'image', value: [...newImgArr] });
+    handleValue({id: 'image', value: [...newImgArr]})
   };
 
   const handleValue = (target) => {
-    // value state를 조정하는 함수. 좌표/주소는 한번에 처리해야 해서 복잡해짐
-    // id가 loc이면 한번에 업데이트
-    // console.log(target)
       setValue({
         ...value,
         [`${target.id}`]: target.value,
@@ -94,6 +87,7 @@ export default function PostPage () {
   const submit = async () => {
     // 포스트 게시하는 함수
     const formData = new FormData();
+
     for (let i = 0; i < value.image.length; i++) {
       formData.append('image', value.image[i][1]);
     }
@@ -108,7 +102,7 @@ export default function PostPage () {
     }
 
     axios({
-      method: 'POST',
+      method: 'PATCH',
       url: `${process.env.REACT_APP_API_URL}/post`,
       data: formData, // 어떤 레퍼런스는 files로 하던데 죽어도 안되서 변경
       headers: { 'content-type': 'multipart/form-data' },
@@ -126,13 +120,35 @@ export default function PostPage () {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log('위치 확인에 성공하였습니다.')
-      kakaoInit([position.coords.latitude, position.coords.longitude], true)
-    }, (error) => {
-      console.log('현재 위치 확인이 불가한 상황입니다.')
-      kakaoInit([37.5655493, 126.9777104], false)
+    let postData = await axios.get(`http://localhost:8080/post/`)
+    postData = postData.data.data
+
+    console.log('POST', postData)
+
+    const download = []
+    postData.image.map( async (e) => {
+      const blobImg = await axios({
+        method: 'GET',
+        responseType: 'blob',
+        url: e,
+        // headers: {Referer: 'http://localhost:3000'}
+      })
+      const imgUrl = URL.createObjectURL(blobImg.data)
+      download.push([imgUrl, blobImg.data])
     })
+    console.log(download)
+
+    // 게시글의 내용을 state에 저장
+    setValue({
+      image: download,
+      title: postData.title,
+      content: postData.content,
+      public: postData.public,
+      categoryId: postData.categoryId
+    })
+
+    // 여기서는 지오로케이션이 필요가 없음(어차피 저장된 위치 가지고 수정하는거니까)
+    kakaoInit([postData.lat, postData.lng])
   }, []);
 
   const geocoder = new kakao.maps.services.Geocoder();

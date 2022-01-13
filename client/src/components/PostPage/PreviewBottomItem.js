@@ -17,7 +17,7 @@ const PreviewImg = styled.div`
     bottom: 1rem;
     cursor: pointer;
   }
-  background-image: url(default-image.jpg);
+  background-image: url(/img/default-image.jpg);
   background-size: cover;
   ${(props) => {
     if(props.Img[0] && props.Img[1] === undefined) { // 자기 앞에 사진이 있고 자기 자리엔 사진이 없을 경우?

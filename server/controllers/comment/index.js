@@ -1,5 +1,6 @@
 const { chkValid } = require('../tokenFunctions');
-const { comments, posts } = require('../../models');
+const { comments, posts, sequelize } = require('../../models');
+const { QueryTypes } = require("sequelize");
 
 module.exports = {
   getUserComment: async (req, res) => {
@@ -22,20 +23,40 @@ module.exports = {
   },
 
   getPostComment: async (req, res) => {
+    // 포스트의 public 값 체크해 인증진행도 추가해야 함
 
     // DB 에 찾는 post가 존재하는지 확인
     if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
     const find = await posts.findOne({ where: { id: req.params.id } });
     if (!find) return res.status(400).json({ message: "Bad Request" });
 
+    // public 값 체크해 인증 진행하기
+    // 비공개 글이면 JWT를 검증해 유저ID가 게시글 유저ID와 같은지 확인
+    if (!find.public) {
+      const userData = chkValid(req);
+      if (!userData) return res.status(401).json({ message: "Invalid Token" });
+      console.log(userData);
+
+      if (userData.id !== find.userId) return res.status(400).json({message: 'Not Authorized'})
+    }
+
     // DB에서 postId로 필터한 코멘트 찾아 보내기
+    // Post에서 댓글 보여주는 데 필요한 nickname, userImage를 포함해야 하므로 Join시켜야 함
     try {
-      const search = await comments.findAll({where: {postId: req.params.id}})
+      // const search = await comments.findAll({where: {postId: req.params.id}})
+      const search = await sequelize.query(`
+        SELECT comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
+        FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
+      `, { type: QueryTypes.SELECT })
+
+      search.map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
+
+      console.log(search)
+
       res.status(200).json({data: search})
     } catch (err) {
       res.sendStatus(500)
     }
-    
   },
 
   postComment: async (req, res) => {
@@ -62,9 +83,12 @@ module.exports = {
         comment: req.body.comment,
       });
 
-      console.log(create)
+      const result = create.dataValues
+      result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]
+      result.nickname = userData.nickname
+      result.createdAt = '방금 전'
       
-      return res.status(201).json({data: create.dataValues, message: 'new column created'})
+      return res.status(201).json({data: result, message: 'new column created'})
     } catch (err) {
       return res.sendStatus(500)
     }
@@ -122,8 +146,6 @@ module.exports = {
     console.log(req.params.id);
     if (!req.params.id)
       return res.status(400).json({ message: "Bad Request1" });
-
-
 
     try {
       const find = await comments.findOne({ where: { id: req.params.id } });

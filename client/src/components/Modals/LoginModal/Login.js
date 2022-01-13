@@ -96,7 +96,7 @@ export default function Login () {
       <LoginModalView onClick={(e) => e.stopPropagation()}>
 
         <ModalLogo>
-          <div><img src="/NADRI.png" /></div>
+          <div><img src="/img/NADRI.png" /></div>
         </ModalLogo>
 
         <ModalHead>
@@ -118,12 +118,12 @@ export default function Login () {
           <div onClick={postLogin}>로그인</div>
           <div>
             <button onClick={onClickGoogle}>
-            <img src="google.png" alt="구글 로그인" />구글 로그인
+            <img src="/img/google.png" alt="구글 로그인" />구글 로그인
             </button>
           </div>
           <div>
             <button onClick={onClickKakao}>
-            <img src="kakao.png" />카카오톡 로그인
+            <img src="/img/kakao.png" />카카오톡 로그인
             </button>
           </div>
         </Oauth>
