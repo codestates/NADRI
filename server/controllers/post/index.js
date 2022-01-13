@@ -102,8 +102,8 @@ module.exports = {
 
   uploadPost: async (req, res) => {
     // 유저정보 인증: 로그인페이지 작동하면 주석 해제
-    // const userData = chkValid(req);
-    // if (!userData) return res.status(400).json({ message: 'Invalid Token' });
+    const userData = chkValid(req);
+    if (!userData) return res.status(400).json({ message: 'Invalid Token' });
 
     // req.files > 이미지 정보 저장
     // req.body > 텍스트가 저장된 필드 전부 (주의: 뭔지모를 객체 하나 있어서 req를 분해할당해야 활용에 지장 없을듯)
@@ -159,8 +159,8 @@ module.exports = {
     // 클라이언트 > getOnePost > patchPost > DB가 처리
 
     // 유저가 로그인된 상태인지(토큰에 정보가 있는지)
-    // const userData = chkValid(req)
-    // if (!userData) return res.status(400).json({message: 'Invalid Token'})
+    const userData = chkValid(req)
+    if (!userData) return res.status(400).json({message: 'Invalid Token'})
 
     // 게시글이 존재하는지(데이터 꺼내오기)
     const id = req.params.id
@@ -168,7 +168,7 @@ module.exports = {
     if (!find) return res.status(400).json({message: 'Bad Request1'})
 
     // 수정 권한이 있는지 확인(본인 or admin)
-    // if (!userData.admin && find.userId !== userData.id) return res.status(400).json({message: 'Bad Request2'})
+    if (!userData.admin && find.userId !== userData.id) return res.status(400).json({message: 'Bad Request2'})
 
     // 변경할 값 저장하는 객체 선언
     const mod = {}
