@@ -52,6 +52,7 @@ max-height: 3rem;
   width: 60%;
   height: 60%;
   color: #708090;
+}
 `
 
 export default function Body () {
