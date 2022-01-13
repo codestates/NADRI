@@ -82,6 +82,7 @@ const Profile = styled.div`
   .repo:hover {
     transition: all 0.3s;
     width: 60px;
+    transform: translate(0, -45%);
   }
 `
 

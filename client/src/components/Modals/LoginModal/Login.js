@@ -45,17 +45,18 @@ export default function Login () {
     const {email, password} = inputs
     axios({
       method: 'POST',
-      url: 'https://localhost:8443/auth/login',
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
       headers: {
         accept: 'application/json'
       },
       data: {email, password}
     })
     .then((res) => {
-      const {nickname, createdAt, email} = res.data.data
+      // console.log(res.data.data)
+      const {nickname, createdAt, emai, image} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt}))
+        dispatch(userInfo({email, nickname, createdAt, image}))
         dispatch(loginModal(LoginModalstate))
         alert('로그인이 완료되었습니다.')
         navigate('/')
@@ -79,13 +80,13 @@ export default function Login () {
   const onClickGoogle = async () => {
     // console.log(e)
     dispatch(gLogIn(gLoginState))
-    window.location.href = 'https://localhost:8443/auth/google';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
     // window.location.href = '/';
   };
 
   const onClickKakao = async () => {
     dispatch(kLogIn(kLoginState))
-    window.location.href = 'https://localhost:8443/auth/kakao';
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
   
 

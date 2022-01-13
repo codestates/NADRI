@@ -78,7 +78,6 @@ export default function PostPage () {
   const submit = async () => {
     // 포스트 게시하는 함수
     const formData = new FormData();
-
     for (let i = 0; i < value.image.length; i++) {
       formData.append('image', value.image[i][1]);
     }
@@ -94,7 +93,7 @@ export default function PostPage () {
 
     axios({
       method: 'POST',
-      url: 'https://localhost:8443/post',
+      url: `${process.env.REACT_APP_API_URL}/post`,
       data: formData, // 어떤 레퍼런스는 files로 하던데 죽어도 안되서 변경
       headers: { 'content-type': 'multipart/form-data' },
     })

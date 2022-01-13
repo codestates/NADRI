@@ -26,25 +26,33 @@ module.exports = {
     // 인증정보가 유효한지 확인
     const userData = chkValid(req)
     if (!userData) res.status(400).json({message: 'Invalid token'})
-
+    
     try {
       // 인증 완료 > 정보 업데이트
       let path = null
-      if (Boolean(req.files.profile)) {
+      if (Boolean(req.files)) {
         const image = req.files['profile'];
-        if (!!image.location) path = image.map((img) => img.key);
+        if (image[0].location) path = image.map((img) => img.key);
         else path = image.map((img) => img.path)
       }
 
       const {nickname, password} = req.body
+
       const find = await users.findOne({ where: { email: userData['email'] } })
       if (nickname) find.nickname = nickname
       if (password) find.password = password
-      if (path) find.image = path
+      if (path) {
+        let imgStr = "";
+        path.map((e) => (imgStr += `${e}`));
+        find.image = imgStr
+        await find.save()
+        return res.send(imgStr)
+      }
       await find.save()
       return res.sendStatus(200)
       
     } catch (err) {
+      console.log(err)
       return res.sendStatus(500)
     }
   },

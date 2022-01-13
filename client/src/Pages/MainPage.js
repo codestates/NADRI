@@ -6,6 +6,7 @@ import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+import DetailPage from "./DetailPage";
 
 const MainContainer = styled.div`
   height: 100%;
@@ -177,11 +178,11 @@ export default function Main () {
 
     setAddress(new kakao.maps.LatLng(lat, lng))
 
-    const postData = await axios.get('https://localhost:8443/post')
+    const postData = await axios.get(`${process.env.REACT_APP_API_URL}/post`)
     handlePoints(postData.data.data)
 
     const points = []
-    console.log(postData)
+    
     postData.data.data.map(e => {
       const {title, lat, lng} = e
       points.push({title, latlng: new kakao.maps.LatLng(lat, lng)})

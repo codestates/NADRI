@@ -18,7 +18,7 @@ function App() {
   const curAuthState = useSelector(state => state.changeAuthState);
   const curUserInfo = useSelector(state => state.getUserInfo);
   const store = useSelector(state => state)
-  // console.log(store)
+  // console.log(curUserInfo)
   // console.log('app.js의 시작 로그인 상태 :'+curAuthState)
 
   const gLoginState = useSelector(state => state.gLoginReducer)
@@ -60,7 +60,7 @@ function App() {
   const getGoogleAccessToken = async (authorizationCode) => {
     //! 서버의 해당 엔드포인트로 authorization code를 보내주고 access token을 받아옴
     await axios
-    .post('https://localhost:8443/auth/googleCallback', { // 서버 배포시 url 수정 필요(환경 변수)
+    .post(`${process.env.REACT_APP_API_URL}/auth/googleCallback`, { // 서버 배포시 url 수정 필요(환경 변수)
       authorizationCode
     })
     .then((result) => {
@@ -77,7 +77,7 @@ function App() {
   }
 
   const getKakaoAccessToken = async (authorizationCode) => {
-    await axios.post('https://localhost:8443/auth/kakaoCallback', {
+    await axios.post(`${process.env.REACT_APP_API_URL}/auth/kakaoCallback`, {
       authorizationCode
     })
     .then((result) =>{
