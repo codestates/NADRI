@@ -80,8 +80,8 @@ export default function Preview ({Img, picChange, removeImg}) {
       <PreviewImg onClick={handleClick} Img={Img} >
         <span>클릭하여 사진을 추가해보세요!</span>
         <br />
-        <span>사진은 최대 4장까지 추가할 수 있습니다!</span>
-        <input ref={photoInput} type="file" accept="image/*" multiple onChange={picChange} />
+        <span>최대 4장, 5mb까지 추가할 수 있습니다!</span>
+        <input ref={photoInput} type="file" accept=".jpg, .jpeg, .png, .gif" multiple onChange={picChange} />
       </PreviewImg>
     :
       <PreviewImg Img={Img}><span id="delImg" onClick={(e) => removeImg(e, Img[0])}>&#10005;</span></PreviewImg>

@@ -14,6 +14,7 @@ export default function Body () {
         <Route path='/post'element={<PostPage/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/detail/:id' element={<DetailPage />} />
+        <Route path='/edit/:id' element={<DetailPage />} />
       </Routes>
     </div>
   )

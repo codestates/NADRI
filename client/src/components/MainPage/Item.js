@@ -27,7 +27,7 @@ const ItemContainer = styled.div`
   }
 `
 
-const ItemImg = styled.div`
+const ItemImg = styled.img`
   width: 8rem;
   border: 1px solid black;
   border-radius: 5px;
@@ -65,9 +65,7 @@ export default function Item ({point}) {
     <div>
       <Link to={`/detail/${point.id}`} state={point}>
       <ItemContainer>
-        <ItemImg className="imgContainer">
-          <img src={point ? point.image[0] : null}></img>
-        </ItemImg>
+        <ItemImg className="imgContainer" src={point.image[0]} onError={(e) => e.target.src = `/img/gitHubLogo.png`} ></ItemImg>
 
         <ItemInfo>
           <div className="title">{point ? point.title : null}</div>

@@ -52,69 +52,58 @@ module.exports = {
   },
 
   getOnePost: async (req, res) => {
+    /*
+    1. 파라미터에 있는 포스트가 존재하는지 확인
+      > 유저-포스트-like 연결해 정보 찾기
+      > 없으면 404에러
+    2. 비공개 글이면 인증 정보 체크
+      > 실패 시 401에러
+    3. 댓글은 comment api 활용해 따로 전송
+    */
     // 전달받은 파라미터로 포스트가 존재하는지 확인
     const id = req.params.id;
     let find = await sequelize.query(`
-      SELECT id, userId, title, image, content, lat, lng, address, createdAt, 
+      SELECT id, userId, title, image, content, lat, lng, address, createdAt, public, categoryId,
         (SELECT nickname FROM users WHERE users.id = posts.userId) AS nickname,
+        (SELECT image FROM users WHERE users.id = posts.userId) AS userImage,
         (SELECT COUNT(userId) FROM user_post_likes WHERE user_post_likes.postId = ${id}) AS likes
       FROM posts WHERE posts.id = ${id}
     `,
       { type: QueryTypes.SELECT }
     );
-
+    
     // find가 빈 배열이면 = 없는 포스트면 404를 반환
     if (!find[0]) return res.sendStatus(404);
 
     // find에 값이 있으면 [0]번을 꺼내 재할당
     find = find[0];
-    
-    // // public이 false이면 인증정보 확인
-    // if (!find.public) {
-    //   const userData = chkValid(req)
-    //   if (!userData || find.userId !== userData.id) return res.sendStatus(400)
-    // }
 
-    // 받아온 userInfo로유저와 작성자가 동일한지 체크  
-    const comment = await sequelize.query(`
-      SELECT userId, comment,
-        (SELECT nickname FROM users WHERE users.id = comments.userId) AS nickname
-      FROM comments WHERE postId = ${id}
-    `,
-      { type: QueryTypes.SELECT }
-    );
-    // console.log(find)
-    find.comment = comment;
+    // public이 false이면 인증정보 확인
+    if (!find.public) {
+      const userData = chkValid(req)
+      if (!userData || find.userId !== userData.id) return res.sendStatus(404)
+      console.log('chkUserID', find.userId !== userData.id)
+    }
 
-    /* 수도코드 짜보기 
-      find[0].image값 가져와서 .split(',')[0] //// 여기는 줄바꿔서 분기 .split('/')[0] 이 uploads 면 로컬에 저장된 이미지
-      로컬이미지면 image값을 매핑해서 현재 프로젝트 경로를 앞에 붙여주기
-      S3면 버킷주소를 env에서 불러와 붙여주기
-    */
+    // 게시글 이미지 링크 처리
     find.image = find.image.split(",");
     find.image.pop();
+    find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
 
-    if (find.image[0].split("/")[0] === "uploads") {
-      console.log("로컬 이미지 확인");
-      find.image = find.image.map(
-        (e) => (e = path.join(__dirname, "../../") + e)
-      );
-    } else {
-      console.log("S3 버킷 이미지");
-      find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
-    }
+    // 유저 이미지 링크 처리
+    find.userImage = `${process.env.AWS_LOCATION}` + find.userImage.split(",")[0]
 
     // 포스트의 정보 반환
     res.status(200).json({ data: find });
 
-    // 찾은 포스트의 like 개수 찾기 > 본인의 Like 여부도 찾아서 보내줘야 할까?
-    // 로컬 이미지링크에 대한 해결책이 없음 
+    // 본인이 like한 정보는 getAllPost에서 보내서 props로 내려주는 편이 좋을듯
+    // 
   },
 
   uploadPost: async (req, res) => {
     // 유저정보 인증: 로그인페이지 작동하면 주석 해제
-    // const userData = chkValid(req);
-    // if (!userData) return res.status(400).json({ message: 'Invalid Token' });
+    const userData = chkValid(req);
+    if (!userData) return res.status(400).json({ message: 'Invalid Token' });
 
     // req.files > 이미지 정보 저장
     // req.body > 텍스트가 저장된 필드 전부 (주의: 뭔지모를 객체 하나 있어서 req를 분해할당해야 활용에 지장 없을듯)
@@ -127,6 +116,9 @@ module.exports = {
     // 이미지 정보 추출
     const image = req.files["image"];
     let path;
+
+    if (!image) return res.status(400).json({message: 'No Image'})
+
     if (image[0].location) path = image.map((img) => img.key);
     else path = image.map((img) => img.path);
 
