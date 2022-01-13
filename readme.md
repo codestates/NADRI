@@ -1,6 +1,6 @@
 # 프로젝트 소개
 
-![NADRI](https://user-images.githubusercontent.com/77206786/147659790-ec69c423-61fe-41e9-950b-4afcee49a014.png)
+![NADRI](https://user-images.githubusercontent.com/84123052/149291470-271a7ba4-a379-4461-a5d0-fcb27fe87b5a.png)
 
 ## 🚌 NADRI
 - 팀 명: localHost
