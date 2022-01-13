@@ -20,6 +20,13 @@ const FooterContainer = styled.footer`
   &>:last-child {
     margin-left: 76px;
   }
+
+
+  @media screen and (max-width:900px){
+    &>:last-child  {
+      margin-left: 0px
+    }
+  }
 `
 
 const Logo = styled.div`
@@ -49,6 +56,10 @@ const MemberContainer = styled.div`
   align-items: center;
   margin: 2rem 0 1rem;
   border-top: 1px solid rgba(248, 249, 250, 0.1);
+
+  @media screen and (max-width:900px){
+    gap:1rem;
+}
 `
 
 const Profile = styled.div`
@@ -88,6 +99,16 @@ const Profile = styled.div`
     transition: all 0.3s;
     width: 60px;
   }
+
+  @media screen and (max-width:900px){
+    margin-top: 0rem;
+   .info{
+     display: none;
+   }
+   .repo:hover {
+    width: 40px;
+    }
+  }
 `
 
 function moveTop () {
@@ -101,28 +122,70 @@ export default function Footer () {
     <FooterContainer>
       <Logo>
         <Link to="/">
-          <img src="NADRI.png" alt="footer-logo" />
+          <img src="nadri-footer-img.png" alt="footer-logo" />
         </Link>
       </Logo>
 
       <MemberContainer>
         <Profile>
-          <div className='repo'><a href='https://github.com/LeeTaeGwan' target={"_blank"}><img src='gitHubLogo.png' alt=''/></a></div>
-          <div><span className='name'>이태관</span> <span className='info'>Front end<br/> freshman1998 @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/LeeTaeGwan' target={"_blank"}>
+              <img src='gitHubLogo.png' alt=''/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              이태관
+            </span> 
+            <span className='info'>
+              Front end<br/> 
+            freshman1998 @ naver.com
+            </span>
+          </div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/LittleBiber' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <div><span className='name'>김상형</span> <span className='info'>Back end<br/> rlatkdgud98 @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/LittleBiber' target={"_blank"}>
+              <img src='gitHubLogo.png'/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              김상형
+            </span> 
+            <span className='info'>
+              Back end<br/> 
+              rlatkdgud98 @ naver.com
+            </span>
+          </div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/racyde' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <div><span className='name'>이상민</span> <span className='info'>Back end<br/> racyde @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/racyde' target={"_blank"}>
+              <img src='gitHubLogo.png'/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              이상민
+            </span> 
+            <span className='info'>
+              Back end<br/> 
+              racyde @ naver.com
+            </span>
+          </div>
         </Profile>
       </MemberContainer>
 
       <Profile>
-          <div className='repo'><a href='https://github.com/codestates/NADRI' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <a href='https://github.com/codestates/NADRI' target={"_blank"}>NADRI GitHub Repository</a>
+          <div className='repo'>
+            <a href='https://github.com/codestates/NADRI' target={"_blank"}>
+              <img src='gitHubLogo.png'/>
+            </a>
+          </div>
+          <a href='https://github.com/codestates/NADRI' target={"_blank"}>
+            NADRI GitHub Repository
+          </a>
       </Profile>
     </FooterContainer>
   )

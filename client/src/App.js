@@ -11,7 +11,6 @@ import { authState } from './redux/actions'
 import { useNavigate } from "react-router-dom";
 // axios.defaults.withCredentials = true;
 
-
 function App() {
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
