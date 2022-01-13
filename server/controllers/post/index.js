@@ -36,16 +36,7 @@ module.exports = {
     find.map((point) => {
       point.image = point.image.split(",");
       point.image.pop();
-
-      if (point.image[0].split("/")[0] === "uploads") {
-        console.log("로컬 이미지 확인");
-        point.image = point.image.map(
-          (e) => (e = path.join(__dirname, "../../") + e)
-        );
-      } else {
-        console.log("S3 버킷 이미지");
-        point.image = point.image.map((e) => (e = process.env.AWS_LOCATION + e));
-      }
+      point.image = point.image.map((e) => (e = process.env.AWS_LOCATION + e));
     });
 
     res.status(200).json({data: find})
@@ -162,13 +153,19 @@ module.exports = {
     const userData = chkValid(req)
     if (!userData) return res.status(400).json({message: 'Invalid Token'})
 
+    console.log('로그인 검증 완료')
+
     // 게시글이 존재하는지(데이터 꺼내오기)
     const id = req.params.id
     const find = await posts.findOne({where: {id}})
     if (!find) return res.status(400).json({message: 'Bad Request1'})
 
+    console.log('게시글 확인 완료')
+
     // 수정 권한이 있는지 확인(본인 or admin)
     if (!userData.admin && find.userId !== userData.id) return res.status(400).json({message: 'Bad Request2'})
+
+    console.log('수정권한 확인 완료')
 
     // 변경할 값 저장하는 객체 선언
     const mod = {}
@@ -182,6 +179,8 @@ module.exports = {
         else path = image.map((img) => img.path);
         path.map((e) => {imgStr += `${e},`});
       }
+
+      console.log('이미지 추출 완료')
 
       // 이미지 변경사항은 바로 반영
       if (imgStr) {
@@ -199,29 +198,48 @@ module.exports = {
             // console.log('s3 deleteObject ', data);
           });
         })
-
-        mod['image'] = imgStr
+        // mod['image'] = imgStr
       }
+
+      console.log('이미지 변경 완료')
 
       // Body 변경점 찾아서 추가
       for (let i of Object.keys(req.body)) {
         if (req.body[`${i}`]) mod[`${i}`] = req.body[`${i}`]
       }
 
-      mod.lat ? mod.lat = parseFloat(mod.lat) : null
-      mod.lng ? mod.lng = parseFloat(mod.lng) : null
-      mod.categoryId ? mod.categoryId = Number(mod.categoryId) : null
-      mod.public ? mod.public = Boolean(mod.public) : null
-      console.log(mod)
+      console.log('Body 수정 데이터 확인')
+
+      // mod.lat ? mod.lat = parseFloat(mod.lat) : null
+      // mod.lng ? mod.lng = parseFloat(mod.lng) : null
+      // mod.categoryId ? mod.categoryId = Number(mod.categoryId) : null
+      // mod.public ? mod.public = Boolean(mod.public) : null
+      // console.log(mod)
+
+      console.log('Body 수정 데이터 검증')
 
       // DB에 반영하기
-      await posts.update(mod, {where: {id}})
+      // await posts.update(mod, {where: {id}})
+      await posts.update({
+        title: req.body.title,
+        content: req.body.content,
+        image: imgStr,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        address: req.body.address,
+        public: req.body.public,
+        categoryId: req.body.categoryId,
+
+      }, {where: {id : req.params.id}})
+
+      console.log('DB에 저장')
 
       // 수정되었으면 응답 반환하기
       return res.sendStatus(200)
     } catch (err) {
       // 에러 있으면 코드 반환: catch (err)
       // 오류 시 올라와버린 이미지는 전체 삭제해주는게 맞을듯 
+      console.log(err)
       res.sendStatus(500)
     }  
   },

@@ -22,9 +22,14 @@ export default function EditPage () {
     address: '',
   })
 
+  const [image, setImage] = useState([])
+  const handleImage = (data) => {
+    setImage(data)
+  }
+
   const [value, setValue] = useState({
     // 정보 저장하는 state
-    image: [],
+    // image: [],
     title: '',
     content: '',
     public: false,
@@ -34,7 +39,7 @@ export default function EditPage () {
   const picChange = (event) => {
     // 이미지를 추가하는 함수
     // 나는 Blob이 싫다
-    let urlArr = [...value.image],
+    let urlArr = [...image],
       image = event.target.files;
 
     let inputSize = 0, useSize = 0
@@ -55,7 +60,7 @@ export default function EditPage () {
       urlArr.push([imageUrl, event.target.files[i]]);
     }
     
-    handleValue({ id: "image", value: urlArr });
+    handleImage(urlArr);
 
   };
 
@@ -65,12 +70,12 @@ export default function EditPage () {
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
 
-    const removeTarget = value.image[event.target.id]
+    const removeTarget = image[event.target.id]
     URL.revokeObjectURL(removeTarget[0]) // 먼저 blob 의 링크를 revoke
-    const newImgArr = value.image.filter(e => {
+    const newImgArr = image.filter(e => {
       return e[0] !== removeTarget[0]
     })
-    handleValue({id: 'image', value: [...newImgArr]})
+    handleImage([...newImgArr])
   };
 
   const handleValue = (target) => {
@@ -101,9 +106,12 @@ export default function EditPage () {
       formData.append(`${val[i]}`, value[val[i]]);
     }
 
+    // http:/ / localhost:8080 / edit / {id}
+    let endPoint = window.location.href.split('/')[4]
+
     axios({
       method: 'PATCH',
-      url: `${process.env.REACT_APP_API_URL}/post`,
+      url: `${process.env.REACT_APP_API_URL}/post/${endPoint}`,
       data: formData, // 어떤 레퍼런스는 files로 하던데 죽어도 안되서 변경
       headers: { 'content-type': 'multipart/form-data' },
     })
@@ -115,12 +123,10 @@ export default function EditPage () {
         console.log(error);
         alert('문제가 발생했습니다!')
       });
-    
-    
   };
 
-  useEffect(() => {
-    let postData = await axios.get(`http://localhost:8080/post/`)
+  useEffect(async () => {
+    let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${window.location.href.split('/')[4]}`)
     postData = postData.data.data
 
     console.log('POST', postData)
@@ -135,12 +141,15 @@ export default function EditPage () {
       })
       const imgUrl = URL.createObjectURL(blobImg.data)
       download.push([imgUrl, blobImg.data])
+      console.log(download)
     })
-    console.log(download)
+
+    // console.log(download)
+    handleImage(download)
 
     // 게시글의 내용을 state에 저장
     setValue({
-      image: download,
+      // image: download,
       title: postData.title,
       content: postData.content,
       public: postData.public,
@@ -203,18 +212,19 @@ export default function EditPage () {
     <PostContainer>
 
       <TopContainer>
-        <UploadContainer>
-          <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
-          <PreviewBottom Img={value.image} picChange={picChange} removeImg={removeImg} />
-        </UploadContainer>
+
+        {!image ? null : <UploadContainer>
+          <Preview Img={image} picChange={picChange} removeImg={removeImg} />
+          <PreviewBottom Img={image} picChange={picChange} removeImg={removeImg} />
+        </UploadContainer>}
         <div id="map"></div>
       </TopContainer>
 
       <BottomContainer>
         <TextInputContainer>
-          <input id="title" onChange={(event) => handleValue(event.target)} />
+          <input id="title" value={value.title} onChange={(event) => handleValue(event.target)} />
         
-          <pre><textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} /></pre>
+          <pre><textarea id="content" rows="10" cols="50" value={value.content} onChange={(event) => handleValue(event.target)} /></pre>
         </TextInputContainer>
 
         <CheckboxContainer>
@@ -226,12 +236,14 @@ export default function EditPage () {
             <input
               type="checkbox"
               onClick={() => handleValue({ id: "public", value: !value.public })}
+              value={value.public}
             />
             <span>{value.public ? "공개" : "비공개"}</span>
           </div>
 
           <div className="category">
             <select
+              value={value.categoryId}
               className="w150"
               onChange={(e) =>
                 handleValue({ id: "categoryId", value: Number(e.target.value) })

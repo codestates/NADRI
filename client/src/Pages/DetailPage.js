@@ -146,7 +146,7 @@ export default function DetailPage() {
     // 전송후 받은 데이터를 comment에 추가
     const newComment = await axios.post(
       `${process.env.REACT_APP_API_URL}/comment/${
-        document.location.href.split("/")[4]
+        window.location.href.split("/")[4]
       }`,
       { comment: text }
     );
@@ -404,12 +404,15 @@ export default function DetailPage() {
     return `https://map.kakao.com/?map_type=TYPE_MAP&target=${by}&rt=${st.x},${st.y},${nd.x},${nd.y}`;
   };
 
+  const editPost = () => {
+    navigate(`/edit/${window.location.href.split("/")[4]}`)
+  } 
+
   return (
     <DetailPageContainer>
       {post ? (
         <div>
           <Title>{post.title ? post.title : null}</Title>
-
           <ImgContainer>
             <img
               className="mainImg"
@@ -421,7 +424,7 @@ export default function DetailPage() {
                 {post.image && post.image[1]
                   ? post.image
                       .slice(1)
-                      .map((e) => <img src={e} key={Math.random()} onError={(e) => e.target.src = `/img/gitHubLogo.png`}/>)
+                      .map((e) => <img src={e} key={Math.random()} />)
                   : null}
               </div>
             ) : null}
@@ -469,13 +472,13 @@ export default function DetailPage() {
                 <button onClick={() => deletePost(post.id)}>삭제</button>
               </span>
               <span>
-                <button onClick={() => alert("수정")}>수정</button>
+                <button onClick={editPost}>수정</button>
               </span>
               <span>
                 <button onClick={() => favorite(post.id)}>즐겨찾기</button>
               </span>
               <span>
-                <button onClick={() => alert('빼애액')}>신고</button>
+                <button onClick={() => console.log(weather)}>신고</button>
               </span>
             </div>
           </ContentContainer>
