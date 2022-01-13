@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
 import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
 import axios from 'axios'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUserPlus, faSignInAlt, faSignOutAlt, faUserCircle, faFile} from '@fortawesome/free-solid-svg-icons'
 
 axios.defaults.withCredentials = true;
 
@@ -15,33 +17,63 @@ const StyledHeader = styled.header`
   width: 100vw;
   height: 6rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f5f5f6;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  top: -1rem;
 `
 
 const Logo = styled.div`
   width: 20rem;
   margin: 0;
+  align-items: center;
+  justify-content: center;
   > a {
-    width: 20rem;
+    width: 100%;
     height: auto;
   }
 
-  > a img {
+  .pcImg {
     display: block;
-    width: 100%;
+    width: 250px;
     height: auto;
+    flex-shrink: 0;
+  }
+
+  .mobileImg {
+    display: none;
+  }
+
+  @media screen and (max-width:650px){
+    .pcImg {
+      display: none;
+    }
+    .mobileImg {
+      display: block;
+      width: 40px;
+      height: auto;
+    }
   }
 `
 
 const Search = styled.div`
   width: 30rem;
   position: relative;
-  margin: 0 auto;
+  margin: 1rem 1rem 1rem 1rem;
   > .searchBar {
     width: 100%;
     height: 40px;
     padding-left: 20px;
-    border: 1px solid rgb(95, 99, 104);
+    border: 0px solid rgb(95, 99, 104);
     border-radius: 25px;
+    box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
+    background: rgb(255,255,255);
+  }
+  > .searchBar:focus {
+    outline: 2px solid rgba(170,170,170);
   }
 
   > .searchLogo {
@@ -49,6 +81,12 @@ const Search = styled.div`
     position: absolute;
     top: 20%;
     right: 3%;
+  }
+
+  @media screen and (max-width:500px) {
+    .searchBar {
+      width: 150px;
+    }
   }
 `
 
@@ -62,26 +100,106 @@ const HeaderContent = styled.div`
     color: black;
   }
 
-  div {
+  button {
     width: 5rem;
     height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    border: 0px solid black;
     border-radius: 5px;
     margin-right: 30px;
     font-size: 1rem;
+    box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
+    background: rgb(255,255,255);
+
 
     &:hover {
       cursor: pointer;
+      transform: scale(1.1);
+      box-shadow: 
+      inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
+      2px 2px 2px 0px rgba(0, 0, 0, 0.1),
+      2px 2px 2px 0px rgba(0, 0, 0, 0.1);
     }
   }
 
   &>:last-child {
     margin-right: 0;
   }
+
+  .loginIcon {
+    width:70%;
+    height: auto;
+  }
+  .mypageIcon {
+    width:85%;
+    height: auto;
+  }
+  .logoutIcon {
+    width:85%;
+    height: auto;
+  }
+  .signinIcon {
+    width:80%;
+    height: auto;
+  }
+  .postIcon {
+    width:65%;
+    height: auto;
+  }
+  span {
+    font-size: 8px;
+    display: none;
+    position: relative;
+    margin-left:0.1rem;
+    padding-top:1rem;
+    
+    .iconBox{
+      display: block;
+      margin: auto;
+      width: 38px;
+      height: 38px;
+      justify-content: center;
+      align-items: center;
+      padding: 0px auto;
+      color: #786b6f;
+    }
+    .iconText{
+      color: #786b6f;
+      text-align: center;     
+    }
+  }
+
+  @media screen and (max-width:900px) {
+    button {
+      display: none;
+    }
+    /* .mobileIcon{
+      display: inline;
+    } */
+    /* .postIcon {
+      display: flex;
+    } */
+    /* .mypageIcon {
+      display: flex;
+    } */
+    /* .logoutIcon {
+      display: flex;
+    } */
+    /* .loginIcon {
+      display: flex;
+    }
+    .signinIcon {
+      display: flex;
+    } */
+    span {
+      display: inline-block;
+    }
+  } 
 `
+
+
 
 export default function Header () {
   const dispatch = useDispatch()
@@ -95,10 +213,11 @@ export default function Header () {
   // console.log('현재 로그인 상태: '+curAuthState)
 
   function ModalHandler (e) {
-    if (e.target.textContent === '로그인') {
+    // console.dir(e.currentTarget.classList[2])
+    if (e.target.textContent === 'Log In' || e.currentTarget.classList[2] === 'loginIcon') {
       dispatch(loginModal(LoginModalState))
     }
-    else if (e.target.textContent ==='회원가입') {
+    else if (e.target.textContent ==='회원가입' || e.currentTarget.classList[2] === 'signinIcon') {
       dispatch(signupModal(SignupModalState))
     }
   }
@@ -125,7 +244,8 @@ export default function Header () {
     <StyledHeader>
       <Logo>
         <Link to="/">
-          <img src="/img/NADRI.png" alt="logo" />
+          <img className="pcImg" src="/img/nadri-footer-img.png" alt="logo" />
+          <img className="mobileImg" src="/img/nadri-logo-small.png" alt="mLogo" />
         </Link>
       </Logo>
       <Search>
@@ -137,14 +257,60 @@ export default function Header () {
         {
           curAuthState ?
           <HeaderContent>
-          <Link to ='/post'><div>새글 쓰기</div></Link>
-          <Link to ='/mypage'><div>마이페이지</div></Link>
-          <div onClick={logout}>로그아웃</div>
+          <Link to ='/post'>
+            <button>새글 쓰기</button>
+            <span className="moblieIcon">
+              <div className="iconBox">
+               <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
+              </div>
+              <div className="iconText">
+              새글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+            </span>
+          </Link>
+          <Link to ='/mypage'>
+            <button>My Page</button>
+            <span className="moblieIcon">
+              <div className="iconBox">
+                <FontAwesomeIcon icon={faUserCircle} className="mypageIcon" alt="my page" />
+              </div>
+              <div className="iconText">
+              my&nbsp;&nbsp;
+              </div>
+            </span>
+          </Link>
+          <button onClick={logout}>Log Out</button>
+          <span className="moblieIcon">
+              <div className="iconBox">
+                <FontAwesomeIcon icon={faSignOutAlt} onClick={logout} className="logoutIcon" alt="logout"/>
+              </div>
+              <div className="iconText">
+              Logout
+              </div>
+          </span>
           </HeaderContent>
           :
           <HeaderContent>
-          <div onClick={(e)=>ModalHandler(e)}>로그인</div>
-          <div onClick={(e)=>ModalHandler(e)}>회원가입</div>
+          <button onClick={(e)=>ModalHandler(e)}>
+            Log In
+          </button>
+          <button onClick={(e)=>ModalHandler(e)}>회원가입</button>
+          <span className="mobileIcon">
+            <div className="iconBox">
+              <FontAwesomeIcon icon={faSignInAlt} className="loginIcon" onClick={(e)=>ModalHandler(e)} alt="login" />
+            </div>
+            <div className="iconText">
+            Login&nbsp;&nbsp;
+            </div>
+          </span>
+          <span className="moblieIcon">
+            <div className="iconBox">
+              <FontAwesomeIcon icon={faUserPlus} className="signinIcon" onClick={(e)=>ModalHandler(e)} alt="signin" />
+            </div>
+            <div className="iconText">
+            회원가입
+            </div>
+          </span>
           </HeaderContent>
         }
     </StyledHeader>

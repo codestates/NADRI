@@ -7,7 +7,7 @@ module.exports = {
       email: "test@test",
       password: "test",
       nickname: "Tester",
-      image: null,
+      image: '3821641965246774.png',
       admin: true,
       oauth: false
     },
@@ -15,7 +15,7 @@ module.exports = {
       email: "kimcoding@test.com",
       password: "test",
       nickname: "김코딩",
-      image: null,
+      image: '3821641965246774.png',
       admin: false,
       oauth: false
     },
@@ -23,7 +23,7 @@ module.exports = {
       email: "parkcoding@test.com",
       password: "test",
       nickname: "박코딩",
-      image: null,
+      image: '3821641965246774.png',
       admin: false,
       oauth: false
     },
@@ -31,7 +31,7 @@ module.exports = {
       email: "seungwook74@naver.com",
       password: "test",
       nickname: "이승욱",
-      image: null,
+      image: '3821641965246774.png',
       admin: false,
       oauth: false
     },
@@ -39,7 +39,7 @@ module.exports = {
       email: "the_redchicken@hanmail.net",
       password: "test",
       nickname: "서영균",
-      image: null,
+      image: '3821641965246774.png',
       admin: false,
       oauth: false
     },

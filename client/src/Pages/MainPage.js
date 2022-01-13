@@ -26,7 +26,6 @@ const MainContainer = styled.div`
     height: 50rem;
     padding: 0 3rem 1rem;
   }
-
   @media screen and (max-width: 1380px) {
     display: flex;
     flex-direction: column;
