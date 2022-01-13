@@ -16,20 +16,17 @@ import {useNavigate} from 'react-router-dom'
 export default function EditPage () {
   const navigate = useNavigate()
 
+  const [test, setTest] = useState(null)
+
   const [loc, setLoc] = useState({
     lat: 0,
     lng: 0,
     address: '',
   })
 
-  const [image, setImage] = useState([])
-  const handleImage = (data) => {
-    setImage(data)
-  }
-
   const [value, setValue] = useState({
     // 정보 저장하는 state
-    // image: [],
+    image: [],
     title: '',
     content: '',
     public: false,
@@ -39,7 +36,7 @@ export default function EditPage () {
   const picChange = (event) => {
     // 이미지를 추가하는 함수
     // 나는 Blob이 싫다
-    let urlArr = [...image],
+    let urlArr = [...value.image],
       image = event.target.files;
 
     let inputSize = 0, useSize = 0
@@ -60,7 +57,7 @@ export default function EditPage () {
       urlArr.push([imageUrl, event.target.files[i]]);
     }
     
-    handleImage(urlArr);
+    handleValue({ id: "image", value: urlArr });
 
   };
 
@@ -70,12 +67,12 @@ export default function EditPage () {
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
 
-    const removeTarget = image[event.target.id]
+    const removeTarget = value.image[event.target.id]
     URL.revokeObjectURL(removeTarget[0]) // 먼저 blob 의 링크를 revoke
-    const newImgArr = image.filter(e => {
+    const newImgArr = value.image.filter(e => {
       return e[0] !== removeTarget[0]
     })
-    handleImage([...newImgArr])
+    handleValue({id: 'image', value: [...newImgArr]})
   };
 
   const handleValue = (target) => {
@@ -131,25 +128,28 @@ export default function EditPage () {
 
     console.log('POST', postData)
 
-    const download = []
-    postData.image.map( async (e) => {
-      const blobImg = await axios({
-        method: 'GET',
-        responseType: 'blob',
-        url: e,
-        // headers: {Referer: 'http://localhost:3000'}
-      })
-      const imgUrl = URL.createObjectURL(blobImg.data)
-      download.push([imgUrl, blobImg.data])
-      console.log(download)
-    })
-
+    // const download = []
+    // postData.image.map( async (e) => {
+    //   const blobImg = await axios({
+    //     method: 'GET',
+    //     responseType: 'blob',
+    //     url: e,
+    //     // headers: {Referer: 'http://localhost:3000'}
+    //   })
+    //   const imgUrl = URL.createObjectURL(blobImg.data)
+    //   download.push([imgUrl, blobImg.data])
+    // })
     // console.log(download)
-    handleImage(download)
+    const testF = await axios({
+      method: 'GET',
+      url: 'http://localhost:8080/post/img/2',
+      responseType: 'blob'
+    })
+    console.log(testF)
 
     // 게시글의 내용을 state에 저장
     setValue({
-      // image: download,
+      image: postData.image,
       title: postData.title,
       content: postData.content,
       public: postData.public,
@@ -212,11 +212,10 @@ export default function EditPage () {
     <PostContainer>
 
       <TopContainer>
-
-        {!image ? null : <UploadContainer>
-          <Preview Img={image} picChange={picChange} removeImg={removeImg} />
-          <PreviewBottom Img={image} picChange={picChange} removeImg={removeImg} />
-        </UploadContainer>}
+        <UploadContainer>
+          <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
+          <PreviewBottom Img={value.image} picChange={picChange} removeImg={removeImg} />
+        </UploadContainer>
         <div id="map"></div>
       </TopContainer>
 

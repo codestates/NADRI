@@ -75,7 +75,7 @@ export default function PreviewBottom ({allImg, img, picChange, removeImg}) {
         img[1] === undefined ?
         <PreviewImg Img={img} >
         <input ref={photoInput} type="file" accept="image/*" multiple onChange={picChange} />
-        <img src="plus.svg" alt="" onClick={handleClick} />
+        <img src="/img/plus.svg" alt="" onClick={handleClick} />
         </PreviewImg>
         :
         <PreviewImg Img={img}>
