@@ -11,32 +11,21 @@ const s3 = new aws.S3();
 const path = require('path')
 const dotenv = require('dotenv')
 dotenv.config()
+const axios = require('axios')
+const {Blob} = require('node:buffer') // for real?
 
 module.exports = {
   getAllPost: async (req, res) => {
-    // 모든 게시글 전송: 현재위치에서의 거리 계산해야 함.
-    // 거리계산 API 활용해도 모든 점의 거리를 계산하는것은 좋은 생각이 아닌데
-
-    // 처음에는 자기위치 기준 5km 안의 좌표를 보여주고
-    // 클릭해서 위치 지정이 되면 그 좌표를 기준으로 변경
-
-    // 단계별 구현
-    // step1: 일단 모든 게시글 (+ 각 게시글의 like 개수 + 각 게시글의 comment 개수 보내기)
-    // step2: 좌표값 기준으로 +- 1? (경/위도 차이를 고려해야 함)
-    // step3: 카카오 api로 각 좌표 사이의 거리(폴리라인?응용?) 해서 보여주기?
-
-    // step1
+    // 비공개 게시글은 메인화면에서 아예 안보이게 필터
     let find = await sequelize.query(`
       SELECT id, title, image, content, lat, lng, address, public, categoryId
       FROM posts
       WHERE posts.public = 1
     `, { type: QueryTypes.SELECT })
 
-    // 비공개 게시글은 그냥 메인화면에서 아예 안보이게 하는게 맞나?
+    // 첫 번째 이미지만 보이게 image데이터 매핑
     find.map((point) => {
-      point.image = point.image.split(",");
-      point.image.pop();
-      point.image = point.image.map((e) => (e = process.env.AWS_LOCATION + e));
+      point.image = [process.env.AWS_LOCATION + point.image.split(",")[0]];
     });
 
     res.status(200).json({data: find})
@@ -80,6 +69,9 @@ module.exports = {
     find.image = find.image.split(",");
     find.image.pop();
     find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
+
+    console.log(find.image)
+    
 
     // 유저 이미지 링크 처리
     find.userImage = `${process.env.AWS_LOCATION}` + find.userImage

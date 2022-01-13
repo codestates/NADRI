@@ -126,7 +126,7 @@ const CommentListContainer = styled.div`
 export default function DetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [comment, setComment] = useState([]);
+  const [comment, setComment] = useState(null);
   const [loc, setLoc] = useState(null);
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
@@ -175,11 +175,11 @@ export default function DetailPage() {
         console.log(result);
         alert("삭제되었습니다");
         navigate("/");
-      });
-    // .then(error => {
-    //   console.log(error)
-    //   alert('오류 발생')
-    // })
+      })
+      .catch(error => {
+        console.log(error)
+        alert('오류가 발생했습니다.')
+      })
   };
 
   useEffect(async () => {
@@ -251,7 +251,7 @@ export default function DetailPage() {
           latlng: new kakao.maps.LatLng(lat, lng),
         },
         {
-          title: "방문하실 장소",
+          title: "도착",
           latlng: new kakao.maps.LatLng(endLat, endLng),
         },
       ];
@@ -432,9 +432,9 @@ export default function DetailPage() {
           </ImgContainer>
 
           <ContentContainer>
-            <div className="contentDesc">
+            <pre><div className="contentDesc">
               {post.content ? post.content : null}
-            </div>
+            </div></pre>
             <div className="contentToolbar">
               <span>
                 <button
@@ -500,7 +500,7 @@ export default function DetailPage() {
               ? comment.map((e) => (
                   <Comment comment={e} key={comment.indexOf(e)} />
                 ))
-              : null}
+              : "아직 댓글이 없습니다!"}
           </CommentListContainer>
           <button onClick={() => console.log(comment, weather)}>웃음벨</button>
         </div>

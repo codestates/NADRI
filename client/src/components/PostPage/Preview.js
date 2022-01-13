@@ -53,7 +53,7 @@ const PreviewImg = styled.div`
         `
         cursor: grab;
         transition: all 0.3s;
-        background-image: url(${props.Img[0]});
+        background-image: url(${props.Img[0][0]});
         background-size: contain;
         `
       )

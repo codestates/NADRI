@@ -16,8 +16,6 @@ import {useNavigate} from 'react-router-dom'
 export default function EditPage () {
   const navigate = useNavigate()
 
-  const [test, setTest] = useState(null)
-
   const [loc, setLoc] = useState({
     lat: 0,
     lng: 0,
@@ -38,6 +36,8 @@ export default function EditPage () {
     // 나는 Blob이 싫다
     let urlArr = [...value.image],
       image = event.target.files;
+
+    if (urlArr.length + image.length >= 4) return alert('이미지는 4장까지 첨부 가능합니다!')
 
     let inputSize = 0, useSize = 0
 
@@ -61,13 +61,14 @@ export default function EditPage () {
 
   };
 
-  const removeImg = (event) => {
+  const removeImg = (event, removeTarget) => {
     // 이미지를 제거하는 함수
     // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
+    // console.log(event.target.id, wtf)
 
-    const removeTarget = value.image[event.target.id]
+    // const removeTarget = value.image[event.target.id]
     URL.revokeObjectURL(removeTarget[0]) // 먼저 blob 의 링크를 revoke
     const newImgArr = value.image.filter(e => {
       return e[0] !== removeTarget[0]
@@ -128,28 +129,24 @@ export default function EditPage () {
 
     console.log('POST', postData)
 
-    // const download = []
-    // postData.image.map( async (e) => {
-    //   const blobImg = await axios({
-    //     method: 'GET',
-    //     responseType: 'blob',
-    //     url: e,
-    //     // headers: {Referer: 'http://localhost:3000'}
-    //   })
-    //   const imgUrl = URL.createObjectURL(blobImg.data)
-    //   download.push([imgUrl, blobImg.data])
-    // })
-    // console.log(download)
-    const testF = await axios({
-      method: 'GET',
-      url: 'http://localhost:8080/post/img/2',
-      responseType: 'blob'
-    })
-    console.log(testF)
+    const download = []
+    for (let i = 0; i < postData.image.length; i++) {
+      let blobData = await axios({
+        method: 'GET',
+        url: postData.image[i],
+        responseType: 'blob',
+        withCredentials: false
+      })
+      let imgUrl = URL.createObjectURL(blobData.data)
+      download.push([imgUrl, blobData])
+    }
+    // 안됨 471641965984498.jpeg 그냥 이 파일만 문제였음.
+
+    console.log(download)
 
     // 게시글의 내용을 state에 저장
     setValue({
-      image: postData.image,
+      image: download,
       title: postData.title,
       content: postData.content,
       public: postData.public,
