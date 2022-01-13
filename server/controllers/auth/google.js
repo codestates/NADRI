@@ -52,7 +52,7 @@ module.exports = {
                 email: googleUserInfo.data.email,
                 password: googleUserInfo.data.id,
                 nickname: googleUserInfo.data.name,
-                image: '',
+                image: '2111641961096892.jpeg,',
                 admin: false,
                 oauth: true,
             },

@@ -52,10 +52,11 @@ export default function Login () {
       data: {email, password}
     })
     .then((res) => {
-      const {nickname, createdAt, email} = res.data.data
+      // console.log(res.data.data)
+      const {nickname, createdAt, emai, image} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt}))
+        dispatch(userInfo({email, nickname, createdAt, image}))
         dispatch(loginModal(LoginModalstate))
         alert('로그인이 완료되었습니다.')
         navigate('/')
@@ -117,12 +118,12 @@ export default function Login () {
           <div onClick={postLogin}>로그인</div>
           <div>
             <button onClick={onClickGoogle}>
-            <img src="google.png" alt="구글 로그인" />구글 로그인
+            <img src="/img/google.png" alt="구글 로그인" />구글 로그인
             </button>
           </div>
           <div>
             <button onClick={onClickKakao}>
-            <img src="kakao.png" />카카오톡 로그인
+            <img src="/img/kakao.png" />카카오톡 로그인
             </button>
           </div>
         </Oauth>

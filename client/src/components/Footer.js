@@ -33,12 +33,7 @@ const Logo = styled.div`
   width: 15rem;
   margin: 0;
 
-  > a {
-    width: 20rem;
-    height: auto;
-  }
-
-  > a img {
+  img {
     display: block;
     width: 100%;
     height: auto;
@@ -98,6 +93,7 @@ const Profile = styled.div`
   .repo:hover {
     transition: all 0.3s;
     width: 60px;
+    transform: translate(0, -45%);
   }
 
   @media screen and (max-width:900px){
@@ -111,13 +107,12 @@ const Profile = styled.div`
   }
 `
 
-function moveTop () {
-  window.screenTop(0, 0)
-}
+
 
 
 
 export default function Footer () {
+
   return (
     <FooterContainer>
       <Logo>

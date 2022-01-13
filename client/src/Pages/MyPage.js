@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
@@ -26,13 +26,28 @@ const UserProfileContainer = styled.div`
 
   .user-profile-picture {
     width: 8rem;
+    height: 8rem;
     border: 1px solid black;
     border-radius: 50%;
-    > img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+
+    ${(props) => {
+      if(props.img) {
+        return (
+          `
+          background-image: url(https://nadri.s3.ap-northeast-2.amazonaws.com/${props.img});
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+          `
+        )
+      } else {
+        return (
+          `
+          background-image: url(NADRI.png)
+          `
+        )
+      }
+    }}
   }
 
   .user-profile-info {
@@ -68,7 +83,7 @@ const UserProfileContainer = styled.div`
 
 const UserMainContents = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   .content-container {
     width: 45rem;
@@ -101,9 +116,8 @@ const UserMainContents = styled.div`
 
 export default function MyPage() {
   const [curContent, setCurContent] = useState('내 게시글')
-
   const curUserInfo = useSelector(state => state.getUserInfo);
-
+  
   function contentRender() {
     if(curContent === '내 게시글') {
       return dummy.map((post,idx) => <MyPosts key={idx} post={post}/>)
@@ -116,11 +130,10 @@ export default function MyPage() {
     }
   }
 
-
   return (
   <MypageContainer>
-    <UserProfileContainer>
-      <div className="user-profile-picture"><img src="/gitHubLogo.png"></img></div>
+    <UserProfileContainer img={curUserInfo.image}>
+      <div className="user-profile-picture"></div>
       <div className="user-profile-info">
         <div className="user-profile-header">
           <div>닉네임</div>
@@ -143,7 +156,6 @@ export default function MyPage() {
               contentRender()
             }
         </div>
-
     </UserMainContents>
   </MypageContainer>
   )

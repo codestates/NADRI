@@ -2,11 +2,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
-import dummy from "../assets/dummy";
+// import dummy from "../assets/dummy";
 import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
 import axios from 'axios'
-import DetailPage from "./DetailPage";
+// import DetailPage from "./DetailPage";
 
 const MainContainer = styled.div`
   height: 100%;
@@ -26,7 +26,6 @@ const MainContainer = styled.div`
     height: 50rem;
     padding: 0 3rem 1rem;
   }
-  
   @media screen and (max-width: 1380px) {
     display: flex;
     flex-direction: column;
@@ -42,7 +41,6 @@ const MainContainer = styled.div`
       padding: 0;
     }
   }
-
 `
 
 const ContentNav = styled.nav`
@@ -82,6 +80,12 @@ const ItemContainer = styled.div`
 
   &::-webkit-scrollbar-track{
       background-color: rgba(0,0,0,0);
+  }
+
+  @media screen and (max-width: 1380px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 `
 
@@ -127,32 +131,6 @@ export default function Main () {
     // console.log(points)
   }, []);
 
-  // useEffect(() => {
-  //   mkMarker()
-  // }, [points])
-
-  // const mkMarker = () => {
-  //   console.log(points)
-  //   const positions = []
-  //   points.map(e => {
-
-  //   })
-  // }
-
-  // 주소 받아오는 함수
-  const geocoder = new kakao.maps.services.Geocoder();
-  const setAddress = (locData) => {
-    geocoder.coord2Address(
-      locData.getLng(),
-      locData.getLat(),
-      function (result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          setLoc({lat: locData.Ma, lng: locData.La, address: result[0].address.address_name});
-        }
-      }
-    );
-  };
-
   const kakaoInit = async ([lat, lng]) => {
     // 지도 생성
     const map = new kakao.maps.Map(document.getElementById('map'), {
@@ -171,12 +149,26 @@ export default function Main () {
     // 마커를 지도에 표시
     marker.setMap(map);
 
-    setAddress(new kakao.maps.LatLng(lat, lng))
-
+    // 모든 게시글 정보를 수신해 거리순으로 정렬
     const postData = await axios.get(`${process.env.REACT_APP_API_URL}/post`)
-    handlePoints(postData.data.data)
+    let sortTarget = [...postData.data.data]
+
+    const startLatLng = new kakao.maps.LatLng(lat, lng)
+    sortTarget.map(e => {
+      const polyline = new kakao.maps.Polyline({
+        path: [startLatLng, new kakao.maps.LatLng(e.lat, e.lng)]
+      });
+      e['distance'] = polyline.getLength()
+    })
+
+    sortTarget.sort((a, b) => {
+      return a.distance - b.distance
+    })
+
+    handlePoints(sortTarget)
 
     const points = []
+    
     postData.data.data.map(e => {
       const {title, lat, lng} = e
       points.push({title, latlng: new kakao.maps.LatLng(lat, lng)})
@@ -190,17 +182,35 @@ export default function Main () {
       const marker = new kakao.maps.Marker({
         map,
         position: i.latlng,
-        title: i.title,
+        // title: i.title,
         image: markerImage,
       });
 
       // 인포윈도우 추가하기
+      // 마우스 오버될 때 표시할 인포윈도우
+      // 여기 컴포넌트 들어가려나?
+      const iwContent = `<div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>`;
+      const infowindow = new kakao.maps.InfoWindow({
+        content : iwContent
+      });
+
+      // 마커에 마우스오버 이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'mouseover', function() {
+        // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+          infowindow.open(map, marker);
+      });
+
+      // 마커에 마우스아웃 이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'mouseout', function() {
+          // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+          infowindow.close();
+      });
     }
   }
 
   return (
     <MainContainer>
-      <div id="map"></div>
+      <div id="map" />
 
       <div className="contentContainer">
         <ContentNav>
@@ -214,7 +224,7 @@ export default function Main () {
 
         
           <ItemContainer>
-          {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
+            {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
           </ItemContainer>
       </div>
     </MainContainer>

@@ -37,6 +37,26 @@ export default function Signup () {
       ...inputs,
       [name]: value
     })
+    console.log(inputs)
+  }
+
+  // 이메일 검증 단계 추가
+  const [code, setCode] = useState(null)
+  const [userCode, setUserCode] = useState('')
+  function sendChkMail (email) {
+    if (!email) return alert('이메일을 입력하세요!')
+    axios.post(`${process.env.REACT_APP_API_URL}/auth/code`, {email})
+    .then(result => {
+      setCode(result.data.code)
+      alert('인증메일이 발송되었습니다.')
+    })
+  }
+  function verifyCode (userCode) {
+    console.log(userCode, code)
+    if (!code) return alert('인증 메일을 먼저 발송하세요')
+
+    if (userCode !== code) return alert('일치하지 않습니다!')
+    else return alert('인증이 완료되었습니다!')
   }
 
   function postSignup () {
@@ -104,11 +124,11 @@ export default function Signup () {
                 <label htmlFor="email">이메일</label>
                 <div>
                   <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
-                  <button type="button">중복확인</button>
+                  <button type="button" onClick={() => sendChkMail(inputs.email)} >중복확인</button>
                 </div>
                 <div>
-                  <input autoComplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함"></input>
-                  <button type="button">인증확인</button>
+                  <input autoComplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함" onChange={(e) => setUserCode(e.target.value)}></input>
+                  <button type="button" onClick={() => verifyCode(userCode)}>인증확인</button>
                 </div>
               </div>
             <label htmlFor="nickname">닉네임</label>
@@ -124,12 +144,12 @@ export default function Signup () {
           <div onClick={postSignup}>회원가입</div>
           <div>
             <button onClick={onClickGoogle}>
-            <img src="google.png" alt="구글 로그인" />구글 로그인
+            <img src="/img/google.png" alt="구글 로그인" />구글 로그인
             </button>
           </div>
           <div>
             <button onClick={onClickKakao}>
-            <img src="kakao.png" />카카오톡 로그인
+            <img src="/img/kakao.png" />카카오톡 로그인
             </button>
           </div>
         </Oauth>

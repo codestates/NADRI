@@ -39,7 +39,6 @@ const Logo = styled.div`
   .pcImg {
     display: block;
     width: 250px;
-    /* max-width: 100%; */
     height: auto;
     flex-shrink: 0;
   }
@@ -130,27 +129,22 @@ const HeaderContent = styled.div`
   }
 
   .loginIcon {
-    /* display: none; */
     width:70%;
     height: auto;
   }
   .mypageIcon {
-    /* display: none; */
     width:85%;
     height: auto;
   }
   .logoutIcon {
-    /* display: none; */
     width:85%;
     height: auto;
   }
   .signinIcon {
-    /* display: none; */
     width:80%;
     height: auto;
   }
   .postIcon {
-    /* display: none; */
     width:65%;
     height: auto;
   }
@@ -173,8 +167,7 @@ const HeaderContent = styled.div`
     }
     .iconText{
       color: #786b6f;
-      text-align: center;
-      
+      text-align: center;     
     }
   }
 
@@ -194,12 +187,12 @@ const HeaderContent = styled.div`
     /* .logoutIcon {
       display: flex;
     } */
-    .loginIcon {
+    /* .loginIcon {
       display: flex;
     }
     .signinIcon {
       display: flex;
-    }
+    } */
     span {
       display: inline-block;
     }
@@ -258,7 +251,7 @@ export default function Header () {
       <Search>
         <input className='searchBar' type={'text'} />
         <div className='searchLogo'>
-          <input type={'image'} src='search.jpg'/>
+          <input type={'image'} src='/img/search.jpg'/>
         </div>
       </Search>
         {

@@ -12,7 +12,7 @@ const ItemContainer = styled.div`
   gap: 2rem;
 
   & {
-    .imgContainer {
+    .imgContainer{
       transition: transform 0.2s linear;
       transform: scale(1);
     }
@@ -20,27 +20,30 @@ const ItemContainer = styled.div`
 
   &:hover {
     .imgContainer {
-      transition: all 0.2s linear;
-      border:none;
+      transition: transform 0.2s linear;
+      border: none;
       transform: scale(1.4);
     }
   }
 `
 
-const ItemImg = styled.div`
+const ItemImg = styled.img`
   width: 8rem;
   border: 1px solid black;
   border-radius: 5px;
-  > img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+
+  ${(props) => {
+    return (
+      `
+      background-image: url(${props.img});
+      background-size: cover;
+      `
+    )
+  }}
 `
 
 const ItemInfo = styled.div`
   width: 20rem;
-  cursor: grab;
   .title {
     display: flex;
     align-items: center;
@@ -65,9 +68,7 @@ export default function Item ({point}) {
     <div>
       <Link to={`/detail/${point.id}`} state={point}>
       <ItemContainer>
-        <ItemImg className="imgContainer">
-          <img src={point ? point.image[0] : null}></img>
-        </ItemImg>
+        <ItemImg className="imgContainer" src={point.image[0]} onError={(e) => e.target.src = `/img/gitHubLogo.png`} ></ItemImg>
 
         <ItemInfo>
           <div className="title">{point ? point.title : null}</div>
