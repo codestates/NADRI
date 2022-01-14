@@ -142,7 +142,8 @@ export default function EditPage () {
         method: 'GET',
         url: postData.image[i],
         responseType: 'blob',
-        withCredentials: false
+        withCredentials: false,
+        headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
       })
       const convertFile = new File([blobData.data], postData.image[i].split('/')[3], {type: blobData.data.type})
 
