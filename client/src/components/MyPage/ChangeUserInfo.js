@@ -100,8 +100,8 @@ const InputUserInfo = styled.div`
   }
 
   button:active {
-    background-color: pink;
-    color: white;
+    position: relative;
+    top: 2px;
   }
 `
 
@@ -128,6 +128,7 @@ export default function ChageUserInfo () {
     passwordInput: true,
     passwordCheckInput: true
   })
+  const [changeTarget, setChangeTarget] = useState('')
   // console.log(curInputs.passwordInput)
   function getUserInfo(e) {
     const {name, value} = e.target
@@ -138,11 +139,11 @@ export default function ChageUserInfo () {
     })
   }
 
-  function patchUserNickname() { // input창에 아무것도 안누르고 변경버튼 눌렀을 경우
+  function patchUserNickname(e) { // input창에 아무것도 안누르고 변경버튼 눌렀을 경우
     const {nickname, password, passwordCheck} = inputs
-    // 닉네임만 변경할 경우
+
     if(!nickname){
-      alert('닉네임을 적어주세요')
+      setDangerMessage('변경할 닉네임을 적어주세요')
       return;
     }
 
@@ -151,15 +152,17 @@ export default function ChageUserInfo () {
     })
     .then((res) => {
       dispatch(changeUserNickname(nickname))
-      navigate('/mypage')
       setSuccessModal(!curSuccessModal)
+      resetInput(e)
+      setChangeTarget(e.target.name)
+      navigate('/mypage')
     })
   }
 
   const profileImg = useRef(null)
 
-  function picChange(event) { // 이미지를 추가하는 함수
-    const image = event.target.files
+  function picChange(e) { // 이미지를 추가하는 함수
+    const image = e.target.files
     const formData = new FormData() // formData생성
     formData.append('profile', image[0])  // formData에 profile이라는 이름으로 blob~~ 넣음
 
@@ -173,6 +176,7 @@ export default function ChageUserInfo () {
       console.log(res.data)
       dispatch(changeProfile(res.data))
       setSuccessModal(!curSuccessModal)
+      setChangeTarget(e.target.name)
       navigate('/mypage')
     })
   };
@@ -198,6 +202,8 @@ export default function ChageUserInfo () {
       .then((res) => {
         setSuccessModal(!curSuccessModal)
         setDangerMessage('')
+        setChangeTarget(e.target.name)
+        resetInput(e)
       })
     }
   }
@@ -206,34 +212,44 @@ export default function ChageUserInfo () {
     profileImg.current.click();
   }
 
+  const resetInput = (e) => {
+    const target = e.target.name
+    if(target === 'passwordCheck') {
+      setInputs({...inputs, [target]:'', password: ''})
+      return;
+    } else {
+      setInputs({...inputs, [target]:''})
+    }
+  }
+
   return (
     <ChageUserInfoContainer img={curUserInfo.image}>
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"></div>
-        <input type={'file'} ref={profileImg} onChange={picChange}/>
+        <input type={'file'} name='img' ref={profileImg} onChange={picChange}/>
         <img src="/img/edit.png" onClick={handleClick} />
       </div>
 
       <InputContainer>
         <InputUserInfo inputs={inputs}>
           <label htmlFor="nickname">닉네임</label>
-          <input type={"text"} name="nickname" onChange={(e) => getUserInfo(e)}></input>
-          <button type="button" onClick={patchUserNickname}>변경</button>
+          <input type={"text"} name="nickname" value={inputs.nickname} onChange={(e) => getUserInfo(e)}></input>
+          <button type="button" name="nickname" onClick={(e) => patchUserNickname(e)}>변경</button>
         </InputUserInfo>
         <InputUserInfo inputs={inputs}>
           <label htmlFor="password">비밀번호</label>
-          <input className="input" type={"password"} name="password" onChange={(e) => getUserInfo(e)} />
+          <input className="input" value={inputs.password} type={"password"} name="password" onChange={(e) => getUserInfo(e)} />
         </InputUserInfo>
         <InputUserInfo inputs={inputs}>
           <label htmlFor="passwordCheck">비밀번호 확인</label>
-          <input type={"password"} name="passwordCheck" onChange={(e) => getUserInfo(e)}></input>
-          <button type="button" onClick={changePassword}>변경</button>
+          <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}></input>
+          <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>
         </InputUserInfo>
       </InputContainer>
 
       <DangerMessage>{dangerMessage}</DangerMessage>
       {
-        curSuccessModal ? <SuccessModal setSuccessModal={setSuccessModal} curSuccessModal={curSuccessModal}/>
+        curSuccessModal ? <SuccessModal changeTarget={changeTarget} setSuccessModal={setSuccessModal} curSuccessModal={curSuccessModal}/>
         : ''
       }
     </ChageUserInfoContainer>

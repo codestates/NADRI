@@ -26,8 +26,8 @@ const MyPageSideBar = styled.div`
   }
 
   > div:active {
-    background-color: pink;
-    color: white;
+    position: relative;
+    top: 2px;
   }
 `
 

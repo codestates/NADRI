@@ -112,15 +112,22 @@ const HeaderContent = styled.div`
     font-size: 1rem;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     background: rgb(255,255,255);
-
+    transition: all 0.2s;
 
     &:hover {
+      transition: all 0.2s;
       cursor: pointer;
       transform: scale(1.1);
-      box-shadow: 
-      inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
-      2px 2px 2px 0px rgba(0, 0, 0, 0.1),
-      2px 2px 2px 0px rgba(0, 0, 0, 0.1);
+      // box-shadow: 
+      // inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
+      // 2px 2px 2px 0px rgba(0, 0, 0, 0.1),
+      // 2px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      box-shadow: 2px 2px 0 rgb(0, 0, 0, 0.3);
+      position: relative;
+      top: 2px;
     }
   }
 

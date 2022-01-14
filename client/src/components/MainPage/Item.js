@@ -19,6 +19,7 @@ const ItemContainer = styled.div`
   }
 
   &:hover {
+    
     .imgContainer {
       transition: transform 0.2s linear;
       border: none;
@@ -31,7 +32,7 @@ const ItemImg = styled.img`
   width: 8rem;
   border: 1px solid black;
   border-radius: 5px;
-
+  
   ${(props) => {
     return (
       `
