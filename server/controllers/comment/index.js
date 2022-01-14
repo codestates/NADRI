@@ -15,8 +15,18 @@ module.exports = {
 
     // DB에서 userId로 필터한 코멘트 찾아 보내기
     try {
-      const find = await comments.findAll({where: {userId: userData.id}})
-      res.status(200).json({data: find})
+      const testQuery = await sequelize.query(`
+        SELECT comments.postId, comments.comment, posts.image, posts.title, comments.updatedAt 
+        FROM comments
+        JOIN posts ON comments.postId = posts.id
+        WHERE comments.userId = ${userData.id} ORDER BY comments.updatedAt DESC
+      `)
+
+      testQuery[0].map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
+
+      console.log('testQuery', testQuery.length)
+
+      res.status(200).json({data: testQuery[0]})
     } catch (err) {
       res.sendStatus(500)
     }
@@ -43,7 +53,7 @@ module.exports = {
     // DB에서 postId로 필터한 코멘트 찾아 보내기
     // Post에서 댓글 보여주는 데 필요한 nickname, userImage를 포함해야 하므로 Join시켜야 함
     try {
-      // const search = await comments.findAll({where: {postId: req.params.id}})
+
       const search = await sequelize.query(`
         SELECT comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}

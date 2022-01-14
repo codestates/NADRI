@@ -11,41 +11,21 @@ const s3 = new aws.S3();
 const path = require('path')
 const dotenv = require('dotenv')
 dotenv.config()
+const axios = require('axios')
+const {Blob} = require('node:buffer') // for real?
 
 module.exports = {
   getAllPost: async (req, res) => {
-    // 모든 게시글 전송: 현재위치에서의 거리 계산해야 함.
-    // 거리계산 API 활용해도 모든 점의 거리를 계산하는것은 좋은 생각이 아닌데
-
-    // 처음에는 자기위치 기준 5km 안의 좌표를 보여주고
-    // 클릭해서 위치 지정이 되면 그 좌표를 기준으로 변경
-
-    // 단계별 구현
-    // step1: 일단 모든 게시글 (+ 각 게시글의 like 개수 + 각 게시글의 comment 개수 보내기)
-    // step2: 좌표값 기준으로 +- 1? (경/위도 차이를 고려해야 함)
-    // step3: 카카오 api로 각 좌표 사이의 거리(폴리라인?응용?) 해서 보여주기?
-
-    // step1
+    // 비공개 게시글은 메인화면에서 아예 안보이게 필터
     let find = await sequelize.query(`
       SELECT id, title, image, content, lat, lng, address, public, categoryId
       FROM posts
       WHERE posts.public = 1
     `, { type: QueryTypes.SELECT })
 
-    // 비공개 게시글은 그냥 메인화면에서 아예 안보이게 하는게 맞나?
+    // 첫 번째 이미지만 보이게 image데이터 매핑
     find.map((point) => {
-      point.image = point.image.split(",");
-      point.image.pop();
-
-      if (point.image[0].split("/")[0] === "uploads") {
-        console.log("로컬 이미지 확인");
-        point.image = point.image.map(
-          (e) => (e = path.join(__dirname, "../../") + e)
-        );
-      } else {
-        console.log("S3 버킷 이미지");
-        point.image = point.image.map((e) => (e = process.env.AWS_LOCATION + e));
-      }
+      point.image = [process.env.AWS_LOCATION + point.image.split(",")[0]];
     });
 
     res.status(200).json({data: find})
@@ -89,6 +69,9 @@ module.exports = {
     find.image = find.image.split(",");
     find.image.pop();
     find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
+
+    console.log(find.image)
+    
 
     // 유저 이미지 링크 처리
     find.userImage = `${process.env.AWS_LOCATION}` + find.userImage
@@ -162,13 +145,19 @@ module.exports = {
     const userData = chkValid(req)
     if (!userData) return res.status(400).json({message: 'Invalid Token'})
 
+    console.log('로그인 검증 완료')
+
     // 게시글이 존재하는지(데이터 꺼내오기)
     const id = req.params.id
     const find = await posts.findOne({where: {id}})
     if (!find) return res.status(400).json({message: 'Bad Request1'})
 
+    console.log('게시글 확인 완료')
+
     // 수정 권한이 있는지 확인(본인 or admin)
     if (!userData.admin && find.userId !== userData.id) return res.status(400).json({message: 'Bad Request2'})
+
+    console.log('수정권한 확인 완료')
 
     // 변경할 값 저장하는 객체 선언
     const mod = {}
@@ -182,6 +171,8 @@ module.exports = {
         else path = image.map((img) => img.path);
         path.map((e) => {imgStr += `${e},`});
       }
+
+      console.log('이미지 추출 완료')
 
       // 이미지 변경사항은 바로 반영
       if (imgStr) {
@@ -199,29 +190,48 @@ module.exports = {
             // console.log('s3 deleteObject ', data);
           });
         })
-
-        mod['image'] = imgStr
+        // mod['image'] = imgStr
       }
+
+      console.log('이미지 변경 완료')
 
       // Body 변경점 찾아서 추가
       for (let i of Object.keys(req.body)) {
         if (req.body[`${i}`]) mod[`${i}`] = req.body[`${i}`]
       }
 
-      mod.lat ? mod.lat = parseFloat(mod.lat) : null
-      mod.lng ? mod.lng = parseFloat(mod.lng) : null
-      mod.categoryId ? mod.categoryId = Number(mod.categoryId) : null
-      mod.public ? mod.public = Boolean(mod.public) : null
-      console.log(mod)
+      console.log('Body 수정 데이터 확인')
+
+      // mod.lat ? mod.lat = parseFloat(mod.lat) : null
+      // mod.lng ? mod.lng = parseFloat(mod.lng) : null
+      // mod.categoryId ? mod.categoryId = Number(mod.categoryId) : null
+      // mod.public ? mod.public = Boolean(mod.public) : null
+      // console.log(mod)
+
+      console.log('Body 수정 데이터 검증')
 
       // DB에 반영하기
-      await posts.update(mod, {where: {id}})
+      // await posts.update(mod, {where: {id}})
+      await posts.update({
+        title: req.body.title,
+        content: req.body.content,
+        image: imgStr,
+        lat: req.body.lat,
+        lng: req.body.lng,
+        address: req.body.address,
+        public: req.body.public,
+        categoryId: req.body.categoryId,
+
+      }, {where: {id : req.params.id}})
+
+      console.log('DB에 저장')
 
       // 수정되었으면 응답 반환하기
       return res.sendStatus(200)
     } catch (err) {
       // 에러 있으면 코드 반환: catch (err)
       // 오류 시 올라와버린 이미지는 전체 삭제해주는게 맞을듯 
+      console.log(err)
       res.sendStatus(500)
     }  
   },

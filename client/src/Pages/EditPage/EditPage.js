@@ -37,6 +37,8 @@ export default function EditPage () {
     let urlArr = [...value.image],
       image = event.target.files;
 
+    if (urlArr.length + image.length > 4) return alert('이미지는 4장까지 첨부 가능합니다!')
+
     let inputSize = 0, useSize = 0
 
     for (let i of image) inputSize += i.size
@@ -59,13 +61,14 @@ export default function EditPage () {
 
   };
 
-  const removeImg = (event) => {
+  const removeImg = (event, removeTarget) => {
     // 이미지를 제거하는 함수
     // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
+    // console.log(event.target.id, wtf)
 
-    const removeTarget = value.image[event.target.id]
+    // const removeTarget = value.image[event.target.id]
     URL.revokeObjectURL(removeTarget[0]) // 먼저 blob 의 링크를 revoke
     const newImgArr = value.image.filter(e => {
       return e[0] !== removeTarget[0]
@@ -101,9 +104,12 @@ export default function EditPage () {
       formData.append(`${val[i]}`, value[val[i]]);
     }
 
+    // http:/ / localhost:8080 / edit / {id}
+    let endPoint = window.location.href.split('/')[4]
+
     axios({
       method: 'PATCH',
-      url: `${process.env.REACT_APP_API_URL}/post`,
+      url: `${process.env.REACT_APP_API_URL}/post/${endPoint}`,
       data: formData, // 어떤 레퍼런스는 files로 하던데 죽어도 안되서 변경
       headers: { 'content-type': 'multipart/form-data' },
     })
@@ -114,28 +120,37 @@ export default function EditPage () {
       .catch((error) => {
         console.log(error);
         alert('문제가 발생했습니다!')
-      });
-    
-    
+      })
+      
+      // 데이터 출력 테스트
+      for (let value of formData.values()) {
+        console.log(value);
+      }
+
+
   };
 
-  useEffect(() => {
-    let postData = await axios.get(`http://localhost:8080/post/`)
+  useEffect(async () => {
+    let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${window.location.href.split('/')[4]}`)
     postData = postData.data.data
 
     console.log('POST', postData)
 
     const download = []
-    postData.image.map( async (e) => {
-      const blobImg = await axios({
+    for (let i = 0; i < postData.image.length; i++) {
+      let blobData = await axios({ // 응답 전체를 저장
         method: 'GET',
+        url: postData.image[i],
         responseType: 'blob',
-        url: e,
-        // headers: {Referer: 'http://localhost:3000'}
+        withCredentials: false,
+        headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
       })
-      const imgUrl = URL.createObjectURL(blobImg.data)
-      download.push([imgUrl, blobImg.data])
-    })
+      const convertFile = new File([blobData.data], postData.image[i].split('/')[3], {type: blobData.data.type})
+
+      let imgUrl = URL.createObjectURL(blobData.data)
+      download.push([imgUrl, convertFile])
+    }
+
     console.log(download)
 
     // 게시글의 내용을 state에 저장
@@ -212,9 +227,9 @@ export default function EditPage () {
 
       <BottomContainer>
         <TextInputContainer>
-          <input id="title" onChange={(event) => handleValue(event.target)} />
+          <input id="title" value={value.title} onChange={(event) => handleValue(event.target)} />
         
-          <pre><textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} /></pre>
+          <pre><textarea id="content" rows="10" cols="50" value={value.content} onChange={(event) => handleValue(event.target)} /></pre>
         </TextInputContainer>
 
         <CheckboxContainer>
@@ -226,12 +241,14 @@ export default function EditPage () {
             <input
               type="checkbox"
               onClick={() => handleValue({ id: "public", value: !value.public })}
+              value={value.public}
             />
             <span>{value.public ? "공개" : "비공개"}</span>
           </div>
 
           <div className="category">
             <select
+              value={value.categoryId}
               className="w150"
               onChange={(e) =>
                 handleValue({ id: "categoryId", value: Number(e.target.value) })
