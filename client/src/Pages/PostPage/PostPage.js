@@ -115,7 +115,7 @@ export default function PostPage () {
     })
       .then((result) => {
         console.log(result);
-        navigate('/') // 리턴된 페이지로 이동?
+        navigate(`/detail/${result.data.id}`) // 리턴된 페이지로 이동
       })
       .catch((error) => {
         console.log(error);

@@ -115,7 +115,7 @@ export default function EditPage () {
     })
       .then((result) => {
         console.log(result);
-        navigate('/') // 리턴된 페이지로 이동?
+        navigate(`/detail/${endPoint}`) // 리턴된 페이지로 이동
       })
       .catch((error) => {
         console.log(error);
@@ -134,7 +134,7 @@ export default function EditPage () {
     let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${window.location.href.split('/')[4]}`)
     postData = postData.data.data
 
-    console.log('POST', postData)
+    // console.log('POST', postData)
 
     const download = []
     for (let i = 0; i < postData.image.length; i++) {
@@ -143,7 +143,11 @@ export default function EditPage () {
         url: postData.image[i],
         responseType: 'blob',
         withCredentials: false,
-        headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
+        timeout: 60000,
+        headers: {
+          'access-control-allow-origin': '*',
+          'accept': 'text/html,application/xhtml+xml,application/xml'
+        }
       })
       const convertFile = new File([blobData.data], postData.image[i].split('/')[3], {type: blobData.data.type})
 

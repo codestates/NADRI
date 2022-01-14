@@ -132,6 +132,8 @@ export default function DetailPage() {
   const [text, setText] = useState("");
 
   const handleText = (value) => {
+
+    if (value.length > 150) return alert('글자 수 초과입니다.')
     // console.log(value)
     setText(value);
   };

@@ -12,7 +12,9 @@ export default function Comment ({comment}) {
 
         <PostInfo>
           <div className="title">{comment.title}</div>
-          <div className="desc">{comment.comment}</div>
+          {comment.comment ? <div className="desc">{comment.comment}</div> 
+          : <div className="desc">{comment.content}</div> }
+          <div className='uptime'>{comment.createdAt}</div>
         </PostInfo>
       </PostContainer>
   )
