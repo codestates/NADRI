@@ -35,16 +35,21 @@ const ModalView = styled.div`
   }
 `
 
-export default function SuccessModal({setSuccessModal, curSuccessModal}) {
+export default function SuccessModal({changeTarget, setSuccessModal, curSuccessModal}) {
+  let target = changeTarget
   function ModalHandler() {
     setSuccessModal(!curSuccessModal)
   }
+  
+  if(target === 'nickname') target = '닉네임이'
+  else if(target === 'passwordCheck') target = '비밀번호가'
+  else if(target === 'img') target = '프로필 사진이'
 
   return (
     <ModalBackdrop onClick={ModalHandler}>
       <ModalView onClick={(e) => e.stopPropagation()}>
         <span className="close-X" onClick={ModalHandler}>&#x2716;</span>
-        <span>변경사항이 성공적으로 변경되었습니다.</span>
+        <span>{target} 성공적으로 변경되었습니다.</span>
         <button type="button" className="closeBtn" onClick={ModalHandler}>확인</button>
         
 

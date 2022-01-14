@@ -47,13 +47,17 @@ max-height: 3rem;
       width: 100%;
     }
 
+  &:active {
+    position: relative;
+    top: 2px;
+  }
 }
 
 .backIcon{
   width: 60%;
   height: 60%;
   color: #708090;
-  }
+}
 `
 
 
@@ -62,7 +66,7 @@ export default function Body () {
   const navigate = useNavigate()
 
   return (
-    <div>
+    <div className='body'>
       <SidebarContainer>
         <button className="backButton" onClick={()=> navigate(-1)}>
           <FontAwesomeIcon icon={faChevronLeft} className="backIcon" />

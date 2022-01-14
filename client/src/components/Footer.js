@@ -32,7 +32,6 @@ const FooterContainer = styled.footer`
 const Logo = styled.div`
   width: 15rem;
   margin: 0;
-
   img {
     display: block;
     width: 100%;
@@ -95,6 +94,11 @@ const Profile = styled.div`
     width: 60px;
     transform: translate(0, -45%);
   }
+  .repo:active {
+    transition: all 0.3s;
+    position: relative;
+    top: 3px;
+  }
 
   @media screen and (max-width:900px){
     margin-top: 0rem;
@@ -116,9 +120,7 @@ export default function Footer () {
   return (
     <FooterContainer>
       <Logo>
-        <Link to="/">
           <img src="/img/nadri-footer-img.png" alt="footer-logo" />
-        </Link>
       </Logo>
 
       <MemberContainer>
