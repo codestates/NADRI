@@ -126,7 +126,7 @@ const CommentListContainer = styled.div`
 export default function DetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [comment, setComment] = useState([]);
+  const [comment, setComment] = useState(null);
   const [loc, setLoc] = useState(null);
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
@@ -147,7 +147,7 @@ export default function DetailPage() {
     // 전송후 받은 데이터를 comment에 추가
     const newComment = await axios.post(
       `${process.env.REACT_APP_API_URL}/comment/${
-        document.location.href.split("/")[4]
+        window.location.href.split("/")[4]
       }`,
       { comment: text }
     );
@@ -175,11 +175,11 @@ export default function DetailPage() {
         console.log(result);
         alert("삭제되었습니다");
         navigate("/");
-      });
-    // .then(error => {
-    //   console.log(error)
-    //   alert('오류 발생')
-    // })
+      })
+      .catch(error => {
+        console.log(error)
+        alert('오류가 발생했습니다.')
+      })
   };
 
   useEffect(async () => {
@@ -251,7 +251,7 @@ export default function DetailPage() {
           latlng: new kakao.maps.LatLng(lat, lng),
         },
         {
-          title: "방문하실 장소",
+          title: "도착",
           latlng: new kakao.maps.LatLng(endLat, endLng),
         },
       ];
@@ -405,12 +405,15 @@ export default function DetailPage() {
     return `https://map.kakao.com/?map_type=TYPE_MAP&target=${by}&rt=${st.x},${st.y},${nd.x},${nd.y}`;
   };
 
+  const editPost = () => {
+    navigate(`/edit/${window.location.href.split("/")[4]}`)
+  } 
+
   return (
     <DetailPageContainer>
       {post ? (
         <div>
           <Title>{post.title ? post.title : null}</Title>
-
           <ImgContainer>
             <img
               className="mainImg"
@@ -422,16 +425,16 @@ export default function DetailPage() {
                 {post.image && post.image[1]
                   ? post.image
                       .slice(1)
-                      .map((e) => <img src={e} key={Math.random()} onError={(e) => e.target.src = `/img/gitHubLogo.png`}/>)
+                      .map((e) => <img src={e} key={Math.random()} />)
                   : null}
               </div>
             ) : null}
           </ImgContainer>
 
           <ContentContainer>
-            <div className="contentDesc">
+            <pre><div className="contentDesc">
               {post.content ? post.content : null}
-            </div>
+            </div></pre>
             <div className="contentToolbar">
               <span>
                 <button
@@ -470,13 +473,13 @@ export default function DetailPage() {
                 <button onClick={() => deletePost(post.id)}>삭제</button>
               </span>
               <span>
-                <button onClick={() => alert("수정")}>수정</button>
+                <button onClick={editPost}>수정</button>
               </span>
               <span>
                 <button onClick={() => favorite(post.id)}>즐겨찾기</button>
               </span>
               <span>
-                <button onClick={() => alert('빼애액')}>신고</button>
+                <button onClick={() => console.log(weather)}>신고</button>
               </span>
             </div>
           </ContentContainer>
@@ -497,9 +500,9 @@ export default function DetailPage() {
               ? comment.map((e) => (
                   <Comment comment={e} key={comment.indexOf(e)} />
                 ))
-              : null}
+              : "아직 댓글이 없습니다!"}
           </CommentListContainer>
-          <button onClick={() => console.log(comment, weather)}>웃음벨</button>
+          <button onClick={() => console.log(post, comment, weather)}>웃음벨</button>
         </div>
       ) : (
         "저런!"

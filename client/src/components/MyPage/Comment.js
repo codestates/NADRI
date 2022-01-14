@@ -7,7 +7,7 @@ export default function Comment ({comment}) {
   return (
       <PostContainer>
         <PostImg className="imgContainer">
-          <img src={`${comment.img}`}></img>
+          <img src={`${comment.image}`} onError={(e) => e.target.src = `/img/gitHubLogo.png`} />
         </PostImg>
 
         <PostInfo>

@@ -8,6 +8,7 @@ import Sidebar from "../components/MyPage/Sidebar";
 import Comment from "../components/MyPage/Comment";
 import commentsDummy from "../assets/comments";
 import dummy from "../assets/dummy";
+import axios from 'axios'
 
 
 const MypageContainer = styled.div`
@@ -117,6 +118,16 @@ const UserMainContents = styled.div`
 export default function MyPage() {
   const [curContent, setCurContent] = useState('내 게시글')
   const curUserInfo = useSelector(state => state.getUserInfo);
+
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    console.log('mypage init')
+    axios.get(`${process.env.REACT_APP_API_URL}/comment`)
+    .then(res => {
+      console.log(res)
+      setComments(res.data.data)})
+  }, [])
   
   function contentRender() {
     if(curContent === '내 게시글') {
@@ -126,7 +137,8 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      return commentsDummy.map((comment, idx) => <Comment key={idx} comment={comment} />)
+      if (comments.length > 1) return comments.map((comment, idx) => <Comment key={idx} comment={comment} />)
+      else return '댓글이 없습니다'
     }
   }
 
