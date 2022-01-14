@@ -37,7 +37,7 @@ export default function EditPage () {
     let urlArr = [...value.image],
       image = event.target.files;
 
-    if (urlArr.length + image.length >= 4) return alert('이미지는 4장까지 첨부 가능합니다!')
+    if (urlArr.length + image.length > 4) return alert('이미지는 4장까지 첨부 가능합니다!')
 
     let inputSize = 0, useSize = 0
 
@@ -120,7 +120,14 @@ export default function EditPage () {
       .catch((error) => {
         console.log(error);
         alert('문제가 발생했습니다!')
-      });
+      })
+      
+      // 데이터 출력 테스트
+      for (let value of formData.values()) {
+        console.log(value);
+      }
+
+
   };
 
   useEffect(async () => {
@@ -131,16 +138,17 @@ export default function EditPage () {
 
     const download = []
     for (let i = 0; i < postData.image.length; i++) {
-      let blobData = await axios({
+      let blobData = await axios({ // 응답 전체를 저장
         method: 'GET',
         url: postData.image[i],
         responseType: 'blob',
         withCredentials: false
       })
+      const convertFile = new File([blobData.data], postData.image[i].split('/')[3], {type: blobData.data.type})
+
       let imgUrl = URL.createObjectURL(blobData.data)
-      download.push([imgUrl, blobData])
+      download.push([imgUrl, convertFile])
     }
-    // 안됨 471641965984498.jpeg 그냥 이 파일만 문제였음.
 
     console.log(download)
 

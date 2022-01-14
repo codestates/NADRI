@@ -502,7 +502,7 @@ export default function DetailPage() {
                 ))
               : "아직 댓글이 없습니다!"}
           </CommentListContainer>
-          <button onClick={() => console.log(comment, weather)}>웃음벨</button>
+          <button onClick={() => console.log(post, comment, weather)}>웃음벨</button>
         </div>
       ) : (
         "저런!"
