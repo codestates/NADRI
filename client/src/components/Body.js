@@ -7,6 +7,7 @@ import DetailPage from '../Pages/DetailPage';
 import { Routes, Route, useNavigate, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
+import EditPage from '../Pages/EditPage/EditPage';
 
 const SidebarContainer = styled.span`
 display: flex;
@@ -71,7 +72,7 @@ export default function Body () {
         <Route path='/post'element={<PostPage/>} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/detail/:id' element={<DetailPage />} />
-        <Route path='/edit/:id' element={<DetailPage />} />
+        <Route path='/edit/:id' element={<EditPage />} />
       </Routes>
     </div>
   )

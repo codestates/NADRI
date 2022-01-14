@@ -11,11 +11,11 @@ import {
   CheckboxContainer} from './StyledEditPage'
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 
 export default function EditPage () {
   const navigate = useNavigate()
-
+  const location = useLocation()
   const [loc, setLoc] = useState({
     lat: 0,
     lng: 0,
@@ -118,9 +118,10 @@ export default function EditPage () {
     
     
   };
-
-  useEffect(() => {
-    let postData = await axios.get(`http://localhost:8080/post/`)
+  const postId = location.pathname.split('/')[2]
+  console.log(postId)
+  useEffect( async () => {
+    let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${postId}`)
     postData = postData.data.data
 
     console.log('POST', postData)
@@ -132,6 +133,7 @@ export default function EditPage () {
         responseType: 'blob',
         url: e,
         // headers: {Referer: 'http://localhost:3000'}
+        withCredentials: false,
       })
       const imgUrl = URL.createObjectURL(blobImg.data)
       download.push([imgUrl, blobImg.data])

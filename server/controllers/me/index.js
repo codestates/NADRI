@@ -1,5 +1,6 @@
 const { chkValid } = require('../tokenFunctions')
-const { users } = require('../../models');
+const { users, posts } = require('../../models');
+const { rmSync } = require('fs');
 
 module.exports = {
   getUserInform: (req, res) => {
@@ -57,4 +58,30 @@ module.exports = {
     }
   },
 
+  getUserPost: async (req, res) => {
+
+     // 인증정보가 있는지 확인
+    if (!req.cookies['authorization']) return res.status(400).json({message: 'Bad Request'})
+
+    // 인증정보가 유효한지 확인
+    const userData = chkValid(req)
+    if (!userData) res.status(400).json({message: 'Invalid token'})
+
+    try {
+
+      const userPost = await posts.findAll({
+        where: {userId: userData.id}
+      })
+
+      if(userPost.length ===0){
+        return res.status(200).json({data:null, message: '작성한 글이 없어요'})
+      }
+      // console.log(userPost);
+      res.status(200).json({data: userPost})
+
+    } catch (error) {
+      console.log('getUserPost 500 err')
+      res.sendStatus(500)
+    }
+  },
 }
