@@ -8,7 +8,6 @@ import EditPage from '../Pages/EditPage/EditPage';
 import { Routes, Route, useNavigate, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
-import EditPage from '../Pages/EditPage/EditPage';
 
 const SidebarContainer = styled.span`
 display: flex;

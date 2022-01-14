@@ -129,16 +129,9 @@ export default function EditPage () {
 
 
   };
-<<<<<<< HEAD
-  const postId = location.pathname.split('/')[2]
-  console.log(postId)
-  useEffect( async () => {
-    let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${postId}`)
-=======
 
   useEffect(async () => {
     let postData = await axios.get(`${process.env.REACT_APP_API_URL}/post/${window.location.href.split('/')[4]}`)
->>>>>>> c14293fd01c116ed029d691ec8a6c5e43b1edb2a
     postData = postData.data.data
 
     console.log('POST', postData)
@@ -149,14 +142,8 @@ export default function EditPage () {
         method: 'GET',
         url: postData.image[i],
         responseType: 'blob',
-<<<<<<< HEAD
-        url: e,
-        // headers: {Referer: 'http://localhost:3000'}
-        withCredentials: false,
-=======
         withCredentials: false,
         headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
->>>>>>> c14293fd01c116ed029d691ec8a6c5e43b1edb2a
       })
       const convertFile = new File([blobData.data], postData.image[i].split('/')[3], {type: blobData.data.type})
 
