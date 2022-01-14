@@ -11,11 +11,11 @@ import {
   CheckboxContainer} from './StyledEditPage'
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 
 export default function EditPage () {
   const navigate = useNavigate()
-
+  const location = useLocation()
   const [loc, setLoc] = useState({
     lat: 0,
     lng: 0,

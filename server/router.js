@@ -90,6 +90,7 @@ router.patch(
 );
 router.delete('/post/:id', controllers.post.deletePost)
 
+// me 라우터
 router.get("/auth/me", controllers.me.getUserInform);
 router.patch(
   "/auth/me",
@@ -100,6 +101,7 @@ router.patch(
   ]),
   controllers.me.patchUserInform
 );
+router.get('/auth/me/post', controllers.me.getUserPost);
 
 // 라우터 입력 끝
 

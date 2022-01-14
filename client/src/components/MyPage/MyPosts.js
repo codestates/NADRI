@@ -61,6 +61,8 @@ export const PostInfo = styled.div`
 `
 
 export default function MyPosts ({post}) {
+
+  
   return (
     <PostContainer>
       <PostImg className="imgContainer">
