@@ -12,6 +12,7 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0,0,0,0.4);
   text-align: center;
   overflow: scroll;
+  z-index: 999;
   &::-webkit-scrollbar {
     display: none;
   }
