@@ -8,6 +8,7 @@ module.exports = {
       database: process.env.DATABASE_NAME,
       host: process.env.DATABASE_HOST,
       dialect: 'mysql',
+      dialectOptions: {charset: "utf8mb4", dateStrings: true, typeCast: true},
       // port:process.env.DATABASE_PORT
       timezone: '+09:00'
     },

@@ -252,7 +252,6 @@ export default function Main () {
           </span>
         </ContentNav>
 
-        
           <ItemContainer>
             {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
           </ItemContainer>

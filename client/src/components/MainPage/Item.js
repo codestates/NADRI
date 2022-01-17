@@ -7,6 +7,7 @@ const ItemContainer = styled.div`
   height: 10rem;
   display: flex;
   border: 1px solid black;
+  border-radius: 10px;
   margin-bottom: 3rem;
   padding: 1rem;
   gap: 2rem;
@@ -29,7 +30,8 @@ const ItemContainer = styled.div`
 `
 
 const ItemImg = styled.img`
-  width: 8rem;
+  width: 7rem;
+  height: 7rem;
   border: 1px solid black;
   border-radius: 5px;
   
