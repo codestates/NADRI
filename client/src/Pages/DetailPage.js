@@ -645,7 +645,7 @@ export default function DetailPage() {
             </div>
             :
             // 실패 시
-            <div className='weather_ok' style={{'justify-content': 'center'}}>
+            <div className='weather_ok' style={{'justifyContent': 'center'}}>
               <img src='/img/loading.svg' style={{width: '60px'}}/>
             </div>
             }

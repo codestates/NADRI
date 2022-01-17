@@ -10,6 +10,7 @@ import axios from 'axios';
 import { authState } from './redux/actions'
 import { useNavigate } from "react-router-dom";
 import Randing from './components/RandingPage/Randing';
+import { Routes, Route, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
 // axios.defaults.withCredentials = true;
 
 function App() {
@@ -96,7 +97,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Randing /> */}
+      <Routes>
+        <Route path='/randing' element={<Randing />} />
+      </Routes>
       <Header />
       <Body />
       <Footer />
