@@ -1,5 +1,6 @@
 const { chkValid } = require("../tokenFunctions");
-const { user_post_likes, posts } = require("../../models");
+const { user_post_likes, posts, sequelize } = require("../../models");
+const { QueryTypes } = require("sequelize");
 
 module.exports = {
   getLike: async (req, res) => {
@@ -13,10 +14,17 @@ module.exports = {
     console.log(userData);
 
     try {
-      const userLike = await user_post_likes.findAll({
-        where: { userId: userData.id },
-      });
-      res.status(200).json({ data: userLike });
+      const userLike = await sequelize.query(`
+        SELECT user_post_likes.postId, posts.title, posts.image, posts.content, posts.createdAt
+        FROM user_post_likes JOIN posts ON user_post_likes.postId = posts.id
+        WHERE user_post_likes.userId = ${userData.id}
+      `)
+
+      userLike[0].map(e => {
+        e.image = process.env.AWS_LOCATION + e.image.split(',')[0]
+      })
+      
+      res.status(200).json({ data: userLike[0] });
     } catch (err) {
       res.sendStatus(500);
     }

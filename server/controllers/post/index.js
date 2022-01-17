@@ -13,12 +13,14 @@ const dotenv = require('dotenv')
 dotenv.config()
 const axios = require('axios')
 const {Blob} = require('node:buffer') // for real?
+const { Readable } = require('stream');
 
 module.exports = {
   getAllPost: async (req, res) => {
     // 비공개 게시글은 메인화면에서 아예 안보이게 필터
     let find = await sequelize.query(`
-      SELECT id, title, image, content, lat, lng, address, public, categoryId
+      SELECT id, title, image, content, lat, lng, address, public, categoryId, 
+      (SELECT count(*) FROM user_post_likes WHERE user_post_likes.postId = posts.id ) AS likes
       FROM posts
       WHERE posts.public = 1
     `, { type: QueryTypes.SELECT })
@@ -69,7 +71,7 @@ module.exports = {
     find.image = find.image.split(",");
     find.image.pop();
     find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
-
+    // AWS_CLOUD_URL
     console.log(find.image)
     
 
@@ -114,11 +116,9 @@ module.exports = {
     let imgStr = "";
     path.map((e) => (imgStr += `${e},`));
 
-    console.log(parseFloat(lat));
-
     await posts
       .create({
-        userId: 1, // 인증단계 거쳐서 id 추출해야 함. 테스트 끝나면 반드시 수정할것
+        userId: userData.id,
         title,
         image: imgStr, // 다중 이미지의 경우 어떻게 처리해야 할지 생각해야 함
         content,
@@ -128,8 +128,9 @@ module.exports = {
         public: JSON.parse(public),
         categoryId: Number(categoryId),
       })
-      .then(() => {
-        res.sendStatus(201);
+      .then((data) => {
+        // console.log('DATA: ', data)
+        res.status(201).json({id: data.dataValues.id});
       })
       .catch((err) => {
         console.log(err);
@@ -199,14 +200,6 @@ module.exports = {
       for (let i of Object.keys(req.body)) {
         if (req.body[`${i}`]) mod[`${i}`] = req.body[`${i}`]
       }
-
-      console.log('Body 수정 데이터 확인')
-
-      // mod.lat ? mod.lat = parseFloat(mod.lat) : null
-      // mod.lng ? mod.lng = parseFloat(mod.lng) : null
-      // mod.categoryId ? mod.categoryId = Number(mod.categoryId) : null
-      // mod.public ? mod.public = Boolean(mod.public) : null
-      // console.log(mod)
 
       console.log('Body 수정 데이터 검증')
 
@@ -278,4 +271,23 @@ module.exports = {
     }
     res.sendStatus(200);
   },
+
+  // 테스트 함수
+  getPostImg: async (req, res) => {
+    // console.log(req.body.lnk)
+
+    const targetUrl = req.body.lnk
+
+    let blobData = await axios({ // 응답 전체를 저장
+      method: 'GET',
+      url: targetUrl,
+      responseType: 'arraybuffer',
+    })
+    
+    // const testBlob = new Blob([blobData.data], { type: 'image/jpeg' })
+
+    console.log('Tlqkf', blobData.data)
+
+    res.send(blobData.data)
+  }
 };

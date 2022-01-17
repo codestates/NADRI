@@ -9,6 +9,7 @@ import Comment from "../components/MyPage/Comment";
 import commentsDummy from "../assets/comments";
 import dummy from "../assets/dummy";
 import axios from 'axios'
+import { Link } from "react-router-dom";
 
 
 const MypageContainer = styled.div`
@@ -123,13 +124,19 @@ export default function MyPage() {
   const curUserInfo = useSelector(state => state.getUserInfo);
 
   const [comments, setComments] = useState([])
+  const [likes, setLikes] = useState([])
 
   useEffect(() => {
     console.log('mypage init')
     axios.get(`${process.env.REACT_APP_API_URL}/comment`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setComments(res.data.data)})
+    axios.get(`${process.env.REACT_APP_API_URL}/like`)
+    .then(res => {
+      console.log(res)
+      setLikes(res.data.data)
+    })
   }, [])
   
   function contentRender() {
@@ -140,8 +147,12 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      if (comments.length > 1) return comments.map((comment, idx) => <Comment key={idx} comment={comment} />)
+      if (comments.length > 1) return comments.map((comment, idx) => <Link to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
       else return '댓글이 없습니다'
+    }
+    else if(curContent === '즐겨찾기') {
+      if (likes.length > 1) return likes.map((post, idx) => <Link to={`/detail/${post.postId}`}><Comment key={idx} comment={post} /></Link>)
+      else return '즐겨찾기한 장소가 없습니다'
     }
   }
 

@@ -47,8 +47,9 @@ export default function Sidebar({setCurContent}) {
     <div>
     <MyPageSideBar>
         <div onClick={(e) => changeCurContent(e)}>내 게시글</div>
-        <div onClick={(e) => changeCurContent(e)}>회원정보 수정</div>
         <div onClick={(e) => changeCurContent(e)}>내 댓글</div>
+        <div onClick={(e) => changeCurContent(e)}>즐겨찾기</div>
+        <div onClick={(e) => changeCurContent(e)}>회원정보 수정</div>
         <div onClick={signOutHandler}>탈퇴하기</div>
         
     </MyPageSideBar>

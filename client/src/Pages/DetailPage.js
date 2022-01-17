@@ -57,6 +57,10 @@ const ImgContainer = styled.div`
     border-radius: 10px;
     padding: 1rem;
   }
+  
+  img {
+    width: 200px;
+  }
 `;
 const ContentContainer = styled.div`
   display: flex;
@@ -123,6 +127,31 @@ const CommentListContainer = styled.div`
   }
 `;
 
+const Forecast = styled.div`
+  .weather_ok {
+    display: flex;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    justify-content: space-between;
+    padding: 3%
+  }
+
+  .informBox {
+    margin: 5px;
+    justify-content: center;
+  }
+
+  .informImg {
+    width: 80px;
+  }
+
+  .distance {
+    justify-content: center;
+  }
+`;
+
 export default function DetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -130,8 +159,39 @@ export default function DetailPage() {
   const [loc, setLoc] = useState(null);
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
+  const [distance, setDistance] = useState([]);
+
+  const handleDistance = (data) => {
+    setDistance(data)
+  }
+
+  const modComment = async ([id, text]) => {
+    console.log(id, text);
+    const changed = await axios.patch(
+      `${process.env.REACT_APP_API_URL}/comment/${id}`,
+      { comment: text }
+    );
+
+    console.log("변경사항", changed);
+
+    const newComment = [...comment];
+    newComment.map((e) => {
+      if (e.id === id) e.comment = text;
+    });
+
+    setComment(newComment);
+  };
+
+  const delComment = (id) => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/comment/${id}`)
+      .then((result) => {
+        console.log(result);
+      });
+  };
 
   const handleText = (value) => {
+    if (value.length > 150) return alert("글자 수 초과입니다.");
     // console.log(value)
     setText(value);
   };
@@ -176,10 +236,10 @@ export default function DetailPage() {
         alert("삭제되었습니다");
         navigate("/");
       })
-      .catch(error => {
-        console.log(error)
-        alert('오류가 발생했습니다.')
-      })
+      .catch((error) => {
+        console.log(error);
+        alert("오류가 발생했습니다.");
+      });
   };
 
   useEffect(async () => {
@@ -193,12 +253,15 @@ export default function DetailPage() {
     const comments = await axios.get(
       `${process.env.REACT_APP_API_URL}/comment/${targetId}`
     );
-    console.log(comments)
+    console.log(comments);
     setComment(comments.data.data);
 
     // 데이터 추출 및 state로 저장
     const result = postData.data.data;
     handlePost(result);
+
+    // 날씨정보 받아오기
+    getWeather([result.lat, result.lng]);
 
     // 현재 위치를 받아 카카오지도 생성 및 날씨정보 수신
     navigator.geolocation.getCurrentPosition(
@@ -208,15 +271,11 @@ export default function DetailPage() {
           [result.lat, result.lng],
           true
         );
-        setLoc([position.coords.latitude, position.coords.longitude]);
-        // 날씨정보 받아오기
-        getWeather([result.lat, result.lng]);
+        setLoc([position.coords.latitude, position.coords.longitude]);        
       },
       (error) => {
         console.log("현재 위치 확인이 불가한 상황입니다. 목적지만 표시됩니다.");
         kakaoInit([result.lat, result.lng], [], false);
-        // 날씨정보 받아오기
-        getWeather([result.lat, result.lng]);
       }
     );
   }, []);
@@ -297,7 +356,7 @@ export default function DetailPage() {
       });
 
       // 이동경로 획득 함수, 정보 어떻게 보여줄지 생각해보기
-      let tmapRoute = await axios.post(
+      const walkRoute = await axios.post(
         // TMAP API로 도보이동 경로 요청
         "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
         tmapBody,
@@ -309,22 +368,36 @@ export default function DetailPage() {
         }
       );
 
-      console.log(tmapRoute);
+      // 도보이동 경로를 찾을 수 없는 경우, 차량경로를 제공
+      const carRoute = await axios.post(
+        "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
+        tmapBody,
+        {
+          "Accept-Language": "ko",
+          "Content-Type": "application/x-www-form-urlencoded",
+          Origin: "http://localhost:3000",
+          withCredentials: false,
+        }
+      );
 
-      if (tmapRoute.statusText === "No Content") {
-        // 도보이동 경로를 찾을 수 없는 경우, 차량경로를 제공
-        tmapRoute = await axios.post(
-          "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
-          tmapBody,
-          {
-            "Accept-Language": "ko",
-            "Content-Type": "application/x-www-form-urlencoded",
-            Origin: "http://localhost:3000",
-            withCredentials: false,
-          }
-        );
-        console.log("도보이동 경로를 찾을 수 없어 차량 경로를 안내합니다.");
+      // 도보경로가 없거나 시간이 30분 이상 걸리는 경우 차량경로를 사용
+      let tmapRoute;
+      if (
+        walkRoute.data.length === 0 ||
+        walkRoute.data.features[0].properties.totalTime > 1800
+      ) {
+        tmapRoute = carRoute;
+        console.log("차량 경로를 사용합니다.");
+      } else {
+        tmapRoute = walkRoute;
+        console.log("도보 경로를 사용합니다.");
       }
+
+      // setDistance로 총 거리와 시간 걸리는 시간을 저장
+      handleDistance([
+        tmapRoute.data.features[0].properties.totalDistance, // m단위
+        tmapRoute.data.features[0].properties.totalTime / 60, // 분 단위
+      ]);
 
       // 티맵 응답을 카카오맵이 처리가능한 형태로 저장
       let routePoint = []; // 폴리라인 지점들 저장하는 배열
@@ -338,9 +411,9 @@ export default function DetailPage() {
       const polyline = new kakao.maps.Polyline({
         // 카카오맵 폴리라인 생성
         path: routePoint, // 선을 구성하는 좌표배열 입니다
-        strokeWeight: 5, // 선의 두께 입니다
-        strokeColor: "#FFAE00", // 선의 색깔입니다
-        strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeWeight: 4, // 선의 두께 입니다
+        strokeColor: "#ff0000", // 선의 색깔입니다
+        strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle: "solid", // 선의 스타일입니다
       });
 
@@ -348,39 +421,30 @@ export default function DetailPage() {
     }
   };
 
-  // 날씨위젯 넣기( CORS 오류 픽스해야 함: withCredential 오류라는데 false로 줘도 안됨 )
-  const getWeather = async ([endLat, endLng]) => {
+  const getWeather = async ([lat, lng]) => {
     // 요청 보낼때 http or https를 안 붙이면 현재 주소가 baseUrl로 붙는다... 이건 몰랐네
     // 반대로 요청 url 앞에 뭘 붙이려면 baseUrl: ~~ 형식으로 작성해 요청하면 됨.
     const weather = await axios({
       method: "GET",
-      url: `https://api.openweathermap.org/data/2.5/onecall?lat=${endLat}&lon=${endLng}&exclude=daily,alerts&units=metric&appid=46ef901de3b2efd51f01cc77ce74f69b&lang=kr`,
+      url: `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=daily,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}&lang=kr`,
       withCredentials: false,
     });
-    const weatherData = weather.data.hourly.slice(0, 3);
-
-    // fetch(
-    //   `https://api.openweathermap.org/data/2.5/onecall?lat=${endLat}&lon=${endLng}&exclude=daily,alerts&units=metric&appid=46ef901de3b2efd51f01cc77ce74f69b&lang=kr`,
-    //   {credentials: 'omit',})
-    //   .then((response)=>{
-    //     return response.text();
-    //   }).then((data)=>{
-    //     console.log(data);
-    //   }).catch(err=>{
-    //     console.log(err);
-    //   }) // 와우 리을리?
+    const weatherData = weather.data.hourly;
 
     const airPol = await axios({
       method: "GET",
-      url: `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${endLat}&lon=${endLng}&appid=46ef901de3b2efd51f01cc77ce74f69b&lang=kr`,
+      url: `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_WEATHER_KEY}&lang=kr`,
       withCredentials: false,
     });
-    const air = airPol.data.list.slice(0, 3);
+    const air = airPol.data.list
 
     const result = weatherData.map((e) =>
       Object.assign(e, air[weatherData.indexOf(e)])
-    );
+    );    
+    // console.log('날씨', result)
+    // console.log('거리', distance)
     setWeather(result);
+
   };
 
   // 웹서비스로 넘겨주기
@@ -406,8 +470,8 @@ export default function DetailPage() {
   };
 
   const editPost = () => {
-    navigate(`/edit/${window.location.href.split("/")[4]}`)
-  } 
+    navigate(`/edit/${window.location.href.split("/")[4]}`);
+  };
 
   return (
     <DetailPageContainer>
@@ -417,7 +481,8 @@ export default function DetailPage() {
           <ImgContainer>
             <img
               className="mainImg"
-              src={post.image[0] ? post.image[0] : null} onError={(e) => e.target.src = `/img/gitHubLogo.png`}
+              src={post.image[0] ? post.image[0] : null}
+              onError={(e) => (e.target.src = `/img/gitHubLogo.png`)}
             ></img>
             {post.image && post.image.length > 1 ? (
               <div className="imgThumbnail">
@@ -432,9 +497,11 @@ export default function DetailPage() {
           </ImgContainer>
 
           <ContentContainer>
-            <pre><div className="contentDesc">
-              {post.content ? post.content : null}
-            </div></pre>
+            <pre>
+              <div className="contentDesc">
+                {post.content ? post.content : null}
+              </div>
+            </pre>
             <div className="contentToolbar">
               <span>
                 <button
@@ -484,6 +551,106 @@ export default function DetailPage() {
             </div>
           </ContentContainer>
 
+          <Forecast>
+            {distance[0] && weather ? 
+            <div className='weather_ok'>
+
+              {distance[0] ? 
+                <div className="informBox">
+                  {/* <img className='weather_img' src='/img/gitHubLogo.png'/> */}
+                  <p id="distance">거리</p>
+                  <meter
+                    min="0"
+                    max="10000"
+                    low="3000"
+                    high="6000"
+                    optimum="3000"
+                    value={distance[0]}
+                  />
+                </div>
+                : 'ERROR'
+              }
+
+              {distance[0] && weather[(distance[1] / 60).toFixed(0)] ?
+                <div className="informBox">
+                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
+                  <p>온도</p>
+                  <meter
+                    min="-30"
+                    max="40"
+                    low="30"
+                    high="60"
+                    optimum="0"
+                    value={weather[(distance[1] / 60).toFixed(0)].temp}
+                  />
+                </div>
+                : 'ERROR'
+              }
+
+              {distance[0] && weather[(distance[1] / 60).toFixed(0)].rain ? (
+                <div className="informBox">
+                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
+                  <p>
+                    {/* 강수량 */}
+                    {/* 300mm */}
+                  </p>
+                  <meter
+                    min="-10"
+                    max="100"
+                    low="40"
+                    high="60"
+                    optimum="0"
+                    value={weather[(distance[1] / 60).toFixed(0)].rain['1h']}
+                  />
+                </div>
+              ) : (
+                <div className="informBox">
+                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
+                  <p>
+                    자외선지수
+                    {/* {weather[(distance[1] / 60).toFixed(0)].uvi} */}
+                  </p>
+                  <meter
+                    min="0"
+                    max="10"
+                    low="4"
+                    high="7"
+                    optimum="2"
+                    value={weather[(distance[1] / 60).toFixed(0)].uvi}
+                  />
+                </div>
+              )}
+
+              {distance[0] && weather[(distance[1] / 60).toFixed(0)] ?
+                // 미세먼지예보는 2시간까지만 제공됨;
+                <div className="informBox">
+                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
+                  {/* 미세먼지 pm10 기준 */}
+                  {/* API가 제공하는 미세먼지 평가는 main.aqi를 가져오면 됨 */}
+                  <p>
+                    PM10
+                  </p>
+                  <meter
+                    min="0"
+                    max="80"
+                    low="30"
+                    high="60"
+                    optimum="0"
+                    value={weather[(distance[1] / 60).toFixed(0)].components['pm10']}
+                  />
+                </div>
+                : 'ERROR'
+              }
+
+            </div>
+            :
+            // 실패 시
+            <div className='weather_ok' style={{'justify-content': 'center'}}>
+              <img src='/img/loading.svg' style={{width: '60px'}}/>
+            </div>
+            }
+          </Forecast>
+
           <MapContainer id="map"></MapContainer>
 
           <CommentListContainer>
@@ -498,11 +665,19 @@ export default function DetailPage() {
             </div>
             {comment
               ? comment.map((e) => (
-                  <Comment comment={e} key={comment.indexOf(e)} />
+                  <Comment
+                    id={e.id}
+                    comment={e}
+                    key={comment.indexOf(e)}
+                    modComment={modComment}
+                    delComment={delComment}
+                  />
                 ))
               : "아직 댓글이 없습니다!"}
           </CommentListContainer>
-          <button onClick={() => console.log(post, comment, weather)}>웃음벨</button>
+          <button onClick={() => console.log(post, comment, weather)}>
+            웃음벨
+          </button>
         </div>
       ) : (
         "저런!"
