@@ -20,6 +20,7 @@ const ChageUserInfoContainer = styled.div`
       margin-bottom: 10px;
 
       ${(props) => {
+        
         if(props.img) {
           return (
             `
@@ -30,9 +31,13 @@ const ChageUserInfoContainer = styled.div`
             `
           )
         } else {
+          console.log(props.img)
           return (
             `
-            background-image: url(NADRI.png)
+            background-image: url(img/gitHubLogo.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
             `
           )
         }
