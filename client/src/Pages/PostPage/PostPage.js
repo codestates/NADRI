@@ -188,7 +188,9 @@ export default function PostPage () {
         <TextInputContainer>
           <input id="title" onChange={(event) => handleValue(event.target)} />
         
-          <pre><textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} /></pre>
+          <pre>
+            <textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} />
+          </pre>
         </TextInputContainer>
 
         <CheckboxContainer>

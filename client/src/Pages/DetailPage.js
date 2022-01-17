@@ -80,6 +80,10 @@ const ContentContainer = styled.div`
   margin-right: auto;
   margin-bottom: 5%;
 
+  .contentText {
+    white-space: pre-wrap;
+  }
+
   .contentDesc {
     border: 1px solid black;
     border-radius: 10px;
@@ -88,7 +92,7 @@ const ContentContainer = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 1rem;
-  }
+}
 
   .contentToolbar {
     border: 1px solid black;

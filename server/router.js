@@ -105,5 +105,6 @@ router.patch(
 
 // 테스트 라우팅
 router.post('/post/image', controllers.post.getPostImg)
+router.get('/auth/me/post', controllers.me.getUserPost)
 
 module.exports = router;

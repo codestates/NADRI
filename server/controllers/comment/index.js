@@ -11,17 +11,17 @@ module.exports = {
     // 인증정보가 검증되는지 확인
     const userData = chkValid(req);
     if (!userData) return res.status(401).json({ message: "Invalid Token" });
-    console.log(userData);
+    // console.log(userData);
 
     // DB에서 userId로 필터한 코멘트 찾아 보내기
     try {
       const testQuery = await sequelize.query(`
-        SELECT comments.postId, comments.comment, posts.image, posts.title, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt
+        SELECT comments.postId, comments.comment, posts.image, posts.title, DATE_FORMAT(comments.createdAt,'%Y-%m-%d') AS createdAt
         FROM comments
         JOIN posts ON comments.postId = posts.id
         WHERE comments.userId = ${userData.id} ORDER BY comments.updatedAt DESC
       `)
-
+    
       testQuery[0].map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
 
       console.log('testQuery', testQuery.length)
