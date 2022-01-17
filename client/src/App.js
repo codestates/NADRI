@@ -96,10 +96,10 @@ function App() {
 
   return (
     <div className="App">
-      <Randing />
-      {/* <Header />
+      {/* <Randing /> */}
+      <Header />
       <Body />
-      <Footer /> */}
+      <Footer />
       {
         LoginModalstate ? <Login />
         : ''
