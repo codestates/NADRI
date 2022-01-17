@@ -89,9 +89,11 @@ module.exports = {
       // DB에 정보 저장하기
       const create = await comments.create({
         userId: userData.id,
-        postId: req.params.id,
+        postId: Number(req.params.id),
         comment: req.body.comment,
       });
+
+      console.log(create.dataValues)
 
       const result = create.dataValues
       result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]
