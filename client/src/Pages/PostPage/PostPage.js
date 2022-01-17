@@ -27,7 +27,7 @@ export default function PostPage () {
     image: [],
     title: '',
     content: '',
-    public: false,
+    public: 1, // true
     categoryId: 1,
   });
 
@@ -60,14 +60,7 @@ export default function PostPage () {
   };
 
   const removeImg = (event, curImg) => {
-    // 이미지를 제거하는 함수
-    // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
-    // 실행만 시키거나 다른 변수에 저장시켜야 함.
-    // 그것도 싫다면 다른 함수를 적용해야 함
-
     URL.revokeObjectURL(event.target.src); // 제거할 링크를 revoke시켜 메모리 낭비를 방지(해야 한다네요)
-    // tmp.splice(event.target.id + 1, 1);
-    // console.log(event.target)
 
     const delImage = curImg
     const newImgArr = value.image.filter(x => {
@@ -78,9 +71,6 @@ export default function PostPage () {
   };
 
   const handleValue = (target) => {
-    // value state를 조정하는 함수. 좌표/주소는 한번에 처리해야 해서 복잡해짐
-    // id가 loc이면 한번에 업데이트
-    // console.log(target)
       setValue({
         ...value,
         [`${target.id}`]: target.value,
@@ -209,7 +199,8 @@ export default function PostPage () {
           <div className="checkbox">
             <input
               type="checkbox"
-              onClick={() => handleValue({ id: "public", value: !value.public })}
+              checked={value.public}
+              onChange={() => handleValue({ id: "public", value: !value.public })}
             />
             <span>{value.public ? "공개" : "비공개"}</span>
           </div>
@@ -221,18 +212,12 @@ export default function PostPage () {
                 handleValue({ id: "categoryId", value: Number(e.target.value) })
               }
             >
-              <option value={1}>테스트</option>
-              <option value={2}>여행</option>
-              <option value={3}>카페</option>
-              <option value={4}>맛집</option>
-              <option value={5}>산책</option>
+              <option value={1}>여행</option>
+              <option value={2}>카페</option>
+              <option value={3}>맛집</option>
+              <option value={4}>산책</option>
             </select>
           </div>
-
-        <div>
-          <button onClick={() => console.log(value, loc)}>ㅡㅡ</button>
-          <span>{loc.address}</span>
-        </div>
       </CheckboxContainer>
       </BottomContainer>
     </PostContainer>

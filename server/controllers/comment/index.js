@@ -16,7 +16,7 @@ module.exports = {
     // DB에서 userId로 필터한 코멘트 찾아 보내기
     try {
       const testQuery = await sequelize.query(`
-        SELECT comments.postId, comments.comment, posts.image, posts.title, comments.updatedAt 
+        SELECT comments.postId, comments.comment, posts.image, posts.title, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt
         FROM comments
         JOIN posts ON comments.postId = posts.id
         WHERE comments.userId = ${userData.id} ORDER BY comments.updatedAt DESC
@@ -55,7 +55,7 @@ module.exports = {
     try {
 
       const search = await sequelize.query(`
-        SELECT comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
+        SELECT comments.id, comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
       `, { type: QueryTypes.SELECT })
 
@@ -128,10 +128,7 @@ module.exports = {
     if (userData.id !== find.userId) return res.status(400).json({ message: "Bad Request3" });
 
     try {
-      // await find.update({comment: req.body.comment})
-      // await find.save()
-
-      // #2 tabel에서 update해주기 > find로 처리하지말고 테이블에서 where로 바로 찾아서 바꿔주는게 맞다
+      // #2 table에서 update해주기 > find로 처리하지말고 테이블에서 where로 바로 찾아서 바꿔주는게 맞다
       await comments.update({comment: req.body.comment}, {
         where: {id: req.params.id}
       })
@@ -159,7 +156,7 @@ module.exports = {
 
     try {
       const find = await comments.findOne({ where: { id: req.params.id } });
-      if (!find) res.status(400).json({ message: "Bad Request2" });
+      if (!find) return res.status(400).json({ message: "Bad Request2" });
 
       // 가져온 comment의 작성자 여부 확인
       if (userData.id !== find.userId)
