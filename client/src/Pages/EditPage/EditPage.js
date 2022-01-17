@@ -137,6 +137,10 @@ export default function EditPage() {
         responseType: "arraybuffer",
         data: { lnk: postData.image[i] },
       });
+
+      // 이미지에 오류 발생 시 넘어가기
+      if (!blobData.data) continue
+
       const convertFile = new File(
         [blobData.data],
         postData.image[i].split("/")[3],
