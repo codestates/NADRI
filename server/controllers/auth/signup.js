@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
   
     const userData = created.dataValues
     delete userData.password
-    // console.log(userData)
+    console.log('회원가입', userData)
     const accessToken = mkAccessToken(created.dataValues)
     sendAccessToken(res, accessToken)
     // console.log(accessToken)

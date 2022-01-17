@@ -38,18 +38,21 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-basis: 500px;
-  /* width: 500; */
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+  /* max-width: 750px; */
+  width: 500px;
+  height: 500px;
   margin-bottom: 5%;
+  overflow:hidden;
+  margin:0 auto;
   /* box-shadow: 4px 4px 4px rgb(100, 100, 100); */
   /* transition: box-shadow 0.1s, transform 0.1s; */
 
   .mainImg {
-    border: 1px solid black;
     border-radius: 10px;
     margin-bottom: 1rem;
+    width:100%;
+    height:100%; 
+    object-fit:cover
   }
 
   .imgThumbnail {
@@ -57,9 +60,13 @@ const ImgContainer = styled.div`
     border-radius: 10px;
     padding: 1rem;
   }
-  
-  img {
-    width: 200px;
+
+  .thumbnailImg {
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    max-height: 100px;
+    max-width: auto;
+    overflow: hidden;
   }
 `;
 const ContentContainer = styled.div`
@@ -117,13 +124,14 @@ const CommentListContainer = styled.div`
   margin-bottom: 5%;
   flex-direction: column;
   flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
+  /* align-content: center; */
+  /* justify-content: center; */
+  padding: 1% 3%;
 
   #textinput {
-    width: 80%;
+    width: 90%;
     height: 1.5em;
-    border: 1px;
+    border: 1px black;
   }
 `;
 
@@ -135,7 +143,7 @@ const Forecast = styled.div`
     border-radius: 10px;
     margin-bottom: 5%;
     justify-content: space-between;
-    padding: 3%
+    /* padding: 3% */
   }
 
   .informBox {
@@ -159,7 +167,7 @@ export default function DetailPage() {
   const [loc, setLoc] = useState(null);
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
-  const [distance, setDistance] = useState([]);
+  const [distance, setDistance] = useState([0, 0, false]);
 
   const handleDistance = (data) => {
     setDistance(data)
@@ -182,12 +190,15 @@ export default function DetailPage() {
     setComment(newComment);
   };
 
-  const delComment = (id) => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URL}/comment/${id}`)
-      .then((result) => {
-        console.log(result);
-      });
+  const delComment = async (id) => {
+    const del = await axios.delete(`${process.env.REACT_APP_API_URL}/comment/${id}`)
+    console.log(del)
+
+    const comments = await axios.get(
+      `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
+    );
+    
+    setComment(comments.data.data);
   };
 
   const handleText = (value) => {
@@ -211,7 +222,14 @@ export default function DetailPage() {
       }`,
       { comment: text }
     );
-    setComment([...comment, newComment.data.data]);
+
+    const comments = await axios.get(
+      `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
+    );
+    // console.log(comments);
+    setComment(comments.data.data);
+    // setComment([...comment, newComment.data.data]);
+
     handleText("");
   };
 
@@ -397,7 +415,10 @@ export default function DetailPage() {
       handleDistance([
         tmapRoute.data.features[0].properties.totalDistance, // m단위
         tmapRoute.data.features[0].properties.totalTime / 60, // 분 단위
+        true
       ]);
+
+      console.log('이동경로', tmapRoute)
 
       // 티맵 응답을 카카오맵이 처리가능한 형태로 저장
       let routePoint = []; // 폴리라인 지점들 저장하는 배열
@@ -483,18 +504,20 @@ export default function DetailPage() {
               className="mainImg"
               src={post.image[0] ? post.image[0] : null}
               onError={(e) => (e.target.src = `/img/gitHubLogo.png`)}
-            ></img>
+            />
             {post.image && post.image.length > 1 ? (
               <div className="imgThumbnail">
                 {/* 이미지 썸네일 공간 */}
                 {post.image && post.image[1]
                   ? post.image
                       .slice(1)
-                      .map((e) => <img src={e} key={Math.random()} />)
+                      .map((e) => <img className='thumbnailImg' src={e} key={Math.random()} />)
                   : null}
               </div>
             ) : null}
           </ImgContainer>
+
+          <MapContainer id="map"></MapContainer>
 
           <ContentContainer>
             <pre>
@@ -552,10 +575,10 @@ export default function DetailPage() {
           </ContentContainer>
 
           <Forecast>
-            {distance[0] && weather ? 
+            {distance[2] && weather ? 
             <div className='weather_ok'>
 
-              {distance[0] ? 
+              {weather ? 
                 <div className="informBox">
                   {/* <img className='weather_img' src='/img/gitHubLogo.png'/> */}
                   <p id="distance">거리</p>
@@ -571,7 +594,7 @@ export default function DetailPage() {
                 : 'ERROR'
               }
 
-              {distance[0] && weather[(distance[1] / 60).toFixed(0)] ?
+              {weather[(distance[1] / 60).toFixed(0)] ?
                 <div className="informBox">
                   {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
                   <p>온도</p>
@@ -587,7 +610,7 @@ export default function DetailPage() {
                 : 'ERROR'
               }
 
-              {distance[0] && weather[(distance[1] / 60).toFixed(0)].rain ? (
+              {weather[(distance[1] / 60).toFixed(0)].rain ? (
                 <div className="informBox">
                   {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
                   <p>
@@ -621,7 +644,7 @@ export default function DetailPage() {
                 </div>
               )}
 
-              {distance[0] && weather[(distance[1] / 60).toFixed(0)] ?
+              {weather[(distance[1] / 60).toFixed(0)] ?
                 // 미세먼지예보는 2시간까지만 제공됨;
                 <div className="informBox">
                   {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
@@ -651,8 +674,6 @@ export default function DetailPage() {
             }
           </Forecast>
 
-          <MapContainer id="map"></MapContainer>
-
           <CommentListContainer>
             <div>
               <input
@@ -675,7 +696,7 @@ export default function DetailPage() {
                 ))
               : "아직 댓글이 없습니다!"}
           </CommentListContainer>
-          <button onClick={() => console.log(post, comment, weather)}>
+          <button onClick={() => console.log(post, comment, distance, weather)}>
             웃음벨
           </button>
         </div>

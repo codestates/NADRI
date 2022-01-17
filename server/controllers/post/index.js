@@ -278,16 +278,17 @@ module.exports = {
 
     const targetUrl = req.body.lnk
 
-    let blobData = await axios({ // 응답 전체를 저장
-      method: 'GET',
-      url: targetUrl,
-      responseType: 'arraybuffer',
-    })
-    
-    // const testBlob = new Blob([blobData.data], { type: 'image/jpeg' })
+    try {
+      const blobData = await axios({ // 응답 전체를 저장
+        method: 'GET',
+        url: targetUrl,
+        responseType: 'arraybuffer',
+      })
 
-    console.log('Tlqkf', blobData.data)
-
-    res.send(blobData.data)
+      console.log('ImgData', blobData.data)
+      res.send(blobData.data)
+    } catch (err) {
+      res.send(null)
+    }
   }
 };
