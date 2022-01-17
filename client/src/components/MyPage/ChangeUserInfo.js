@@ -34,7 +34,7 @@ const ChageUserInfoContainer = styled.div`
           console.log(props.img)
           return (
             `
-            background-image: url(img/gitHubLogo.png);
+            background-image: url(/img/gitHubLogo.png);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
