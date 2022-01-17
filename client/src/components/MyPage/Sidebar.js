@@ -12,7 +12,8 @@ const MyPageSideBar = styled.div`
   border-radius: 10px;
   width: 20rem;
   height: 16rem;
-  margin-left: 15rem;
+  /* margin-left: 15rem; */
+  margin: auto;
 
   > div {
     display: flex;

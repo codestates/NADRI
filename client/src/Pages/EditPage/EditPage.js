@@ -142,6 +142,7 @@ export default function EditPage () {
         method: 'GET',
         url: postData.image[i],
         responseType: 'blob',
+        timeout: 65000,
         withCredentials: false,
         headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'}
       })
@@ -229,7 +230,9 @@ export default function EditPage () {
         <TextInputContainer>
           <input id="title" value={value.title} onChange={(event) => handleValue(event.target)} />
         
-          <pre><textarea id="content" rows="10" cols="50" value={value.content} onChange={(event) => handleValue(event.target)} /></pre>
+          <pre>
+            <textarea id="content" rows="10" cols="50" value={value.content} onChange={(event) => handleValue(event.target)} />
+          </pre>
         </TextInputContainer>
 
         <CheckboxContainer>

@@ -84,16 +84,18 @@ const UserProfileContainer = styled.div`
 
 const UserMainContents = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
 
   .content-container {
-    width: 45rem;
+    width: 36rem;
     height: 33rem;
     border: 1px solid black;
     overflow: auto;
     padding: 2rem;
     border-radius: 10px;
-    margin-right: 15rem;
+    /* margin-right: 15rem; */
+    margin: auto;
 
     >div:last-child {
       margin-bottom: 0;
@@ -120,25 +122,36 @@ export default function MyPage() {
   const curUserInfo = useSelector(state => state.getUserInfo);
 
   const [comments, setComments] = useState([])
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    console.log('mypage init')
+    console.log('myComment init')
     axios.get(`${process.env.REACT_APP_API_URL}/comment`)
     .then(res => {
       console.log(res)
       setComments(res.data.data)})
   }, [])
+
+  useEffect(()=> {
+    console.log('myPost init')
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/me/post`)
+    .then(res => {
+      console.log(res)
+      setPosts(res.data.data)
+    })
+  }, [])
   
   function contentRender() {
     if(curContent === '내 게시글') {
-      return dummy.map((post,idx) => <MyPosts key={idx} post={post}/>)
+      if(posts!==null) return posts.map((post, idx) => <MyPosts key={idx} post={post} />)
+      else return '작성한 게시글이 없습니다'
     }
     else if(curContent === '회원정보 수정') {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      if (comments.length > 1) return comments.map((comment, idx) => <Comment key={idx} comment={comment} />)
-      else return '댓글이 없습니다'
+      if (comments.length >= 1) return comments.map((comment, idx) => <Comment key={idx} comment={comment} />)
+      else return '작성한 댓글이 없습니다'
     }
   }
 
@@ -159,8 +172,6 @@ export default function MyPage() {
         </div>
       </div>
     </UserProfileContainer>
-
-
     <UserMainContents>
       <Sidebar setCurContent={setCurContent} />
         <div className="content-container">

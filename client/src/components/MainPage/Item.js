@@ -7,6 +7,7 @@ const ItemContainer = styled.div`
   height: 10rem;
   display: flex;
   border: 1px solid black;
+  border-radius: 10px;
   margin-bottom: 3rem;
   padding: 1rem;
   gap: 2rem;
@@ -29,7 +30,8 @@ const ItemContainer = styled.div`
 `
 
 const ItemImg = styled.img`
-  width: 8rem;
+  width: 7rem;
+  height: 7rem;
   border: 1px solid black;
   border-radius: 5px;
   
@@ -57,10 +59,20 @@ const ItemInfo = styled.div`
   }
 
   .desc {
-    height: 5rem;
+    height: 4rem;
+    width: 100%;
     border-radius: 5px;
     border: 1px solid black;
     padding: 0.2rem 0.2rem;
+    line-height: 1.2;
+
+    white-space: nowrap;
+    overflow: hidden;
+    white-space: normal;
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 `
 

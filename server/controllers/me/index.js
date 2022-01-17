@@ -65,18 +65,22 @@ module.exports = {
 
     // 인증정보가 유효한지 확인
     const userData = chkValid(req)
+    // console.log(userData)
     if (!userData) res.status(400).json({message: 'Invalid token'})
 
     try {
 
       const userPost = await posts.findAll({
-        where: {userId: userData.id}
+        where: {userId: userData.id},
+        order: [['createdAt', 'DESC']]
       })
+      console.log('유저포스트')
+      console.log(userPost);
+      userPost.map(e => e.dataValues.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
 
       if(userPost.length ===0){
         return res.status(200).json({data:null, message: '작성한 글이 없어요'})
       }
-      // console.log(userPost);
       res.status(200).json({data: userPost})
 
     } catch (error) {
