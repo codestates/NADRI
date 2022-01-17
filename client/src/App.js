@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { authState } from './redux/actions'
 import { useNavigate } from "react-router-dom";
+import Randing from './components/RandingPage/Randing';
 // axios.defaults.withCredentials = true;
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   const curAuthState = useSelector(state => state.changeAuthState);
   const curUserInfo = useSelector(state => state.getUserInfo);
   const store = useSelector(state => state)
-  // console.log(curUserInfo)
+  console.log(store)
   // console.log('app.js의 시작 로그인 상태 :'+curAuthState)
 
   const gLoginState = useSelector(state => state.gLoginReducer)
@@ -95,9 +96,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Randing />
+      {/* <Header />
       <Body />
-      <Footer />
+      <Footer /> */}
       {
         LoginModalstate ? <Login />
         : ''

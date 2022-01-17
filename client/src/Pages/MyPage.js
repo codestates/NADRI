@@ -44,7 +44,10 @@ const UserProfileContainer = styled.div`
       } else {
         return (
           `
-          background-image: url(NADRI.png)
+          background-image: url(img/gitHubLogo.png);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
           `
         )
       }
