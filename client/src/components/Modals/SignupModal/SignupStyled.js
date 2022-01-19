@@ -85,6 +85,7 @@ export const ModalHead = styled.div`
 
 export const ModalInput = styled.div`
   margin: 2rem 0 1rem;
+
   label {
     text-align: left;
     display: block;
@@ -107,7 +108,6 @@ export const ModalInput = styled.div`
 
   > form {
     .emailInput {
-      
       >div {
         display: flex;
         justify-content: space-between;
@@ -140,7 +140,7 @@ export const Oauth = styled.div`
     font-size: 20px;
     color: rgb(73, 80, 87);
     font-weight: 700;
-    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
     position: relative;
     cursor: pointer;
 
@@ -188,14 +188,30 @@ export const Oauth = styled.div`
 
   & > div:first-child {
     padding: 0.3rem;
+    
+  }
+
+  & > div:active {
+    position: relative;
+    top: 2px;
   }
 
   & > div:nth-child(2) {
     box-shadow: none;
   }
 
+  & > div:nth-child(2):active {
+    position: relative;
+    top: 2px;
+  }
+
   & > div:last-child {
     padding: 0.3rem;
+  }
+
+  & > div:last-child:active {
+    position: relative;
+    top: 2px;
   }
 
   @media (max-width: 650px){

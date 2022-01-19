@@ -93,6 +93,11 @@ export default function Login () {
   }
   
 
+  function handleKeyPress(e) {
+    if(e.key === 'Enter') {
+      postLogin()
+    }
+  }
 
   return (
     <ModalBackdrop onClick={ModalHandler}>
@@ -114,9 +119,9 @@ export default function Login () {
         <ModalInput>
           <form>
             <label htmlFor="email">이메일</label>
-            <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
+            <input autoComplete="off" type={"text"} name="email" onKeyPress={(e) => handleKeyPress(e)} onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input autoComplete="off" type={"password"} name="password" onChange={onChange}></input>
+            <input autoComplete="off" type={"password"} name="password" onKeyPress={(e) => handleKeyPress(e)} onChange={onChange}></input>
           </form>
         </ModalInput>
 
