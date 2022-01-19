@@ -160,11 +160,11 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      if (comments.length > 1) return comments.map((comment, idx) => <Link to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
+      if (comments.length > 0) return comments.map((comment, idx) => <Link to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
       else return '댓글이 없습니다'
     }
     else if(curContent === '즐겨찾기') {
-      if (likes.length > 1) return likes.map((post, idx) => <Link to={`/detail/${post.postId}`}><Comment key={idx} comment={post} /></Link>)
+      if (likes.length > 0) return likes.map((post, idx) => <Link to={`/detail/${post.postId}`}><Comment key={idx} comment={post} /></Link>)
       else return '즐겨찾기한 장소가 없습니다'
     }
   }
