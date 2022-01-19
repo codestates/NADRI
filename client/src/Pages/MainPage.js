@@ -91,11 +91,6 @@ const ItemContainer = styled.div`
 
 export default function Main () {
 
-  // const [loc, setLoc] = useState({
-  //   lat: 0,
-  //   lng: 0,
-  //   address: '',
-  // })
   const [origPost, setOrigPost] = useState([])
   const [points, setPoints] = useState([])
   const handlePoints = (data) => {
@@ -135,8 +130,6 @@ export default function Main () {
     let sortTarget = [...origPost]
     if (option[1] === 5) sortTarget = [...origPost]
     else sortTarget = sortTarget.filter(e => e.categoryId === option[1])
-
-    // console.log('filtered', sortTarget)
 
     sortTarget = sortTarget.sort((a, b) => {
       return a[`${option[0]}`] - b[`${option[0]}`]
@@ -210,7 +203,15 @@ export default function Main () {
       // 인포윈도우 추가하기
       // 마우스 오버될 때 표시할 인포윈도우
       // 여기 컴포넌트 들어가려나?
-      const iwContent = `<div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>`;
+      // const iwContent = `<div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>`;
+      const testImgUrl = 'https://nadri.s3.ap-northeast-2.amazonaws.com/6131642483890263.jpeg'
+      const iwContent = `
+      <div>
+        <div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>
+        <div"><img src='${testImgUrl}' /></div>
+      </div>
+      `;
+      
       const infowindow = new kakao.maps.InfoWindow({
         content : iwContent
       });

@@ -7,12 +7,6 @@ const {
 require("dotenv").config();
 
 module.exports = async (req, res) => {
-  /*
-    전송되는 PW는 해싱된 값으로 받는 게 좋을듯
-    (프론트엔드 단에서 처리해줘야 함...)
-    > 프론트에서 해싱하는것은 아무짝에 쓸모없음
-  */
-
   if (!req.body.email) return res.status(400).json({ message: "Wrong ID" });
   if (!req.body.password)
     return res.status(400).json({ message: "Wrong Password" });
@@ -28,6 +22,9 @@ module.exports = async (req, res) => {
   // const result = verifyPW(req.body.password, userInfo.password)
   // if (!result)
   //   return res.status(400).json({ message: "Wrong Password" });
+
+  // 로컬용 평문 PW 검증
+  if (userInfo.password !== req.body.password) return res.status(400).json({ message: "Wrong Password" });
 
   try {
     // 유저정보가 있으면? > 중요정보를 삭제하고 사인 후 전달

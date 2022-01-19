@@ -7,13 +7,15 @@ import Comment from "./../components/Comment";
 import { useNavigate } from "react-router-dom";
 
 const DetailPageContainer = styled.div`
-  padding: 3rem 9vw;
-  display: flex;
-  height: 100%;
-  /* flex-direction: column; */
-  flex-wrap: wrap;
-  justify-content: space-around;
-  /* align-content: flex-start; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; 
+  .loadingImg {
+
+  }
 `;
 
 const fontsize = {
@@ -22,145 +24,418 @@ const fontsize = {
 };
 
 const Title = styled.h2`
-  width: 100%;
+  width: 30vw;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 5%;
-  margin-top: 5%;
+  margin-bottom: 1%;
+  margin-top: 2%;
   padding: 1rem;
   color: black;
   font-size: ${fontsize.Titlefontsize};
   font-weight: bold;
   text-align: center;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  border-radius: 10px;
+  background-color: #f7f7f7;
+  
+  @media screen and (max-width: 900px) {
+    width: 70vw;
+    margin-bottom: 1rem;
+  }
 `;
+
+const PostContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const Dropdown = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* float: right; */
+  width: 82vw;
+  max-width: 1600px;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+
+  #bookmark {
+    cursor: pointer;
+  }
+
+  #nav ul img {
+    width: 2rem;
+  }
+
+  #nav {
+    list-style: none;
+    margin: 0 auto;
+  }
+
+  #nav li {
+    /* float: right; */
+    position: relative;
+    padding: 0;
+    z-index: 1;
+  }
+
+  #nav li ul {
+    left: -25%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    background-color: #dfe3ee;
+  }
+
+  #nav li span {
+    display: block;
+    text-decoration: none;
+    font-size: 1.2rem;
+    width: 3rem;
+    margin: 0.5rem 0;
+  }
+
+  #nav li:hover > span {
+    font-size: 1.4rem;
+    color: black;
+    margin: 0;
+    text-shadow: 0 1px 1px;
+    width: 3rem;
+    cursor: pointer;
+    margin: 0.5rem 0;
+
+  }
+
+  #nav ul li {
+    float: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 3rem;
+    background: white;
+    text-align: center;
+    opacity: 0;
+  }
+
+  #nav li:hover ul {
+    opacity: 1;
+  }
+
+  #nav li:hover ul li {
+    overflow: visible;
+    padding: 0;
+  }
+`
+
+const TopContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`
 
 const ImgContainer = styled.div`
+  width: 40vw;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  flex-basis: 500px;
-  /* max-width: 750px; */
-  width: 500px;
-  height: 500px;
-  margin-bottom: 5%;
-  overflow:hidden;
-  margin:0 auto;
-  /* box-shadow: 4px 4px 4px rgb(100, 100, 100); */
-  /* transition: box-shadow 0.1s, transform 0.1s; */
+  margin-right: 1rem;
+  height: 40vw;
 
-  .mainImg {
-    border-radius: 10px;
+  @media screen and (max-width: 900px) {
+    margin: 0 auto;
+    width: 80vw;
     margin-bottom: 1rem;
-    width:100%;
-    height:100%; 
-    object-fit:cover
+    height: 100%;
+  }
+`
+
+const MainImg = styled.img`
+  display: flex;
+  height: 30vw; // 16:9 하려면 22.5
+  width: 40vw;
+  
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  
+  @media screen and (max-width: 900px) {
+    width: 80vw;
+    height: 50vw;
+  }
+`
+
+const SubImgContainer = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  height: 10vw;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 100px;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  background-color: #f9fafc;
+
+  .subImg {
+    width: 12vw;
+    height: 8vw;
+    margin: 0 auto;
+    overflow: auto; // 이건 맞는지 확인 필요
+    border: 1px solid grey;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    border-radius: 10px;
+    object-fit: cover;
+    max-width: 120px;
+    max-height: 80px;
+    cursor: pointer;
   }
 
-  .imgThumbnail {
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 1rem;
+  @media screen and (max-width: 900px) {
+    width: 80vw;
+    height: 10vw;
   }
+`
 
-  .thumbnailImg {
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    max-height: 100px;
-    max-width: auto;
-    overflow: hidden;
-  }
-`;
-const ContentContainer = styled.div`
+const NavContainer = styled.div`
+  width: 40vw;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  margin-left: 1rem;
+  height: 40vw;
+
+  @media screen and (max-width: 900px) {
+    width: 80vw;
+    margin: 0 auto;
+    height: 60vw;
+  }
+`
+
+const MapContainer = styled.div`
+  display: flex;
+  height: 30vw;
   border-radius: 10px;
-  flex-basis: 500px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5%;
+  width: 100%;
+  z-index: 0;
+  margin-bottom: 1rem;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+
+  @media screen and (max-width: 900px) {
+    height: 50vw;
+  }
+
+  .wrap {
+    position: absolute;
+    left: 0;
+    bottom: -6.5rem;
+    width: 10rem;
+    height: 6rem;
+    margin-left: -80px;
+    text-align: left;
+    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .wrap .info {
+    width: 10rem;
+    border-radius: 10px;
+    border-bottom: 2px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    background: #fff;
+  }
+  .info .title {
+    padding: 5px 0 0 10px;
+    height: 2rem;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .imojiContianer{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+  }
+
+  .info .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: #888;
+    width: 17px;
+    height: 17px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+  .info .close:hover {cursor: pointer;}
+
+`
+
+const Forecast = styled.div`
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  height: 10vw;
+  max-height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  background-color: #f9fafc;
+
+  @media screen and (max-width: 650px) {
+    height: 12vw;
+  }
+
+  .informBox {
+    width: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+
+    @media screen and (max-width: 650px) {
+      padding-top: 0.2rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  .infoContainer{
+    padding-top: 0.4rem;
+    max-width: 150px;
+    font-size: 2rem;
+    overflow: hidden;
+    margin: 0 auto;
+    
+
+    @media screen and (max-width: 900px) {
+      font-size: 1.5rem;
+    }
+    @media screen and (max-width: 470px) {
+      font-size: 1rem;
+      height: 10vw;
+    }
+  }
+
+  #weatherImg {
+    object-fit: cover;
+    width: 4rem;
+    height: 4rem;
+  }
+`
+
+const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  @media screen and (max-width: 900px) {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`
+
+const ContentContainer = styled.div`
+  margin-right: 1rem;
+  width: 40vw;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  padding: 1rem;
+  max-width: 800px;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  background-color: #f9fafc;
 
   .contentText {
     white-space: pre-wrap;
   }
 
   .contentDesc {
-    border: 1px solid black;
+    /* border: 1px solid black;
     border-radius: 10px;
     margin-left: 1rem;
     margin-right: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1rem; */
+    white-space: pre-line;
+    background-color: #fdfdff;
 }
 
   .contentToolbar {
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
+    /* border: 1px solid black; */
+    /* border-radius: 10px; */
+    /* margin-left: 1rem; */
+    /* margin-right: 1rem; */
+    /* margin-bottom: 1rem; */
+    /* padding: 1rem; */
   }
-`;
 
-const MapContainer = styled.div`
-  display: flex;
-  flex-basis: 500px;
-  border: 1px solid black;
-  border-radius: 10px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5%;
-  height: 500px;
-  z-index: 0;
+  @media screen and (max-width: 900px) {
+    width: 80vw;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
 `;
 
 const CommentListContainer = styled.div`
-  display: flex;
-  flex-basis: 500px;
-  border: 1px solid black;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  background-color: #f9fafc;
+  margin-left: 1rem;
+  width: 40vw;
+  /* border: 1px solid black; */
   border-radius: 10px;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 5%;
+  display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  /* align-content: center; */
-  /* justify-content: center; */
-  padding: 1% 3%;
+  padding: 0.5rem;
+  max-width: 800px;
 
   #textinput {
-    width: 90%;
-    height: 1.5em;
-    border: 1px black;
+    width: 32vw;
+    height: 1.5rem;
+    font-size: 1rem;
   }
-`;
 
-const Forecast = styled.div`
-  .weather_ok {
+  .writeComment {
     display: flex;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 900px) {
     width: 100%;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-bottom: 5%;
-    justify-content: space-between;
-    /* padding: 3% */
-  }
+    margin: 0 auto;
 
-  .informBox {
-    margin: 5px;
-    justify-content: center;
-  }
-
-  .informImg {
-    width: 80px;
-  }
-
-  .distance {
-    justify-content: center;
+    #textinput {
+      width: 85%;
+      height: 1.5rem;
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -168,23 +443,49 @@ export default function DetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState(null);
-  const [loc, setLoc] = useState(null);
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
   const [distance, setDistance] = useState([0, 0, false]);
+
+  // 자외선 단계 구분(1,2 / 3-5 / 6,7 / 8~)
+  const uviIndex = {
+    0: '#008000', 1: '#008000', 2: '#008000',
+    3: '#ffa500', 4: '#ffa500', 5: '#ffa500',
+    6: '#FF0000', 7: '#FF0000',
+    8: '#000000'
+  }
+
+  // 미세먼지 단계 구분(좋음, 보통, 나쁨, 매우나쁨)
+  const aqiIndex = {
+    1: ['#008000', '좋음'],
+    2: ['#ffa500', '보통'],
+    3: ['#FF0000', '나쁨'],
+    4: ['#744700', '위험'],
+    5: ['#000000', '💀']
+  }
+
+  // 날씨 색상구분
+  const weatherIndex = {
+    '01': ['#008000', '맑음'],
+    '02': ['#008000', '흐림'],
+    '03': ['#ffa500', '흐림'],
+    '04': ['#ffa500', '흐림'],
+    '09': ['#FF0000', '강우'],
+    '10': ['#FF0000', '강우'],
+    '11': ['#FF0000', '뇌우'],
+    '13': ['#ffa500', '강설'],
+    '50': ['#FF0000', '안개'],
+  }
 
   const handleDistance = (data) => {
     setDistance(data)
   }
 
   const modComment = async ([id, text]) => {
-    console.log(id, text);
-    const changed = await axios.patch(
+    await axios.patch(
       `${process.env.REACT_APP_API_URL}/comment/${id}`,
       { comment: text }
     );
-
-    console.log("변경사항", changed);
 
     const newComment = [...comment];
     newComment.map((e) => {
@@ -196,7 +497,6 @@ export default function DetailPage() {
 
   const delComment = async (id) => {
     const del = await axios.delete(`${process.env.REACT_APP_API_URL}/comment/${id}`)
-    console.log(del)
 
     const comments = await axios.get(
       `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
@@ -207,20 +507,22 @@ export default function DetailPage() {
 
   const handleText = (value) => {
     if (value.length > 150) return alert("글자 수 초과입니다.");
-    // console.log(value)
     setText(value);
   };
 
-  const handlePost = (data) => {
-    setPost(data);
+  const handlePost = (id, value) => {
+    setPost({
+      ...post,
+      [`${id}`]: value
+    })
   };
 
   const sendComment = async () => {
     // 문자열 비었으면 전송X
     if (text.length === 0) return null;
 
-    // 전송후 받은 데이터를 comment에 추가
-    const newComment = await axios.post(
+    // 문자열 전송
+    await axios.post(
       `${process.env.REACT_APP_API_URL}/comment/${
         window.location.href.split("/")[4]
       }`,
@@ -230,10 +532,8 @@ export default function DetailPage() {
     const comments = await axios.get(
       `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
     );
-    // console.log(comments);
-    setComment(comments.data.data);
-    // setComment([...comment, newComment.data.data]);
 
+    setComment(comments.data.data);
     handleText("");
   };
 
@@ -254,12 +554,10 @@ export default function DetailPage() {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/post/${id}`)
       .then((result) => {
-        console.log(result);
         alert("삭제되었습니다");
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
         alert("오류가 발생했습니다.");
       });
   };
@@ -275,12 +573,12 @@ export default function DetailPage() {
     const comments = await axios.get(
       `${process.env.REACT_APP_API_URL}/comment/${targetId}`
     );
-    console.log(comments);
+
     setComment(comments.data.data);
 
     // 데이터 추출 및 state로 저장
     const result = postData.data.data;
-    handlePost(result);
+    setPost(result);
 
     // 날씨정보 받아오기
     getWeather([result.lat, result.lng]);
@@ -292,8 +590,7 @@ export default function DetailPage() {
           [position.coords.latitude, position.coords.longitude],
           [result.lat, result.lng],
           true
-        );
-        setLoc([position.coords.latitude, position.coords.longitude]);        
+        );    
       },
       (error) => {
         console.log("현재 위치 확인이 불가한 상황입니다. 목적지만 표시됩니다.");
@@ -302,7 +599,7 @@ export default function DetailPage() {
     );
   }, []);
 
-  // 카카오 지도 생성부터 폴리라인 생성까지 진행하는 함수
+  // 카카오 지도 생성부터 폴리라인 생성까지 진행
   const kakaoInit = async ([lat, lng], [endLat, endLng], result) => {
     // 지도 생성
     const map = new kakao.maps.Map(document.getElementById("map"), {
@@ -310,14 +607,76 @@ export default function DetailPage() {
       level: 5,
     });
 
-    // 지도 컨트롤러 추가
-    map.addControl(
-      new kakao.maps.ZoomControl(),
-      kakao.maps.ControlPosition.RIGHT
-    );
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-    if (!result) {
-      // 지오로케이션이 실패한 경우 도착지에만 마커 생성
+    // 길찾기 경로 확인
+    const now = await axios({
+      method: "GET",
+      url: `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${lng}&y=${lat}&output_coord=WCONGNAMUL`,
+      headers: { Authorization: "KakaoAK c62c1cd6ebb77ae75a755cdc15bb59e1" },
+      withCredentials: false,
+    });
+
+    const dest = await axios({
+      method: "GET",
+      url: `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${endLng}&y=${endLat}&output_coord=WCONGNAMUL`,
+      headers: { Authorization: "KakaoAK c62c1cd6ebb77ae75a755cdc15bb59e1" },
+      withCredentials: false,
+    });
+
+    const st = now.data.documents[0],
+      nd = dest.data.documents[0];
+
+    const landingLink = [
+      `https://map.kakao.com/?map_type=TYPE_MAP&target=walk&rt=${st.x},${st.y},${nd.x},${nd.y}`,
+      `https://map.kakao.com/?map_type=TYPE_MAP&target=car&rt=${st.x},${st.y},${nd.x},${nd.y}`,
+      `https://map.kakao.com/?map_type=TYPE_MAP&target=bike&rt=${st.x},${st.y},${nd.x},${nd.y}`
+    ]
+
+    const marker = new kakao.maps.Marker({
+      map: map, 
+      position: new kakao.maps.LatLng(endLat, endLng),
+      zIndex: 3
+    });
+
+    const content = document.createElement('div')
+
+    content.innerHTML = 
+    '<div class="wrap">' + 
+    '    <div class="info">' + 
+    '        <div class="title">' + 
+    '            지도에서 보기' + 
+    '        </div>' + 
+    '        <div class="imojiContianer">' +
+    `         <img class='landingImoji' src='/img/walk.png' onclick=window.open('${landingLink[0]}')></img> ` +
+    `         <img class='landingImoji' src='/img/bike.png' onclick=window.open('${landingLink[2]}')></img> ` +
+    `         <img class='landingImoji' src='/img/car.png' onclick=window.open('${landingLink[1]}')></img> ` +
+    '        </div>' + 
+    '    </div>' +    
+    '</div>';
+
+    const overlay = new kakao.maps.CustomOverlay({
+      content: content,
+      map: map,
+      position: new kakao.maps.LatLng(endLat, endLng),
+      zIndex: 999
+    });
+
+    kakao.maps.event.addListener(marker, 'click', function() {
+      overlay.setMap(map);
+    });
+
+    const closeOverlay = () => {
+      overlay.setMap(null);
+    }
+
+    content.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeOverlay()
+    })
+
+    if (!result) { // 지오로케이션 실패: 도착지에만 마커 생성
       // 마커 생성
       let marker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(lat, lng),
@@ -347,9 +706,8 @@ export default function DetailPage() {
       const markerImg =
         "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-      for (let i = 0; i < points.length; i++) {
-        // 마커 생성
-        // 마커 이미지를 생성합니다
+      for (let i = 0; i < 1; i++) {
+        // 마커 이미지 생성
         let markerImage = new kakao.maps.MarkerImage(
           markerImg,
           new kakao.maps.Size(24, 35)
@@ -360,13 +718,14 @@ export default function DetailPage() {
           position: points[i].latlng, // 마커를 표시할 위치
           title: points[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           image: markerImage, // 마커 이미지
+          zIndex: 1,
         });
       }
 
       const tmapBody = qs.stringify({
         // 지오로케이션 성공: 티맵 API로 경로 받아와서 처리
         // 티맵은 형식이 조금 달라서 stringify해줘야 함.
-        appKey: "l7xxa7d78cec498847918ee4bfadf4851cc9",
+        appKey: process.env.REACT_APP_TMAP_KEY,
         startX: lng, // locPosition.La
         startY: lat, // locPosition.Ma
         endX: endLng,
@@ -377,20 +736,7 @@ export default function DetailPage() {
         endName: "도착지",
       });
 
-      // 이동경로 획득 함수, 정보 어떻게 보여줄지 생각해보기
-      const walkRoute = await axios.post(
-        // TMAP API로 도보이동 경로 요청
-        "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
-        tmapBody,
-        {
-          "Accept-Language": "ko",
-          "Content-Type": "application/x-www-form-urlencoded",
-          Origin: "http://localhost:3000",
-          withCredentials: false,
-        }
-      );
-
-      // 도보이동 경로를 찾을 수 없는 경우, 차량경로를 제공
+      // 차량경로 수신
       const carRoute = await axios.post(
         "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
         tmapBody,
@@ -402,17 +748,29 @@ export default function DetailPage() {
         }
       );
 
-      // 도보경로가 없거나 시간이 30분 이상 걸리는 경우 차량경로를 사용
-      let tmapRoute;
-      if (
-        walkRoute.data.length === 0 ||
-        walkRoute.data.features[0].properties.totalTime > 1800
-      ) {
-        tmapRoute = carRoute;
-        console.log("차량 경로를 사용합니다.");
+      let walkRoute
+      // 이동거리가 5km 이하면 도보경로를 수신
+      if (carRoute.data.features[0].properties.totalDistance <= 5000) {
+        walkRoute = await axios.post(
+          // TMAP API로 도보이동 경로 요청
+          "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
+          tmapBody,
+          {
+            "Accept-Language": "ko",
+            "Content-Type": "application/x-www-form-urlencoded",
+            Origin: "http://localhost:3000",
+            withCredentials: false,
+          }
+        );
+      }
+
+      let tmapRoute
+      if (!walkRoute || walkRoute.statusText === 'No Content') { // 도보경로가 존재하지 않으면(수신하지 않았거나, 데이터가 존재하지 않는 경우)
+        console.log('차량 경로를 안내합니다')
+        tmapRoute = carRoute
       } else {
-        tmapRoute = walkRoute;
-        console.log("도보 경로를 사용합니다.");
+        console.log('도보 경로를 안내합니다')
+        tmapRoute = walkRoute
       }
 
       // setDistance로 총 거리와 시간 걸리는 시간을 저장
@@ -422,7 +780,7 @@ export default function DetailPage() {
         true
       ]);
 
-      console.log('이동경로', tmapRoute)
+      // console.log('이동경로', tmapRoute)
 
       // 티맵 응답을 카카오맵이 처리가능한 형태로 저장
       let routePoint = []; // 폴리라인 지점들 저장하는 배열
@@ -447,8 +805,6 @@ export default function DetailPage() {
   };
 
   const getWeather = async ([lat, lng]) => {
-    // 요청 보낼때 http or https를 안 붙이면 현재 주소가 baseUrl로 붙는다... 이건 몰랐네
-    // 반대로 요청 url 앞에 뭘 붙이려면 baseUrl: ~~ 형식으로 작성해 요청하면 됨.
     const weather = await axios({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=daily,alerts&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}&lang=kr`,
@@ -466,246 +822,152 @@ export default function DetailPage() {
     const result = weatherData.map((e) =>
       Object.assign(e, air[weatherData.indexOf(e)])
     );    
-    // console.log('날씨', result)
-    // console.log('거리', distance)
+
     setWeather(result);
-
-  };
-
-  // 웹서비스로 넘겨주기
-  const goKakoMap = async (lat, lng, by) => {
-    const now = await axios({
-      method: "GET",
-      url: `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${loc[1]}&y=${loc[0]}&output_coord=WCONGNAMUL`,
-      headers: { Authorization: "KakaoAK c62c1cd6ebb77ae75a755cdc15bb59e1" },
-      withCredentials: false,
-    });
-
-    const dest = await axios({
-      method: "GET",
-      url: `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${lng}&y=${lat}&output_coord=WCONGNAMUL`,
-      headers: { Authorization: "KakaoAK c62c1cd6ebb77ae75a755cdc15bb59e1" },
-      withCredentials: false,
-    });
-
-    const st = now.data.documents[0],
-      nd = dest.data.documents[0];
-
-    return `https://map.kakao.com/?map_type=TYPE_MAP&target=${by}&rt=${st.x},${st.y},${nd.x},${nd.y}`;
   };
 
   const editPost = () => {
     navigate(`/edit/${window.location.href.split("/")[4]}`);
   };
 
+  // 썸네일 클릭 시 이미지 위치 변경 > 차후 수정할 수 있음
+  const changeImg = (idx) => {
+    const tmp = [...post.image], target = post.image[idx+1]
+    tmp.splice(idx+1, 1) // 해당 인덱스에서 제거
+    tmp.unshift(target) // 타겟이미지를 맨 앞에 추가
+    handlePost('image', tmp)
+  }
+
   return (
     <DetailPageContainer>
       {post ? (
         <div>
           <Title>{post.title ? post.title : null}</Title>
-          <ImgContainer>
-            <img
-              className="mainImg"
-              src={post.image[0] ? post.image[0] : null}
-              onError={(e) => (e.target.src = `/img/gitHubLogo.png`)}
-            />
-            {post.image && post.image.length > 1 ? (
-              <div className="imgThumbnail">
-                {/* 이미지 썸네일 공간 */}
-                {post.image && post.image[1]
-                  ? post.image
-                      .slice(1)
-                      .map((e) => <img className='thumbnailImg' src={e} key={Math.random()} />)
-                  : null}
+
+          <PostContainer>
+            <Dropdown>
+              <div>
+                <img id='bookmark' onClick={() => favorite(post.id)} src='/img/bookmark.png'/>
+                </div>
+              <div>
+                <ul id='nav'>
+                  <li><img src='/img/dropdown.png' />
+                    <ul>
+                      <li><span onClick={editPost}>수정</span></li>
+                      <li><span onClick={() => deletePost(post.id)}>삭제</span></li>
+                      <li><span>신고</span></li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
-            ) : null}
-          </ImgContainer>
+            </Dropdown>
+            <TopContainer>
+              <ImgContainer>
+                <MainImg 
+                  src={post.image[0]} 
+                  onError={(e) => (e.target.src = `/img/gitHubLogo.png`)} 
+                  style={{height: post.image.length === 1 ? /*1이면 확장 */'100%' : /*아니면 평소처럼 */null }}
+                />
+                {post && post.image.length === 1 ? 
+                  null
+                  : <SubImgContainer>
+                    {post.image.length > 1 ?
+                      post.image.slice(1).map((e, idx) => <img className='subImg' src={e} key={idx} onClick={() => changeImg(idx)} />)
+                    : null}
+                  </SubImgContainer>
+                }
+              </ImgContainer>
 
-          <MapContainer id="map"></MapContainer>
+            <NavContainer>
+                <MapContainer id="map" />
+                {distance[2] && weather ? 
+                <Forecast>
+                    {weather[(distance[1] / 60).toFixed(0)] ?
+                      <div className="informBox">
+                        <div>날씨</div>
+                        <div className='infoContainer' style={{color: weatherIndex[weather[(distance[1] / 60).toFixed(0)].weather[0].icon.slice(0, 2)][0]}}>
+                          {weatherIndex[weather[(distance[1] / 60).toFixed(0)].weather[0].icon.slice(0, 2)][1]}
+                        </div>
+                      </div>
+                      : 'ERR'
+                    }
+                    {weather ? 
+                      <div className="informBox">
+                        <div>거리({distance[0] > 1000 ? 'km' : 'm'})</div>
+                        <div className='infoContainer'>
+                        {distance[0] > 1000 ? (distance[0] / 1000).toFixed(1) : distance[0]}
+                        </div>
+                      </div>
+                      : 'ERR'
+                    }
 
-          <ContentContainer>
-            <pre>
-              <div className="contentDesc">
-                {post.content ? post.content : null}
-              </div>
-            </pre>
-            <div className="contentToolbar">
-              <span>
-                <button
-                  onClick={() => {
-                    goKakoMap(post.lat, post.lng, "walk").then((data) =>
-                      window.open(data)
-                    );
-                  }}
-                >
-                  도보 길찾기
-                </button>
-              </span>
-              <span>
-                <button
-                  onClick={() => {
-                    goKakoMap(post.lat, post.lng, "car").then((data) =>
-                      window.open(data)
-                    );
-                  }}
-                >
-                  차량 길찾기
-                </button>
-              </span>
-              <span>
-                <button
-                  onClick={() => {
-                    goKakoMap(post.lat, post.lng, "bike").then((data) =>
-                      window.open(data)
-                    );
-                  }}
-                >
-                  자전거 길찾기
-                </button>
-              </span>
-              <span>
-                <button onClick={() => deletePost(post.id)}>삭제</button>
-              </span>
-              <span>
-                <button onClick={editPost}>수정</button>
-              </span>
-              <span>
-                <button onClick={() => favorite(post.id)}>즐겨찾기</button>
-              </span>
-              <span>
-                <button onClick={() => console.log(weather)}>신고</button>
-              </span>
-            </div>
-          </ContentContainer>
+                    {weather[(distance[1] / 60).toFixed(0)].rain ? (
+                      <div className="informBox">
+                        <div>강수량</div>
+                        <div className='infoContainer'>
+                        {weather[(distance[1] / 60).toFixed(0)].rain['1h'] + 'mm'}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="informBox">
+                        <div>자외선</div>
+                        <div className='infoContainer' style={{color: uviIndex[weather[(distance[1] / 60).toFixed(0)].uvi.toFixed(0)]}}>
+                          {weather[(distance[1] / 60).toFixed(0)].uvi.toFixed(0)}
+                        </div>
+                      </div>
+                    )}
 
-          <Forecast>
-            {distance[2] && weather ? 
-            <div className='weather_ok'>
+                    {weather[(distance[1] / 60).toFixed(0)] ?
+                      <div className="informBox">
+                        <div>미세먼지</div>
+                        <div className='infoContainer' style={{color: aqiIndex[weather[(distance[1] / 60).toFixed(0)].main.aqi][0]}}>
+                          {/* {weather[(distance[1] / 60).toFixed(0)].main.aqi} */}
+                          {aqiIndex[weather[(distance[1] / 60).toFixed(0)].main.aqi][1]}
+                        </div>
+                      </div>
+                      : 'ERR'
+                    }
+                  </Forecast>
+                  :
+                  <Forecast>
+                    <img src='/img/loading.svg' style={{width: '60px', 'justifyContent': 'center'}}/>
+                  </Forecast>
+                }
+            </NavContainer>
+          </TopContainer>
 
-              {weather ? 
-                <div className="informBox">
-                  {/* <img className='weather_img' src='/img/gitHubLogo.png'/> */}
-                  <p id="distance">거리</p>
-                  <meter
-                    min="0"
-                    max="10000"
-                    low="3000"
-                    high="6000"
-                    optimum="3000"
-                    value={distance[0]}
+          <BottomContainer>
+            <ContentContainer>
+                <div className="contentDesc">{post.content ? post.content : null}</div>
+            </ContentContainer>
+
+            <CommentListContainer>
+                <div className='writeComment'>
+                  <input
+                    id="textinput"
+                    value={text}
+                    placeholder="댓글을 작성해주세요"
+                    onChange={(e) => handleText(e.target.value)}
                   />
+                  <button onClick={sendComment}>전송</button>
                 </div>
-                : 'ERROR'
-              }
-
-              {weather[(distance[1] / 60).toFixed(0)] ?
-                <div className="informBox">
-                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
-                  <p>온도</p>
-                  <meter
-                    min="-30"
-                    max="40"
-                    low="30"
-                    high="60"
-                    optimum="0"
-                    value={weather[(distance[1] / 60).toFixed(0)].temp}
-                  />
-                </div>
-                : 'ERROR'
-              }
-
-              {weather[(distance[1] / 60).toFixed(0)].rain ? (
-                <div className="informBox">
-                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
-                  <p>
-                    {/* 강수량 */}
-                    {/* 300mm */}
-                  </p>
-                  <meter
-                    min="-10"
-                    max="100"
-                    low="40"
-                    high="60"
-                    optimum="0"
-                    value={weather[(distance[1] / 60).toFixed(0)].rain['1h']}
-                  />
-                </div>
-              ) : (
-                <div className="informBox">
-                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
-                  <p>
-                    자외선지수
-                    {/* {weather[(distance[1] / 60).toFixed(0)].uvi} */}
-                  </p>
-                  <meter
-                    min="0"
-                    max="10"
-                    low="4"
-                    high="7"
-                    optimum="2"
-                    value={weather[(distance[1] / 60).toFixed(0)].uvi}
-                  />
-                </div>
-              )}
-
-              {weather[(distance[1] / 60).toFixed(0)] ?
-                // 미세먼지예보는 2시간까지만 제공됨;
-                <div className="informBox">
-                  {/* <img className='informImg' src='/img/gitHubLogo.png'/> */}
-                  {/* 미세먼지 pm10 기준 */}
-                  {/* API가 제공하는 미세먼지 평가는 main.aqi를 가져오면 됨 */}
-                  <p>
-                    PM10
-                  </p>
-                  <meter
-                    min="0"
-                    max="80"
-                    low="30"
-                    high="60"
-                    optimum="0"
-                    value={weather[(distance[1] / 60).toFixed(0)].components['pm10']}
-                  />
-                </div>
-                : 'ERROR'
-              }
-
-            </div>
-            :
-            // 실패 시
-            <div className='weather_ok' style={{'justifyContent': 'center'}}>
-              <img src='/img/loading.svg' style={{width: '60px'}}/>
-            </div>
-            }
-          </Forecast>
-
-          <CommentListContainer>
-            <div>
-              <input
-                id="textinput"
-                value={text}
-                placeholder="댓글을 작성해주세요"
-                onChange={(e) => handleText(e.target.value)}
-              />
-              <button onClick={sendComment}>전송</button>
-            </div>
-            {comment
-              ? comment.map((e) => (
-                  <Comment
-                    id={e.id}
-                    comment={e}
-                    key={comment.indexOf(e)}
-                    modComment={modComment}
-                    delComment={delComment}
-                  />
-                ))
-              : "아직 댓글이 없습니다!"}
-          </CommentListContainer>
-          <button onClick={() => console.log(post, comment, distance, weather)}>
-            웃음벨
-          </button>
+                {comment
+                  ? comment.map((e) => (
+                      <Comment
+                        id={e.id}
+                        comment={e}
+                        key={comment.indexOf(e)}
+                        modComment={modComment}
+                        delComment={delComment}
+                      />
+                    ))
+                  : "아직 댓글이 없습니다!"}
+            </CommentListContainer>
+          </BottomContainer>
+          </PostContainer>
         </div>
       ) : (
-        "저런!"
+        <img className='loadingImg' src='/img/loading.svg' />
       )}
     </DetailPageContainer>
   );
