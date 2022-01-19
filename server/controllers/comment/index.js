@@ -78,7 +78,7 @@ module.exports = {
     const userData = chkValid(req);
     if (!userData)
       return res.status(400).json({ message: "Invalid Token" });
-    console.log(userData);
+    // console.log(userData);
 
     // DB 에 찾는 post가 존재하는지 확인
     if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
@@ -92,8 +92,7 @@ module.exports = {
         postId: Number(req.params.id),
         comment: req.body.comment,
       });
-
-      console.log(create.dataValues)
+      // console.log(create.dataValues)
 
       const result = create.dataValues
       result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]

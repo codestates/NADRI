@@ -12,7 +12,8 @@ const DetailPageContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    font-family: 'NanumSquare','Cafe24', arial;
   .loadingImg {
 
   }
@@ -92,6 +93,7 @@ const Dropdown = styled.div`
     font-size: 1.2rem;
     width: 3rem;
     margin: 0.5rem 0;
+    font-family: 'NanumSquare','Cafe24', arial;
   }
 
   #nav li:hover > span {
@@ -300,6 +302,7 @@ const Forecast = styled.div`
   justify-content: space-evenly;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   background-color: #f9fafc;
+  font-family: 'NanumSquare','Cafe24', arial;
 
   @media screen and (max-width: 650px) {
     height: 12vw;
@@ -425,6 +428,10 @@ const CommentListContainer = styled.div`
   .writeComment {
     display: flex;
     justify-content: center;
+    font-family: 'NanumSquare', 'Cafe24',arial;
+    > button {
+      font-family: 'NanumSquare', 'Cafe24',arial;
+    }
   }
 
   @media screen and (max-width: 900px) {

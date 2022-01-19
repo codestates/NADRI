@@ -13,6 +13,7 @@ const MainContainer = styled.div`
   padding: 3rem 9vw;
   display: flex;
   justify-content: space-between;
+  font-family: 'NanumSquare', 'Cafe24', arial;
 
   #map {
     width: 45rem;
@@ -53,6 +54,19 @@ const ContentNav = styled.nav`
   padding: 0 2rem;
   margin-bottom: 3rem;
   cursor: grab;
+
+  #type {
+    font-family: 'NanumSquare', 'Cafe24', arial;   
+    :hover{
+      color: #ff7400;
+    } 
+  }
+  #categoryId {
+    font-family: 'NanumSquare', 'Cafe24', arial;
+    :hover{
+      color: #005582;
+    } 
+  }
 
   > select {
     height: 2rem;
