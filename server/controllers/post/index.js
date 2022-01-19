@@ -44,11 +44,14 @@ module.exports = {
     */
     // 전달받은 파라미터로 포스트가 존재하는지 확인
     const id = req.params.id;
+    const userData = chkValid(req)
+
     let find = await sequelize.query(`
       SELECT id, userId, title, image, content, lat, lng, address, createdAt, public, categoryId,
         (SELECT nickname FROM users WHERE users.id = posts.userId) AS nickname,
         (SELECT image FROM users WHERE users.id = posts.userId) AS userImage,
-        (SELECT COUNT(userId) FROM user_post_likes WHERE user_post_likes.postId = ${id}) AS likes
+        (SELECT COUNT(userId) FROM user_post_likes WHERE user_post_likes.postId = ${id}) AS likes,
+        (SELECT COUNT(userId) FROM user_post_likes WHERE userId = ${userData.id} AND postId = ${id}) AS bookmark
       FROM posts WHERE posts.id = ${id}
     `,
       { type: QueryTypes.SELECT }
@@ -62,9 +65,8 @@ module.exports = {
 
     // public이 false이면 인증정보 확인
     if (!find.public) {
-      const userData = chkValid(req)
-      if (!userData || find.userId !== userData.id) return res.sendStatus(404)
-      console.log('chkUserID', find.userId !== userData.id)
+      if (!userData || find.userId !== userData.id) return res.sendStatus(401)
+      // console.log('chkUserID', find.userId !== userData.id)
     }
 
     // 게시글 이미지 링크 처리
@@ -77,6 +79,16 @@ module.exports = {
 
     // 유저 이미지 링크 처리
     find.userImage = `${process.env.AWS_LOCATION}` + find.userImage
+
+        // // 해당 게시글에 대한 북마크 여부를 확인
+        // const userLike = await sequelize.query(`
+        // SELECT * FROM user_post_likes WHERE userId = ${userData.id} AND postId = ${id}
+        // `, { type: QueryTypes.SELECT })
+
+        // console.log('Like 정보', Boolean(userLike.length))
+        // find.like = Boolean(userLike.length)
+
+        // console.log('RESULT', find)
 
     // 포스트의 정보 반환
     res.status(200).json({ data: find });

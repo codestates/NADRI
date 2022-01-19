@@ -1,8 +1,8 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
+import { loginModal, signupModal, authState, gLogIn, kLogIn, userInfo } from '../redux/actions';
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus, faSignInAlt, faSignOutAlt, faUserCircle, faFile} from '@fortawesome/free-solid-svg-icons'
@@ -225,6 +225,20 @@ export default function Header () {
   const gLoginState = useSelector(state => state.gLoginReducer);
   const kLoginState = useSelector(state => state.kLoginReducer)
   // console.log('현재 로그인 상태: '+curAuthState)
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/me`)
+    .then(result => {
+      if (result.status === 200) {
+        const {nickname, createdAt, email, image, oauth} = result.data.data
+        dispatch(authState(curAuthState))
+        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
 
   function ModalHandler (e) {
     // console.dir(e.currentTarget.classList[2])
