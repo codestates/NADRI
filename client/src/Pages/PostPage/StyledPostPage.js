@@ -9,10 +9,17 @@ export const PostContainer = styled.div`
 export const Container = styled.div`
   width: 100%;
   // border: 1px solid black;
-  padding: 2rem;
-  background-color: #dfe3ee;
+  padding: 1rem;
+  /* background-color: #dfe3ee; */
   border-radius: 10px;
-  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
+  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  font-family: 'NanumSquare','Cafe24', arial;
+  background: #f9fafc;
+
+  padding: 2rem;
+  /* background-color: #dfe3ee;
+  border-radius: 10px;
+  box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
   position: relative;
 
   #tack {
@@ -34,6 +41,7 @@ export const Container = styled.div`
       left: 43%;
     }
   }
+
 `
 
 export const TopContainer = styled.div`
@@ -101,13 +109,15 @@ export const TextInputContainer = styled.div`
     height: 40px;
     margin: 10px 0 20px;
     padding-left: 10px;
-    border: 1px solid rgb(150, 150, 150);
+    border: 0px solid rgb(150, 150, 150);
     border-radius: 20px;
     box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    background: #fdfdff;
   }
   
   #title:focus {
     outline:none;
+    border: 1px solid #ff7400;
   }
 
   textarea {
@@ -116,14 +126,16 @@ export const TextInputContainer = styled.div`
     height: 80px;
     padding: 10px;
     resize: none;
-    border: 1px solid rgb(150, 150, 150);
+    border: 0px solid rgb(150, 150, 150);
     border-radius: 20px;
     box-shadow: 2px 2px 2px 1px rgb(180 180 180);
     overflow: auto;
+    background: #fdfdff;
   }
 
   textarea:focus {
     outline: none;
+    border: 1px solid #ff7400;
   }
 
   @media (max-width: 767px) {
@@ -144,15 +156,22 @@ export const CheckboxContainer = styled.div`
   gap: 15%;
 
   #category-container {
+    display: flex;
+    flex-direction: column;
     label {
       font-size: 1.1rem;
       margin-right: 1em;
+      margin-bottom: 0.3rem;
     }
 
     select {
       text-align: center;
       width: 6rem;
       height: 1.5rem;
+      font-family: 'NanumSquare', arial;
+      :hover {
+        color: #ff7400;
+      }
     }
   }
 
@@ -162,10 +181,11 @@ export const CheckboxContainer = styled.div`
     border-radius: 8px;
     max-width: 80%;
     border: none;
-    background-color: skyblue;
+    background-color: #f6d9d5;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     cursor: pointer;
     font-size: 1rem;
+    font-family: 'NanumSquare', arial;
   }
 
   #Btn:active {
@@ -193,8 +213,9 @@ export const CheckboxContainer = styled.div`
       align-items: center;
 
       label {
-        margin: 0 auto;
-        margin-bottom: 10px;
+        /* margin: 0 auto;
+        margin-bottom: 10px; */
+        display: flex;
       }
     }
 
@@ -238,6 +259,7 @@ export const CheckboxContainer = styled.div`
     #category-container {
       border-bottom: 1px solid gray;
       padding-bottom: 1rem;
+      flex-direction: row;
     }
 
 

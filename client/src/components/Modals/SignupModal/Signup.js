@@ -162,14 +162,14 @@ export default function Signup () {
           <div onClick={postSignup}>
             <div className="normalSignup">회원가입</div>
           </div>
-          <div onClick={onClickGoogle}>
+          <span onClick={onClickGoogle}>
             <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
             <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
-          </div>
-          <div onClick={onClickKakao}>
-            <img className="kakaoPcLogin" src="/img/kakao_login_large_wide.png" alt="카카오 로그인" />
+          </span>
+          <span onClick={onClickKakao}>
+            <img className="kakaoPcLogin" src="/img/kakao_login_medium_narrow.png" alt="카카오 로그인" />
             <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
-          </div>
+          </span>
         </Oauth>
       </SignupModalView>
     </ModalBackdrop>

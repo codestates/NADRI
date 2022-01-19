@@ -24,7 +24,7 @@ const StyledHeader = styled.header`
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   top: -1rem;
-  /* font-family: 'Cafe24', arial; */
+  font-family: 'NanumSquare', arial;
 `
 
 const Logo = styled.div`

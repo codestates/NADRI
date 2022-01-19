@@ -29,7 +29,7 @@ module.exports = {
     find.map((point) => {
       point.image = [process.env.AWS_LOCATION + point.image.split(",")[0]];
     });
-
+    // console.log(find)
     res.status(200).json({data: find})
   },
 

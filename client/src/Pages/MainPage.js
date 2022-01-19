@@ -43,9 +43,11 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #dfe3ee;
+  background-color: #f9fafc;
   border-radius: 10px;
-  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
+  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  font-family: 'NanumSquare', 'Cafe24', arial;
+
   position: relative;
   padding: 2rem;
 
@@ -71,19 +73,21 @@ const Container = styled.div`
 `
 
 const MapContainer = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  width: 50vw;
   padding: 1rem;
 
   #map {
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
     // z-index: 0;
   }
 
   @media (max-width: 992px){
     flex-direction: column;
+    width: 100%;
 
     #map {
       width: 100%;
@@ -93,13 +97,13 @@ const MapContainer = styled.div`
 
   @media (max-width: 767px) {
     #map {
-      height: 30rem;
+      height: 35vh;
     }
   }
 `
 
 const ContentNav = styled.nav`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 30px;
   height: 3rem;
   display: flex;
@@ -109,17 +113,33 @@ const ContentNav = styled.nav`
   padding: 0 2rem;
   margin-bottom: 1rem;
   cursor: grab;
-  background-color: white;
+  background-color: #f7f7f7;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+
+  #type {
+    font-family: 'NanumSquare', 'Cafe24', arial;   
+    :hover{
+      color: #ff7400;
+    } 
+  }
+  #categoryId {
+    font-family: 'NanumSquare', 'Cafe24', arial;
+    :hover{
+      color: #005582;
+    } 
+  }
+
   > select {
     height: 2rem;
     border-radius: 3px;
-    background-color: white;
+    background-color: #f7f7f7;
+    border:0;
   }
 `
 
 const ContentContainer = styled.div`
-  width: 50%;
+  /* width: 50%; */
+  width: 50vw;
   height: 40rem;
   padding: 1rem 1rem 1rem 3rem;
   display: flex;
@@ -135,19 +155,19 @@ const ContentContainer = styled.div`
 const ItemContainer = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   overflow: auto;
   padding: 1rem;
   border-radius: 10px;
-  background-color: white;
-  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  background-color: #f9fafc;
+  /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   &::-webkit-scrollbar{
     width: 10px;
   }
 
   &::-webkit-scrollbar-thumb{
       height: 17%;
-      background-color: #d3d3d3;
+      background-color: #f1eae4;
       border-radius: 10px;    
   }
 
