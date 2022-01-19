@@ -245,7 +245,7 @@ const UserMainContents = styled.div`
 export default function MyPage() {
   const [curContent, setCurContent] = useState('내 게시글')
   const curUserInfo = useSelector(state => state.getUserInfo);
-  // console.dir(curUserInfo)
+  console.log('유저 정보', curUserInfo)
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [posts, setPosts] = useState([])
@@ -307,8 +307,7 @@ export default function MyPage() {
           <div>{curUserInfo.nickname}</div>
           <div>{curUserInfo.email}</div>
           <div>
-            {/* {curUserInfo.createdAt} */}
-            {curUserInfo ? curUserInfo.createdAt.split(' ')[0]:
+            {curUserInfo.createdAt ? curUserInfo.createdAt.split(' ')[0]:
           null}
           </div>
         </div>
