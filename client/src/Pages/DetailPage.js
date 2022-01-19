@@ -851,7 +851,7 @@ export default function DetailPage() {
                 </div>
               <div>
                 <ul id='nav'>
-                  <li><img src='/img/test.png' />
+                  <li><img src='/img/dropdown.png' />
                     <ul>
                       <li><span onClick={editPost}>수정</span></li>
                       <li><span onClick={() => deletePost(post.id)}>삭제</span></li>
