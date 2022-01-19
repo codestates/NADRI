@@ -556,7 +556,7 @@ export default function DetailPage() {
       })
     })
     .catch(err => {
-      alert('먼저 로그인해야 합니다!')
+      // alert('먼저 로그인해야 합니다!')
       dispatch(loginModal(LoginModalState))
     })
   };
@@ -569,7 +569,7 @@ export default function DetailPage() {
         console.log(result);
       })
       .catch((error) => {
-        alert('먼저 로그인해야 합니다!')
+        // alert('먼저 로그인해야 합니다!')
         dispatch(loginModal(LoginModalState))
       });
   };
@@ -578,7 +578,7 @@ export default function DetailPage() {
     axios
       .delete(`${process.env.REACT_APP_API_URL}/post/${id}`)
       .then((result) => {
-        alert("삭제되었습니다");
+        // alert("삭제되었습니다");
         navigate("/");
       })
       .catch((error) => {
@@ -607,7 +607,7 @@ export default function DetailPage() {
     console.log(postData)
 
     // 날씨정보 받아오기
-    // getWeather([result.lat, result.lng]);
+    getWeather([result.lat, result.lng]);
 
     // 현재 위치를 받아 카카오지도 생성 및 날씨정보 수신
     navigator.geolocation.getCurrentPosition(
@@ -748,10 +748,10 @@ export default function DetailPage() {
         });
       }
 
-      const tmapBody = qs.stringify({
+      const carBody = qs.stringify({
         // 지오로케이션 성공: 티맵 API로 경로 받아와서 처리
         // 티맵은 형식이 조금 달라서 stringify해줘야 함.
-        appKey: process.env.REACT_APP_TMAP_KEY,
+        appKey: process.env.REACT_APP_TMAP_KEY1,
         startX: lng, // locPosition.La
         startY: lat, // locPosition.Ma
         endX: endLng,
@@ -762,71 +762,85 @@ export default function DetailPage() {
         endName: "도착지",
       });
 
-      // // 차량경로 수신
-      // const carRoute = await axios.post(
-      //   "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
-      //   tmapBody,
-      //   {
-      //     "Accept-Language": "ko",
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //     Origin: "http://localhost:3000",
-      //     withCredentials: false,
-      //   }
-      // );
+      const walkBody = qs.stringify({
+        // 지오로케이션 성공: 티맵 API로 경로 받아와서 처리
+        // 티맵은 형식이 조금 달라서 stringify해줘야 함.
+        appKey: process.env.REACT_APP_TMAP_KEY1,
+        startX: lng, // locPosition.La
+        startY: lat, // locPosition.Ma
+        endX: endLng,
+        endY: endLat,
+        reqCoordType: "WGS84GEO",
+        resCoordType: "WGS84GEO",
+        startName: "출발지",
+        endName: "도착지",
+      });
 
-      // let walkRoute
-      // // 이동거리가 5km 이하면 도보경로를 수신
-      // if (carRoute.data.features[0].properties.totalDistance <= 5000) {
-      //   walkRoute = await axios.post(
-      //     // TMAP API로 도보이동 경로 요청
-      //     "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
-      //     tmapBody,
-      //     {
-      //       "Accept-Language": "ko",
-      //       "Content-Type": "application/x-www-form-urlencoded",
-      //       Origin: "http://localhost:3000",
-      //       withCredentials: false,
-      //     }
-      //   );
-      // }
+      // 차량경로 수신
+      const carRoute = await axios.post(
+        "https://apis.openapi.sk.com/tmap/routes?version=1&format=json&callback=result",
+        carBody,
+        {
+          "Accept-Language": "ko",
+          "Content-Type": "application/x-www-form-urlencoded",
+          Origin: "http://localhost:3000",
+          withCredentials: false,
+        }
+      );
 
-      // let tmapRoute
-      // if (!walkRoute || walkRoute.statusText === 'No Content') { // 도보경로가 존재하지 않으면(수신하지 않았거나, 데이터가 존재하지 않는 경우)
-      //   console.log('차량 경로를 안내합니다')
-      //   tmapRoute = carRoute
-      // } else {
-      //   console.log('도보 경로를 안내합니다')
-      //   tmapRoute = walkRoute
-      // }
+      let walkRoute
+      // 이동거리가 5km 이하면 도보경로를 수신
+      if (carRoute.data.features[0].properties.totalDistance <= 5000) {
+        walkRoute = await axios.post(
+          // TMAP API로 도보이동 경로 요청
+          "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
+          walkBody,
+          {
+            "Accept-Language": "ko",
+            "Content-Type": "application/x-www-form-urlencoded",
+            Origin: "http://localhost:3000",
+            withCredentials: false,
+          }
+        );
+      }
 
-      // // setDistance로 총 거리와 시간 걸리는 시간을 저장
-      // handleDistance([
-      //   tmapRoute.data.features[0].properties.totalDistance, // m단위
-      //   tmapRoute.data.features[0].properties.totalTime / 60, // 분 단위
-      //   true
-      // ]);
+      let tmapRoute
+      if (!walkRoute || walkRoute.statusText === 'No Content') { // 도보경로가 존재하지 않으면(수신하지 않았거나, 데이터가 존재하지 않는 경우)
+        console.log('차량 경로를 안내합니다')
+        tmapRoute = carRoute
+      } else {
+        console.log('도보 경로를 안내합니다')
+        tmapRoute = walkRoute
+      }
 
-      // // console.log('이동경로', tmapRoute)
+      // setDistance로 총 거리와 시간 걸리는 시간을 저장
+      handleDistance([
+        tmapRoute.data.features[0].properties.totalDistance, // m단위
+        tmapRoute.data.features[0].properties.totalTime / 60, // 분 단위
+        true
+      ]);
 
-      // // 티맵 응답을 카카오맵이 처리가능한 형태로 저장
-      // let routePoint = []; // 폴리라인 지점들 저장하는 배열
-      // tmapRoute.data.features.map((e) => {
-      //   if (typeof e.geometry.coordinates[0] === "number")
-      //     routePoint.push(e.geometry.coordinates);
-      //   else routePoint.push(...e.geometry.coordinates);
-      // });
-      // routePoint = routePoint.map((e) => new kakao.maps.LatLng(e[1], e[0]));
+      // console.log('이동경로', tmapRoute)
 
-      // const polyline = new kakao.maps.Polyline({
-      //   // 카카오맵 폴리라인 생성
-      //   path: routePoint, // 선을 구성하는 좌표배열 입니다
-      //   strokeWeight: 4, // 선의 두께 입니다
-      //   strokeColor: "#ff0000", // 선의 색깔입니다
-      //   strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-      //   strokeStyle: "solid", // 선의 스타일입니다
-      // });
+      // 티맵 응답을 카카오맵이 처리가능한 형태로 저장
+      let routePoint = []; // 폴리라인 지점들 저장하는 배열
+      tmapRoute.data.features.map((e) => {
+        if (typeof e.geometry.coordinates[0] === "number")
+          routePoint.push(e.geometry.coordinates);
+        else routePoint.push(...e.geometry.coordinates);
+      });
+      routePoint = routePoint.map((e) => new kakao.maps.LatLng(e[1], e[0]));
 
-      // polyline.setMap(map); // 지도에 라인 표시
+      const polyline = new kakao.maps.Polyline({
+        // 카카오맵 폴리라인 생성
+        path: routePoint, // 선을 구성하는 좌표배열 입니다
+        strokeWeight: 4, // 선의 두께 입니다
+        strokeColor: "#ff0000", // 선의 색깔입니다
+        strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: "solid", // 선의 스타일입니다
+      });
+
+      polyline.setMap(map); // 지도에 라인 표시
     }
   };
 
