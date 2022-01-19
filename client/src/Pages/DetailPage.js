@@ -156,7 +156,7 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
-  height: 40vw;
+  /* height: 40vw; */
 
   @media screen and (max-width: 900px) {
     margin: 0 auto;
@@ -169,14 +169,15 @@ const ImgContainer = styled.div`
 const MainImg = styled.img`
   display: flex;
   height: 30vw; // 16:9 하려면 22.5
-  width: 40vw;
+  max-width: 40vw;
+  /* max-height: 30vw; */
   
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   
   @media screen and (max-width: 900px) {
-    width: 80vw;
+    max-width: 80vw;
     height: 50vw;
   }
 `
@@ -220,7 +221,7 @@ const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
-  height: 40vw;
+  /* height: 40vw; */
 
   @media screen and (max-width: 900px) {
     width: 80vw;
@@ -233,12 +234,14 @@ const MapContainer = styled.div`
   display: flex;
   height: 30vw;
   border-radius: 10px;
-  width: 100%;
+  width: 40vw;
+  max-width: 800px;
   z-index: 0;
   margin-bottom: 1rem;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
 
   @media screen and (max-width: 900px) {
+    width: 80vw;
     height: 50vw;
   }
 
