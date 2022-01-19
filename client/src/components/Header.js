@@ -1,8 +1,8 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
+import { loginModal, signupModal, authState, gLogIn, kLogIn, userInfo } from '../redux/actions';
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus, faSignInAlt, faSignOutAlt, faUserCircle, faFile} from '@fortawesome/free-solid-svg-icons'
@@ -20,10 +20,11 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 998;
-  background: #f5f5f6;
+  background: #fdfdff;
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   top: -1rem;
+  /* font-family: 'Cafe24', arial; */
 `
 
 const Logo = styled.div`
@@ -63,6 +64,8 @@ const Search = styled.div`
   width: 30rem;
   position: relative;
   margin: 1rem 1rem 1rem 1rem;
+  font-family: 'NanumSquare', arial;
+
   > .searchBar {
     width: 100%;
     height: 40px;
@@ -71,6 +74,8 @@ const Search = styled.div`
     border-radius: 25px;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     background: rgb(255,255,255);
+    font-family: 'NanumSquare', arial;
+
   }
   > .searchBar:focus {
     outline: 2px solid rgba(170,170,170);
@@ -113,11 +118,13 @@ const HeaderContent = styled.div`
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     background: rgb(255,255,255);
     transition: all 0.2s;
+    font-family: 'NanumSquare', arial;
 
     &:hover {
       transition: all 0.2s;
       cursor: pointer;
       transform: scale(1.1);
+      color: #ff7400;
       // box-shadow: 
       // inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
       // 2px 2px 2px 0px rgba(0, 0, 0, 0.1),
@@ -219,6 +226,20 @@ export default function Header () {
   const kLoginState = useSelector(state => state.kLoginReducer)
   // console.log('현재 로그인 상태: '+curAuthState)
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/me`)
+    .then(result => {
+      if (result.status === 200) {
+        const {nickname, createdAt, email, image, oauth} = result.data.data
+        dispatch(authState(curAuthState))
+        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
+
   function ModalHandler (e) {
     // console.dir(e.currentTarget.classList[2])
     if (e.target.textContent === 'Log In' || e.currentTarget.classList[2] === 'loginIcon') {
@@ -268,7 +289,7 @@ export default function Header () {
             <button>새글 쓰기</button>
             <span className="moblieIcon">
               <div className="iconBox">
-               <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
+                <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
               </div>
               <div className="iconText">
               새글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

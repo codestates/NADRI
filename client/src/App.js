@@ -7,7 +7,7 @@ import Signup from './components/Modals/SignupModal/Signup'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { authState } from './redux/actions'
+import { authState, userInfo } from './redux/actions'
 import { useNavigate } from "react-router-dom";
 import Randing from './components/RandingPage/Randing';
 import { Routes, Route, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
@@ -66,8 +66,10 @@ function App() {
     })
     .then((result) => {
       // console.dir(result)
+      const {nickname, createdAt, email, image, oauth} = result.data.data
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
+      dispatch(userInfo({email, nickname, createdAt, image, oauth}))
       // console.log(curAuthState)
       navigate('/')
 
@@ -83,8 +85,10 @@ function App() {
     })
     .then((result) =>{
       // console.dir(result)
+      const {nickname, createdAt, email, image, oauth} = result.data.data
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
+      dispatch(userInfo({email, nickname, createdAt, image, oauth}))
       // console.log(curAuthState)
       navigate('/')
     })

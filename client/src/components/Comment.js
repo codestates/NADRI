@@ -14,11 +14,10 @@ const CommentWrapper = styled.div`
 `;
 
 const UserImage = styled.img`
-  width: 45px;
-  height: 45px;
+  width: 3rem;
+  height: 3rem;
   margin-right: 10px;
   border-radius: 70%;
-  overflow: hidden;
 `;
 
 const CommentContentWrapper = styled.div`
@@ -32,13 +31,15 @@ const CommentContentWrapper = styled.div`
     padding-right: 5px;
   }
 
-  #editComment {
+  .editComment {
     /* max-width: 340px; */
     /* height: 6.25em; */
     /* border: none; */
+    width: 300px;
     resize: none;
     width: auto;
     height: auto;
+    overflow:visible;
   }
 `;
 
@@ -48,6 +49,10 @@ const InfoAndAlert = styled.div`
   /* padding: 0; */
   .test {
     margin-right: 5px;
+  }
+
+  .click {
+    cursor: pointer;
   }
 `;
 
@@ -76,23 +81,26 @@ export default function Comment({ comment, modComment, delComment }) {
       <div>
         <CommentContentWrapper>
           {/* 위에서부터 닉네임, 내용, 버튼? */}
-          <span className="userNickname">{comment.nickname}</span>
-          { !edit ? 
-            <span className="UserComment">{comment.comment}</span>
-            : <textarea id='editComment' defaultValue={comment.comment} onChange={handleText}/>
+          {
+            !edit ?
+            <div>
+              <span className="userNickname">{comment.nickname}</span>
+              <span className="UserComment">{comment.comment}</span>
+            </div>
+            : <textarea className='editComment' defaultValue={comment.comment} onChange={handleText}/>
           }
         </CommentContentWrapper>
         <InfoAndAlert>
           <span className='test'>{comment.createdAt}</span>
           {!edit ? 
             <span>
-              <span className='test' onClick={handleEdit}>수정</span>
-              <span className='test' onClick={() => delComment(comment.id)}>삭제</span>
+              <span className='test click' onClick={handleEdit}>수정</span>
+              <span className='test click' onClick={() => delComment(comment.id)}>삭제</span>
             </span>
             :
             <span>
-              <span className='test' onClick={() => sendModComment([comment.id, text])}>저장</span>
-              <span className='test' onClick={handleEdit}>취소</span>
+              <span className='test click' onClick={() => sendModComment([comment.id, text])}>저장</span>
+              <span className='test click' onClick={handleEdit}>취소</span>
             </span>
           }
         </InfoAndAlert>

@@ -15,7 +15,7 @@ module.exports = {
 
     try {
       const userLike = await sequelize.query(`
-        SELECT user_post_likes.postId, posts.title, posts.image, posts.content, posts.createdAt
+        SELECT user_post_likes.postId, posts.title, posts.image, posts.content, posts.address, DATE_FORMAT(posts.createdAt,'%Y-%m-%d') AS createdAt
         FROM user_post_likes JOIN posts ON user_post_likes.postId = posts.id
         WHERE user_post_likes.userId = ${userData.id}
       `)

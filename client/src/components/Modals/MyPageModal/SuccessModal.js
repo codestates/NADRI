@@ -26,12 +26,18 @@ const ModalView = styled.div`
     width: 7rem;
     height: 2.5rem;
     border: none;
-    background-color: pink;
+    background-color: #f6d9d5;
     cursor: pointer;
     border-radius: 6px;
+    font-family: 'NanumSquare', arial;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   }
   .closeBtn:active {
     color: white;
+  }
+
+  @media (max-width: 650px){
+    width: 70vw;
   }
 `
 
@@ -49,10 +55,8 @@ export default function SuccessModal({changeTarget, setSuccessModal, curSuccessM
     <ModalBackdrop onClick={ModalHandler}>
       <ModalView onClick={(e) => e.stopPropagation()}>
         <span className="close-X" onClick={ModalHandler}>&#x2716;</span>
-        <span>{target} 성공적으로 변경되었습니다.</span>
+        <span className="success-comment">{target} 성공적으로 <br/>변경되었습니다.</span>
         <button type="button" className="closeBtn" onClick={ModalHandler}>확인</button>
-        
-
       </ModalView>
     </ModalBackdrop>
   )

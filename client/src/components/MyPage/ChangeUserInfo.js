@@ -11,11 +11,17 @@ const ChageUserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  overflow: hidden;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: #f9fafc;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
 
     .user-profile-picture {
       width: 10rem;
       height: 10rem;
-      border: 1px solid black;
+      /* border: 1px solid black; */
       border-radius: 50%;
       margin-bottom: 10px;
 
@@ -48,11 +54,29 @@ const ChageUserInfoContainer = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 3rem;
+      margin-bottom: 1rem;
 
-      > img {
+      .img-edit-span{
+        /* border: 1px solid black; */
+        width: 1.5rem;
+        margin: 0.2rem;
+        
+        .img-edit-icon {
+          cursor: pointer;
+          width: 1.5rem;
+          vertical-align: sub;
+        }
+      }
+      /* > img {
         cursor: pointer;
         width: 25px;
+      } */
+
+      label {
+        // 간격 등만 맞추고 border는 안쓸거임
+        /* border: 1px solid black; */
+        border-radius: 5px;
+        font-size: small;
       }
     }
   
@@ -65,7 +89,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 1.7rem;
+  margin-bottom: 0.5rem;
 `
 
 const InputUserInfo = styled.div`
@@ -74,40 +98,59 @@ const InputUserInfo = styled.div`
 
   label {
     display: inline-block;
-    font-size: 1.1rem;
+    font-size: 1rem;
     width: 7rem;
     height: 2rem;
-    text-align: center;
+    text-align: right;
     line-height: 2rem;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 5px;
-    margin-right: 2rem;
+    margin-right: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   input {
     display: inline-block;
     width: 15rem;
-    height: 2rem;
-    border: 1px solid black;
+    height: auto;
+    border: 0px solid black;
     border-radius: 5px;
     outline: none;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+
+    &:focus {
+      border: 1px solid #ff7400;
+    }
   }
 
   button {
     display: inline-block;
     width: 3rem;
     height: 2rem;
-    margin-left: 3rem;
+    margin-left: 0.3rem;
     background-color: white;
-    border: 1px solid black;
+    border: 0px solid black;
     cursor: pointer;
     border-radius: 5px;
+    font-family: 'NanumSquare',arial;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    
+    &:hover {
+      color: #ff7400;
+    }
   }
 
   button:active {
     position: relative;
     top: 2px;
   }
+
+  @media (max-width:700px){
+    input {
+      width: 35vw;
+    }
+  }
+
 `
 
 const DangerMessage = styled.span`
@@ -231,8 +274,13 @@ export default function ChageUserInfo () {
     <ChageUserInfoContainer img={curUserInfo.image}>
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"></div>
-        <input type={'file'} name='img' ref={profileImg} onChange={picChange}/>
-        <img src="/img/edit.png" onClick={handleClick} />
+        <div>
+          <label htmlFor="profileImgLabel">프로필 사진 변경</label>
+          <input type={'file'} name='img' ref={profileImg} onChange={picChange}/>
+          <span className="img-edit-span">
+            <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />
+          </span>
+        </div>
       </div>
 
       <InputContainer>
@@ -250,9 +298,8 @@ export default function ChageUserInfo () {
           <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}></input>
           <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>
         </InputUserInfo>
-      </InputContainer>
-
       <DangerMessage>{dangerMessage}</DangerMessage>
+      </InputContainer>
       {
         curSuccessModal ? <SuccessModal changeTarget={changeTarget} setSuccessModal={setSuccessModal} curSuccessModal={curSuccessModal}/>
         : ''

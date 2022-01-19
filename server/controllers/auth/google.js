@@ -45,14 +45,14 @@ module.exports = {
             },
         })
         console.log('=== googleUserInfo: get 요청 구간 통과 ===')
-
+        console.log(googleUserInfo)
         await users.findOrCreate({
             where: { email: googleUserInfo.data.email },
             defaults: {
                 email: googleUserInfo.data.email,
                 password: googleUserInfo.data.id,
                 nickname: googleUserInfo.data.name,
-                image: '2111641961096892.jpeg,',
+                image: googleUserInfo.data.picture,
                 admin: false,
                 oauth: true,
             },
@@ -61,13 +61,13 @@ module.exports = {
             //find하든지, create하든지 상관없이 가져오면 됨
             const payLoad = result.dataValues;
             delete payLoad.password
-            // console.log(payLoad)
             const aToken = mkAccessToken(payLoad)
             // console.log(aToken)
             console.log('google result 구간 통과')
             sendAccessToken(res, aToken)
             // console.dir(res)
-            res.sendStatus(200)
+            console.log(payLoad)
+            res.status(200).json({ data: payLoad })
             // ! 이 놈이 문제였음   // preflight cors 에러뜸
             // res.redirect(process.env.CLIENT_URI) 
 

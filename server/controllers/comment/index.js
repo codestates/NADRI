@@ -16,7 +16,7 @@ module.exports = {
     // DB에서 userId로 필터한 코멘트 찾아 보내기
     try {
       const testQuery = await sequelize.query(`
-        SELECT comments.postId, comments.comment, posts.image, posts.title, DATE_FORMAT(comments.createdAt,'%Y-%m-%d') AS createdAt
+        SELECT comments.postId, comments.comment, posts.image, posts.title, posts.address, DATE_FORMAT(comments.createdAt,'%Y-%m-%d') AS createdAt
         FROM comments
         JOIN posts ON comments.postId = posts.id
         WHERE comments.userId = ${userData.id} ORDER BY comments.updatedAt DESC

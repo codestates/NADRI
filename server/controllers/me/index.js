@@ -13,7 +13,6 @@ module.exports = {
     // 데이터 반환
     try{
       delete userData.updatedAt
-      delete userData.createdAt
       res.status(200).json({data: userData})
     } catch (err) {
       res.sendStatus(500)
