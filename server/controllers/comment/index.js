@@ -128,16 +128,16 @@ module.exports = {
 
     console.log(find.dataValues)
 
-    // 가져온 comment의 작성자 여부 확인
-    if (userData.id !== find.userId) return res.status(400).json({ message: "Bad Request3" });
-
     try {
-      // #2 table에서 update해주기 > find로 처리하지말고 테이블에서 where로 바로 찾아서 바꿔주는게 맞다
-      await comments.update({comment: req.body.comment}, {
-        where: {id: req.params.id}
-      })
-
-      res.sendStatus(200)
+      // table에서 update해주기 > 테이블에서 where로 바로 찾아서 바꿔주는게 맞다
+      if (userData.admin || userData.id === find.userId) {
+        await comments.update({comment: req.body.comment}, {
+          where: {id: req.params.id}
+        })
+        return res.sendStatus(200)
+      } else {
+        return res.status(400).json({ message: "Bad Request3" });
+      }
     } catch (err) {
       res.sendStatus(500)
     }
@@ -158,21 +158,19 @@ module.exports = {
     if (!req.params.id)
       return res.status(400).json({ message: "Bad Request1" });
 
+    const find = await comments.findOne({ where: { id: req.params.id } });
+    if (!find) return res.status(400).json({ message: "Bad Request2" });
+
     try {
-      const find = await comments.findOne({ where: { id: req.params.id } });
-      if (!find) return res.status(400).json({ message: "Bad Request2" });
-
-      // 가져온 comment의 작성자 여부 확인
-      if (userData.id !== find.userId)
+      // modify와 마찬가지로 Admin이거나 유저 본인이면 삭제 OK
+      if (userData.admin || userData.id === find.userId) {
+        await comments.destroy({
+          where: {id: req.params.id}
+        })
+        return res.sendStatus(200)
+      } else {
         return res.status(400).json({ message: "Bad Request3" });
-
-      // await find.destroy();
-      // 여기도 modify와 마찬가지로 테이블 쿼리를 사용해 바로 삭제하기
-      await comments.destroy({
-        where: {id: req.params.id}
-      })
-
-      res.sendStatus(200);
+      }
     } catch (err) {
       res.sendStatus(500)
     }

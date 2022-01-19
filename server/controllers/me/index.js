@@ -5,7 +5,8 @@ const { rmSync } = require('fs');
 module.exports = {
   getUserInform: (req, res) => {
     // 인증정보가 있는지 확인
-    if (!req.cookies['authorization']) return res.status(400).json({message: 'Bad Request'})
+    // if (!req.cookies['authorization']) return res.status(400).json({message: 'Bad Request'})
+    if (!req.cookies['authorization']) return res.status(204).json({message: 'No Data'})
     // 인증정보가 유효한지 확인
     const userData = chkValid(req)
     if (!userData) res.status(400).json({message: 'Invalid token'})
