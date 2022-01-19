@@ -15,6 +15,33 @@ export const Container = styled.div`
   /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
   font-family: 'NanumSquare','Cafe24', arial;
   background: #f9fafc;
+
+  padding: 2rem;
+  /* background-color: #dfe3ee;
+  border-radius: 10px;
+  box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  position: relative;
+
+  #tack {
+    position: absolute;
+    top: -10px;
+    left: 47.3%;
+    width: 2rem;
+    height: 2rem;
+    z-index: 10;
+    transform: scaleX(-1);
+    filter: drop-shadow(-5px 5px 2px rgb(180 180 180));
+  }
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+
+    #tack {
+      top: -20px;
+      left: 43%;
+    }
+  }
+
 `
 
 export const TopContainer = styled.div`

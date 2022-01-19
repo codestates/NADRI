@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   PostContainer,
+  Container,
   TopContainer,
   UploadContainer,
   BottomContainer,
   TextInputContainer,
   CheckboxContainer,
-} from "./StyledEditPage";
+} from "./../PostPage/StyledPostPage";
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -31,6 +32,28 @@ export default function EditPage() {
     categoryId: 1,
   });
 
+  useEffect(() => {
+    const param = window.location.href.split("/")[4]
+    axios.get(`${process.env.REACT_APP_API_URL}/post/${param}`)
+    .then((res) => {
+      const Info = res.data.data
+      setLoc({
+        lat: Info.lat,
+        lng: Info.lng,
+        address: Info.address
+      })
+      setValue({
+        image: Info.image,
+        title: Info.title,
+        content: Info.content,
+        public: Info.public,
+        categoryId: Info.categoryId
+      })
+    })
+  }, [])
+
+  // console.log(loc)
+  // console.log(value)
   const picChange = (event) => {
     let urlArr = [...value.image],
       image = event.target.files;
@@ -215,61 +238,32 @@ export default function EditPage() {
 
   return (
     <PostContainer>
+      <Container>
       <TopContainer>
         <UploadContainer>
-          <Preview
-            Img={value.image}
-            picChange={picChange}
-            removeImg={removeImg}
-          />
-          <PreviewBottom
-            Img={value.image}
-            picChange={picChange}
-            removeImg={removeImg}
-          />
+          <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
+          <PreviewBottom Img={value.image} picChange={picChange} removeImg={removeImg} />
         </UploadContainer>
         <div id="map"></div>
       </TopContainer>
 
       <BottomContainer>
-        <TextInputContainer>
-          <input
-            id="title"
-            value={value.title}
-            onChange={(event) => handleValue(event.target)}
-          />
 
-          <pre>
-            <textarea
-              id="content"
-              rows="10"
-              cols="50"
-              value={value.content}
-              onChange={(event) => handleValue(event.target)}
-            />
-          </pre>
+        <TextInputContainer>
+          <div>
+            <label>Title</label>
+            <input id="title" value={value.title} onChange={(event) => handleValue(event.target)} placeholder="게시글의 제목을 적어주세요!" />
+          </div>
+          <div>
+            <label>Description</label>
+            <textarea value={value.content} id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} placeholder="게시글의 내용을 적어주세요!" />
+          </div>
         </TextInputContainer>
 
-        <CheckboxContainer>
-          <div>
-            <button onClick={submit}>업로드</button>
-          </div>
-
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              checked={value.public}
-              onChange={() =>
-                handleValue({ id: "public", value: !value.public })
-              }
-              value={value.public}
-            />
-            <span>{value.public ? "공개" : "비공개"}</span>
-          </div>
-
-          <div className="category">
+        <CheckboxContainer id="checkboxCOntainer">
+          <div id="category-container">
+            <label>Category</label>
             <select
-              value={value.categoryId}
               className="w150"
               onChange={(e) =>
                 handleValue({ id: "categoryId", value: Number(e.target.value) })
@@ -281,8 +275,23 @@ export default function EditPage() {
               <option value={4}>산책</option>
             </select>
           </div>
-        </CheckboxContainer>
+          <div id="address">
+              <label>주소</label>
+              <span>{loc.address}</span>
+          </div>
+          <div className="checkbox">
+            <label>공개여부 :</label>
+            <input
+              type="checkbox"
+              checked={value.public}
+              onChange={() => handleValue({ id: "public", value: !value.public })}
+            />
+            <span>{value.public ? "공개" : "비공개"}</span>
+          </div>
+            <button id="Btn" onClick={submit} type="button">업로드</button>
+      </CheckboxContainer>
       </BottomContainer>
+      </Container>
     </PostContainer>
   );
 }

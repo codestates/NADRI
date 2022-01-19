@@ -108,6 +108,24 @@ export default function Signup () {
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
 
+  function handleKeyPress(e) {
+    if(e.key === 'Enter') {
+      postSignup()
+    }
+  }
+
+  function handleSendChkMail(e) {
+    if(e.key === 'Enter') {
+      sendChkMail(inputs.email)
+    }
+  }
+
+  function handleverifyCode(e) {
+    if(e.key === 'Enter') {
+      verifyCode(userCode)
+    }
+  }
+
   return (
     <ModalBackdrop onClick={ModalHandler}>
       <SignupModalView onClick={(e) => e.stopPropagation()}>
@@ -123,20 +141,20 @@ export default function Signup () {
               <div className="emailInput">
                 <label htmlFor="email">이메일</label>
                 <div>
-                  <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
+                  <input autoComplete="off" onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange}></input>
                   <button type="button" onClick={() => sendChkMail(inputs.email)} >인증코드</button>
                 </div>
                 <div>
-                  <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}></input>
+                  <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}></input>
                   <button type="button" onClick={() => verifyCode(userCode)}>인증확인</button>
                 </div>
               </div>
             <label htmlFor="nickname">닉네임</label>
-            <input autoComplete="off" type={"text"} name="nickname" onChange={onChange}></input>
+            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"text"} name="nickname" onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input autoComplete="off" type={"password"} name="password" onChange={onChange}></input>
+            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} name="password" onChange={onChange}></input>
             <label htmlFor="password">비밀번호 확인</label>
-            <input autoComplete="off" type={"password"} onChange={onChange} name="passwordCheck"></input>
+            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} onChange={onChange} name="passwordCheck"></input>
           </form>
         </ModalInput>
 

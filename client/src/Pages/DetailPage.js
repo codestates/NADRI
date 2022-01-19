@@ -59,6 +59,7 @@ const Dropdown = styled.div`
   max-width: 1600px;
   margin-bottom: 1rem;
   justify-content: flex-end;
+  cursor: pointer;
 
   .bookmark {
     cursor: pointer;
@@ -122,12 +123,13 @@ const Dropdown = styled.div`
     background: white;
     text-align: center;
     opacity: 0;
+    transition: all 0.3s;
   }
 
   #nav li:hover ul {
+    transition: all 0.5s;
     opacity: 1;
   }
-
   #nav li:hover ul li {
     overflow: visible;
     padding: 0;
@@ -174,7 +176,7 @@ const MainImg = styled.img`
   max-width: 40vw;
   /* max-height: 30vw; */
   
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   

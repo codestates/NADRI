@@ -43,13 +43,32 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  /* background-color: #f9fafc; */
+  background-color: #f9fafc;
   border-radius: 10px;
   /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
   font-family: 'NanumSquare', 'Cafe24', arial;
 
+  position: relative;
+  padding: 2rem;
+
+  #tack {
+    position: absolute;
+    top: -10px;
+    left: 47.3%;
+    width: 2rem;
+    height: 2rem;
+    z-index: 10;
+    transform: scaleX(-1);
+    filter: drop-shadow(-5px 5px 2px rgb(180 180 180));
+  }
+
   @media (max-width: 992px) {
     flex-direction: column;
+
+    #tack {
+      top: -20px;
+      left: 43%;
+    }
   }
 `
 
@@ -61,9 +80,8 @@ const MapContainer = styled.div`
   #map {
     width: 100%;
     height: 100%;
-    /* border: 1px solid black; */
     border-radius: 15px;
-    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
     // z-index: 0;
   }
 
@@ -141,7 +159,7 @@ const ItemContainer = styled.div`
   overflow: auto;
   padding: 1rem;
   border-radius: 10px;
-  background-color: white;
+  background-color: #f9fafc;
   /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   &::-webkit-scrollbar{
     width: 10px;
@@ -310,6 +328,7 @@ export default function Main () {
   return (
     <MainContainer id="MainContainer">
       <Container>
+        <img id="tack" src="/img/tack.png" />
       <MapContainer>
         <div id="map" />
       </MapContainer>
