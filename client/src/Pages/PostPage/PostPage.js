@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   PostContainer,
+  Container,
   TopContainer,
   UploadContainer,
   BottomContainer,
@@ -30,7 +31,7 @@ export default function PostPage () {
     public: 1, // true
     categoryId: 1,
   });
-
+  
   const picChange = (event) => {
     // 이미지를 추가하는 함수
     // 나는 Blob이 싫다
@@ -175,7 +176,7 @@ export default function PostPage () {
   return (
 
     <PostContainer>
-
+      <Container>
       <TopContainer>
         <UploadContainer>
           <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
@@ -185,29 +186,21 @@ export default function PostPage () {
       </TopContainer>
 
       <BottomContainer>
+
         <TextInputContainer>
-          <input id="title" onChange={(event) => handleValue(event.target)} />
-        
-          <pre>
-            <textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} />
-          </pre>
+          <div>
+            <label>Title</label>
+            <input id="title" onChange={(event) => handleValue(event.target)} placeholder="게시글의 제목을 적어주세요!" />
+          </div>
+          <div>
+            <label>Description</label>
+            <textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} placeholder="게시글의 내용을 적어주세요!" />
+          </div>
         </TextInputContainer>
 
-        <CheckboxContainer>
-          <div>
-            <button onClick={submit}>업로드</button>
-          </div>
-
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              checked={value.public}
-              onChange={() => handleValue({ id: "public", value: !value.public })}
-            />
-            <span>{value.public ? "공개" : "비공개"}</span>
-          </div>
-
-          <div className="category">
+        <CheckboxContainer id="checkboxCOntainer">
+          <div id="category-container">
+            <label>Category</label>
             <select
               className="w150"
               onChange={(e) =>
@@ -220,8 +213,23 @@ export default function PostPage () {
               <option value={4}>산책</option>
             </select>
           </div>
+          <div id="address">
+              <label>주소</label>
+              <span>{loc.address}</span>
+          </div>
+          <div className="checkbox">
+            <label>공개여부 :</label>
+            <input
+              type="checkbox"
+              checked={value.public}
+              onChange={() => handleValue({ id: "public", value: !value.public })}
+            />
+            <span>{value.public ? "공개" : "비공개"}</span>
+          </div>
+            <button id="Btn" onClick={submit} type="button">업로드</button>
       </CheckboxContainer>
       </BottomContainer>
+      </Container>
     </PostContainer>
   );
 }

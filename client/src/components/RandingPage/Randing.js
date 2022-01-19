@@ -6,17 +6,20 @@ import {
   Section,
   leftContainer,
   Section_Left_Desc,
-  Section_Right_Img,
-  Section_Left_Img,
-  Section_Right_Desc
+  Section_Right_Desc,
+  Section0_Right_Img,
+  Section1_Left_Img,
+  Section2_Right_Img,
+  Section3_Left_Img
 } from './styledRanding'
 
 
 export default function Randing () {
-  const [scrollY, setScrollY] = useState(0); // 현재 스크롤 위치
+  const [scrollY, setScrollY] = useState(0) // 현재 스크롤 위치
   const [initHeight, setInitHeight] = useState(window.innerHeight) // 사용자의 브라우저 높이 값
   const [sectionHeight, setSectionHeight] = useState(initArray()) // section이 시작되는 값이 담긴 배열
-  const [curSection, setCurSection] = useState(0)
+  const [curSection, setCurSection] = useState(0) // 현재 랜딩 Section
+
   // [975, 1950, 2925, 3900]
   function calcCurSection() {
     // console.log(sectionHeight[2]) // 2925
@@ -63,7 +66,7 @@ export default function Randing () {
 
   useEffect(() => {
     calcCurSection()
-    console.log(curSection)
+    // console.log(curSection)
   },[scrollY])
 
   useEffect(() => {
@@ -86,12 +89,12 @@ export default function Randing () {
           <img src="img/nadri-logo-small.png"></img>
         </Section_Left_Desc>
 
-        <Section_Right_Img />
+        <Section0_Right_Img/>
       </Section>
       {/* ------------------------------------------------------------------------------------- */}
 
       <Section initHeight={initHeight}> {/* section의 길이를 세팅하기 위한 프롭스 */}
-        <Section_Left_Img className={curSection === 1 ? "section1-Img" : ''} curSection={curSection}/> {/* section2의 길이를 세팅하기 위한 프롭스 */}
+        <Section1_Left_Img scrollY={scrollY} sectionHeight={sectionHeight[1]} initHeight={initHeight} curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
 
         <Section_Right_Desc>
           <p>
@@ -108,13 +111,13 @@ export default function Randing () {
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit tempora aliquid exercitationem perspiciatis, laboriosam minus aliquam eum eius temporibus quod?
           </p>
         </Section_Left_Desc>
-        <Section_Right_Img id="section2-Img" initHeight={initHeight} scrollY={scrollY} sectionHeight={sectionHeight[1]} />
+        <Section2_Right_Img curSection={curSection}/>
       </Section>
 
       {/* ------------------------------------------------------------------------------------- */}
 
       <Section initHeight={initHeight}>
-        <Section_Left_Img className={curSection === 3 ? "section3-Img" : ''} curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
+        <Section3_Left_Img curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
         <Section_Right_Desc>
           <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit tempora aliquid exercitationem perspiciatis, laboriosam minus aliquam eum eius temporibus quod?

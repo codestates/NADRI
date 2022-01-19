@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 998;
   background: #fdfdff;
   padding-top: 2rem;
   padding-bottom: 0.5rem;
@@ -289,7 +289,7 @@ export default function Header () {
             <button>새글 쓰기</button>
             <span className="moblieIcon">
               <div className="iconBox">
-               <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
+                <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
               </div>
               <div className="iconText">
               새글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
