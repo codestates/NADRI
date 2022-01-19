@@ -13,6 +13,7 @@ export const ModalBackdrop = styled.div`
   text-align: center;
   overflow: scroll;
   z-index: 999;
+  font-family: 'NanumSquare',arial;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -25,6 +26,12 @@ export const SignupModalView = styled.div`
   border-radius: 10px;
   padding: 35px 80px;
   position: relative;
+
+  @media (max-width: 650px){
+    width: 80vw;
+    padding: 35px 30px;
+    height: 80vh;
+  }
 `
 
 export const ModalLogo = styled.div`
@@ -55,7 +62,7 @@ export const ModalHead = styled.div`
 
   > h1 {
     font-size: 2.3rem;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 1.5rem;
   }
 
@@ -65,6 +72,14 @@ export const ModalHead = styled.div`
       color: hotpink;
       cursor: pointer;
     }
+    > br {
+        display: none;
+      }
+    @media screen and (max-width:650px){
+        > br {
+        display: flex;
+        }
+      }
   }
 `;
 
@@ -84,6 +99,10 @@ export const ModalInput = styled.div`
     outline: none;
     padding-left: 10px;
     margin-bottom: 1rem;
+    /* font-family: 'NanumSquare',arial; */
+    :focus {
+        border: 1px solid #ff7400;
+      }
   }
 
   > form {
@@ -102,6 +121,7 @@ export const ModalInput = styled.div`
           height: 2.5rem;
           border-radius: 5px;
           cursor: pointer;
+          font-family: 'NanumSquare',arial;
         }
       }
     }
@@ -120,10 +140,35 @@ export const Oauth = styled.div`
     font-size: 20px;
     color: rgb(73, 80, 87);
     font-weight: 700;
-    box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
     position: relative;
     cursor: pointer;
-    img {
+
+    .normalSignup{
+      width: 100%;
+      background-color: pink;
+      color: white;
+      height: 3.5rem;
+      border-radius: 7px;
+      line-height: 3.5rem;
+
+    }
+    .googlePcLogin{
+      width: 100%;
+      height: 3.5rem;
+    }
+    .googleMobile{
+      display: none;
+    }
+    .kakaoPcLogin{
+      width: 100%;
+      height: 3.5rem;
+    }
+    .kakaoMobile{
+      display: none;
+    }
+
+    /* img {
       position: absolute;
       left: 10px;
       width:30px;
@@ -137,24 +182,55 @@ export const Oauth = styled.div`
       border: 0;
       outline: 0;
       color: rgb(73, 80, 87);
-    }
+    } */
+
   }
 
   & > div:first-child {
-    background-color: pink;
-    color: white;
+    padding: 0.3rem;
   }
 
   & > div:nth-child(2) {
-    button {
-      background: rgb(255,255,255);
-    }
+    box-shadow: none;
   }
 
   & > div:last-child {
-    /* background-color: rgb(255, 231, 16) */
-    button{
-      background-color: rgb(255, 231, 16)
+    padding: 0.3rem;
+  }
+
+  @media (max-width: 650px){
+    display: flex;
+
+    > div {
+      .normalSignup{
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-size: 1rem;
+      }
+      .googlePcLogin{
+        display: none;
+      }
+      .kakaoPcLogin{
+        display: none;
+      }
+      .googleMobile{
+      display: flex;
+      }
+      .kakaoMobile{
+      display: flex;
+      }
     }
+
+    & > div:first-child {
+    padding: 0.3rem;
+   }
+
+  & > div:nth-child(2) {
+    box-shadow: none;
+    }
+
+  & > div:last-child {
+    padding: 0.3rem;
+   }
   }
 `

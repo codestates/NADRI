@@ -13,6 +13,7 @@ export const ModalBackdrop = styled.div`
   text-align: center;
   overflow: scroll;
   z-index: 999;
+  font-family: 'NanumSquare',arial;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -25,16 +26,42 @@ export const LoginModalView = styled.div`
   border-radius: 10px;
   padding: 35px 80px;
   position: relative;
+
+  @media (max-width: 650px){
+    width: 80vw;
+    padding: 35px 30px;
+    height: 60vh;
+  }
 `
 
 export const ModalLogo = styled.div`
   >div {
     width: 20rem;
     margin: 0 auto 1rem;
-    >img {
+    .mainLogo {
       display: block;
       width: 100%;
       height: auto;
+    }
+    .mobileLogo{
+      display: none;
+    }
+  }
+
+  @media (max-width: 650px){
+    >div {
+      display: flex;
+      justify-content: center;
+      width: auto;
+
+      .mainLogo {
+        display: none;
+      }
+      .mobileLogo{
+      display: flex;
+      width: 4rem;
+      height: auto;
+      }
     }
   }
 `
@@ -55,7 +82,7 @@ export const ModalHead = styled.div`
 
   > h1 {
     font-size: 2.3rem;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 1.5rem;
   }
 
@@ -64,6 +91,14 @@ export const ModalHead = styled.div`
     > span {
       color: hotpink;
       cursor: pointer;
+    }
+    > br {
+      display: none;
+    }
+    @media screen and (max-width:650px){
+      > br {
+      display: flex;
+      }
     }
   }
 `;
@@ -86,6 +121,11 @@ export const ModalInput = styled.div`
       outline: none;
       padding-left: 10px;
       margin-bottom: 1rem;
+
+      :focus {
+        border: 1px solid #ff7400;
+
+      }
     }
   }
 `
@@ -100,42 +140,83 @@ export const Oauth = styled.div`
     margin-bottom: 0.8rem;
     border-radius: 5px;
     font-size: 20px;
-    color: rgb(73, 80, 87);
+    /* color: rgb(73, 80, 87); */
     font-weight: 700;
-    box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
     position: relative;
     cursor: pointer;
-    img {
-      position: absolute;
-      left: 10px;
-      width:30px;
-    }
-    button {
+  
+    .normalLogin{
       width: 100%;
-      height: 100%;
-      border-radius: 5px;
-      font-size: 20px;
-      font-weight: 700;
-      border: 0;
-      outline: 0;
-      color: rgb(73, 80, 87);
+      background-color: pink;
+      color: white;
+      height: 3.5rem;
+      border-radius: 7px;
+      line-height: 3.5rem;
+
+    }
+    .googlePcLogin{
+      width: 100%;
+      height: 3.5rem;
+    }
+    .googleMobile{
+      display: none;
+    }
+    .kakaoPcLogin{
+      width: 100%;
+      height: 3.5rem;
+    }
+    .kakaoMobile{
+      display: none;
     }
   }
 
   & > div:first-child {
-    background-color: pink;
-    color: white;
+    padding: 0.3rem;
   }
 
   & > div:nth-child(2) {
-    button {
-      background: rgb(255,255,255);
-    }
+    box-shadow: none;
   }
 
   & > div:last-child {
-    button{
-      background-color: rgb(255, 231, 16)
-    }
+    padding: 0.3rem;
   }
+
+  @media (max-width: 650px){
+    display: flex;
+
+    > div {
+      .normalLogin{
+        height: 2.5rem;
+        line-height: 2.5rem;
+      }
+      .googlePcLogin{
+        display: none;
+      }
+      .kakaoPcLogin{
+        display: none;
+      }
+      .googleMobile{
+      display: flex;
+      }
+      .kakaoMobile{
+      display: flex;
+      }
+    }
+
+    & > div:first-child {
+    padding: 0.3rem;
+   }
+
+  & > div:nth-child(2) {
+    box-shadow: none;
+    }
+
+  & > div:last-child {
+    padding: 0.3rem;
+   }
+
+  }
+
 `

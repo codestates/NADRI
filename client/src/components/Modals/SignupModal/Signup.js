@@ -115,7 +115,7 @@ export default function Signup () {
         <ModalHead>
           <span onClick={ModalHandler}>&#x2716;</span>
           <h1>회원가입</h1>
-          <p>이미 회원이신가요? &#xa0;<span onClick={(e) => ModalHandler (e)}>로그인하기!</span></p>
+          <p>이미 회원이신가요? &#xa0;<br/><span onClick={(e) => ModalHandler (e)}>로그인하기!</span></p>
         </ModalHead>
 
         <ModalInput>
@@ -124,10 +124,10 @@ export default function Signup () {
                 <label htmlFor="email">이메일</label>
                 <div>
                   <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
-                  <button type="button" onClick={() => sendChkMail(inputs.email)} >중복확인</button>
+                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증코드</button>
                 </div>
                 <div>
-                  <input autoComplete="off" type={"password"} placeholder="인증번호 이거 나중에 다시 작업해야함" onChange={(e) => setUserCode(e.target.value)}></input>
+                  <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}></input>
                   <button type="button" onClick={() => verifyCode(userCode)}>인증확인</button>
                 </div>
               </div>
@@ -141,16 +141,16 @@ export default function Signup () {
         </ModalInput>
 
         <Oauth>
-          <div onClick={postSignup}>회원가입</div>
-          <div>
-            <button onClick={onClickGoogle}>
-            <img src="/img/google.png" alt="구글 로그인" />구글 로그인
-            </button>
+          <div onClick={postSignup}>
+            <div className="normalSignup">회원가입</div>
           </div>
-          <div>
-            <button onClick={onClickKakao}>
-            <img src="/img/kakao.png" />카카오톡 로그인
-            </button>
+          <div onClick={onClickGoogle}>
+            <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
+            <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
+          </div>
+          <div onClick={onClickKakao}>
+            <img className="kakaoPcLogin" src="/img/kakao_login_large_wide.png" alt="카카오 로그인" />
+            <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
           </div>
         </Oauth>
       </SignupModalView>

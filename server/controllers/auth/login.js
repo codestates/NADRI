@@ -34,9 +34,9 @@ module.exports = async (req, res) => {
     const payLoad = userInfo.dataValues;
     delete payLoad.password;
 
-    console.log(payLoad);
     const aToken = mkAccessToken(payLoad);
     sendAccessToken(res, aToken);
+    console.log(payLoad);
     res.status(200).json({ data: payLoad });
   } catch (err) {
     res.sendStatus(500);

@@ -11,37 +11,55 @@ import SignoutCheckModal from '../SignoutModal/SignoutCheck'
 axios.defaults.withCredentials = true;
 
 export const ModalView = styled.div`
-  width: 45rem;
-  height: 20rem;
+  width: 32rem;
+  height: 13rem;
   background-color: white;
-  border: 2px solid black;
-  border-radius: 50px;
+  /* border: 2px solid black; */
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6rem;
+  gap: 2rem;
+
+  position: relative;
+
 
   span {
-    font-size: 2rem;
+    font-size: 1.2rem;
   }
 
   .buttonContainer {
     display: flex;
     justify-content: center;
-    gap: 4rem;
+    gap: 1rem;
 
     >button {
-      width: 10rem;
+      width: 8rem;
       height: 3rem;
       border-radius: 10px;
-      border: 1px solid black;
-      background-color: white;
-      font-size: 1.3rem;
+      border: 0px solid black;
+      background-color: #f6d9d5;
+      font-size: 1.1rem;
       cursor: pointer;
+      font-family: 'NanumSquare', arial;
+      box-shadow: 2px 2px 2px 1px rgb(180 180 180);
     }
     >button:active {
       background-color: pink;
       color: white;
+    }
+  }
+
+  @media (max-width:650px){
+    width: 70vw;
+    height: 12rem;
+
+    .buttonContainer {
+      
+      > button {
+        width: 6rem;
+  
+      }
     }
   }
 `
@@ -68,10 +86,10 @@ export default function SignoutModal({signOutHandler}) {
     <div>
     <ModalBackdrop onClick={signOutHandler}>
       <ModalView onClick={(e) => e.stopPropagation()}>
-        <span>정말 회원 탈퇴 하시겠습니까?</span>
+        <span>정말 회원 탈퇴하시겠습니까?</span>
         <div className="buttonContainer">
           <button type="button" onClick={signOutHandler}>취소</button>
-          <button type="button" onClick={SignoutPost}>회원탈퇴</button>
+          <button type="button" onClick={SignoutPost}>회원 탈퇴</button>
         </div>
       </ModalView>
     </ModalBackdrop>
