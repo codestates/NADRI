@@ -353,7 +353,7 @@ const BottomContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   width: 100%;
 
   @media screen and (max-width: 900px) {
@@ -453,6 +453,7 @@ export default function DetailPage() {
   const [distance, setDistance] = useState([0, 0, false]);
   const curUserInfo = useSelector(state => state.getUserInfo);
   const LoginModalState = useSelector(state => state.loginReducer);
+  const curAuthState = useSelector(state => state.changeAuthState);
   const dispatch = useDispatch()
 
   // 자외선 단계 구분(1,2 / 3-5 / 6,7 / 8~)
@@ -881,8 +882,8 @@ export default function DetailPage() {
                 <ul id='nav'>
                   <li><img src='/img/dropdown.png' />
                     <ul> 
-                      {curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={editPost}>수정</span></li> : null}
-                      {curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={() => deletePost(post.id)}>삭제</span></li> : null}
+                      {curAuthState || curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={editPost}>수정</span></li> : null}
+                      {curAuthState || curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={() => deletePost(post.id)}>삭제</span></li> : null}
                       <li><span onClick={report}>신고</span></li>
                     </ul>
                   </li>
