@@ -91,9 +91,10 @@ module.exports = {
         userId: userData.id,
         postId: Number(req.params.id),
         comment: req.body.comment,
+        // image: userData.image
       });
 
-      console.log(create.dataValues)
+      // console.log(create)
 
       const result = create.dataValues
       result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]
@@ -102,6 +103,7 @@ module.exports = {
       
       return res.status(201).json({data: result, message: 'new column created'})
     } catch (err) {
+      console.log(err)
       return res.sendStatus(500)
     }
   },
