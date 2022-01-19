@@ -53,16 +53,19 @@ export default function Login () {
     })
     .then((res) => {
       // console.log(res.data.data)
-      const {nickname, createdAt, emai, image} = res.data.data
+      const {nickname, createdAt, email, image, oauth} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt, image}))
+        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
         dispatch(loginModal(LoginModalstate))
         alert('로그인이 완료되었습니다.')
         navigate('/')
       }
     })
     .catch((err) => {
+      // if(err.status = 400){
+      //   alert('틀렸습니다')
+      // }
       alert('잘못된 로그인입니다.')
       console.log(err)
     })
@@ -96,13 +99,16 @@ export default function Login () {
       <LoginModalView onClick={(e) => e.stopPropagation()}>
 
         <ModalLogo>
-          <div><img src="/img/nadri-footer-img.png" /></div>
+          <div>
+            <img className="mainLogo" src="/img/nadri-footer-img.png" alt="메인 로고"/>
+            <img className="mobileLogo" src="/img/nadri-logo-small.png" alt="모바일 로고" />
+          </div>
         </ModalLogo>
 
         <ModalHead>
           <span onClick={ModalHandler}>&#x2716;</span>
           <h1>로그인</h1>
-          <p>회원이 아니신가요? &#xa0;<span onClick={(e) => ModalHandler(e)}>회원가입하기!</span></p>
+          <p>회원이 아니신가요? &#xa0;<br/><span onClick={(e) => ModalHandler(e)}>회원가입하기!</span></p>
         </ModalHead>
 
         <ModalInput>
@@ -115,16 +121,20 @@ export default function Login () {
         </ModalInput>
 
         <Oauth>
-          <div onClick={postLogin}>로그인</div>
-          <div>
-            <button onClick={onClickGoogle}>
-            <img src="/img/google.png" alt="구글 로그인" />구글 로그인
-            </button>
+          <div onClick={postLogin}>
+            <div className="normalLogin">로그인</div>
           </div>
-          <div>
-            <button onClick={onClickKakao}>
-            <img src="/img/kakao.png" />카카오톡 로그인
-            </button>
+          <div onClick={onClickGoogle}>
+            {/* <button onClick={onClickGoogle}> */}
+            <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
+            <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
+            {/* </button> */}
+          </div>
+          <div onClick={onClickKakao}>
+            {/* <button onClick={onClickKakao}> */}
+            <img className="kakaoPcLogin" src="/img/kakao_login_large_wide.png" alt="카카오 로그인" />
+            <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
+            {/* </button> */}
           </div>
         </Oauth>
       </LoginModalView>

@@ -20,10 +20,11 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 2;
-  background: #f5f5f6;
+  background: #fdfdff;
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   top: -1rem;
+  /* font-family: 'Cafe24', arial; */
 `
 
 const Logo = styled.div`
@@ -63,6 +64,8 @@ const Search = styled.div`
   width: 30rem;
   position: relative;
   margin: 1rem 1rem 1rem 1rem;
+  font-family: 'NanumSquare', arial;
+
   > .searchBar {
     width: 100%;
     height: 40px;
@@ -71,6 +74,8 @@ const Search = styled.div`
     border-radius: 25px;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     background: rgb(255,255,255);
+    font-family: 'NanumSquare', arial;
+
   }
   > .searchBar:focus {
     outline: 2px solid rgba(170,170,170);
@@ -113,11 +118,13 @@ const HeaderContent = styled.div`
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     background: rgb(255,255,255);
     transition: all 0.2s;
+    font-family: 'NanumSquare', arial;
 
     &:hover {
       transition: all 0.2s;
       cursor: pointer;
       transform: scale(1.1);
+      color: #ff7400;
       // box-shadow: 
       // inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
       // 2px 2px 2px 0px rgba(0, 0, 0, 0.1),

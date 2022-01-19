@@ -4,6 +4,8 @@ import { SETUSERINFO, CHANGE_USER_NICKNAME, CHANGE_PROFILE } from "../actions";
 export const getUserInfo = (state={}, action) => {
   switch (action.type) {
     case SETUSERINFO:
+      console.log('셋유저인포')
+      console.log(action)
       return Object.assign({},action.payload.userInfo)
       break;
 
