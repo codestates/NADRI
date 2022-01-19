@@ -14,7 +14,8 @@ const DetailPageContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
+    font-family: 'NanumSquare','Cafe24', arial;
   .loadingImg {
 
   }
@@ -36,9 +37,9 @@ const Title = styled.h2`
   font-size: ${fontsize.Titlefontsize};
   font-weight: bold;
   text-align: center;
-  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   border-radius: 10px;
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   
   @media screen and (max-width: 900px) {
     width: 70vw;
@@ -60,6 +61,7 @@ const Dropdown = styled.div`
   max-width: 1600px;
   margin-bottom: 1rem;
   justify-content: flex-end;
+  cursor: pointer;
 
   .bookmark {
     cursor: pointer;
@@ -94,6 +96,7 @@ const Dropdown = styled.div`
     font-size: 1.2rem;
     width: 3rem;
     margin: 0.5rem 0;
+    font-family: 'NanumSquare','Cafe24', arial;
   }
 
   #nav li:hover > span {
@@ -122,12 +125,13 @@ const Dropdown = styled.div`
     background: white;
     text-align: center;
     opacity: 0;
+    transition: all 0.3s;
   }
 
   #nav li:hover ul {
+    transition: all 0.5s;
     opacity: 1;
   }
-
   #nav li:hover ul li {
     overflow: visible;
     padding: 0;
@@ -174,7 +178,7 @@ const MainImg = styled.img`
   max-width: 40vw;
   /* max-height: 30vw; */
   
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   
@@ -305,6 +309,7 @@ const Forecast = styled.div`
   justify-content: space-evenly;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   background-color: #f9fafc;
+  font-family: 'NanumSquare','Cafe24', arial;
 
   @media screen and (max-width: 650px) {
     height: 12vw;
@@ -430,6 +435,10 @@ const CommentListContainer = styled.div`
   .writeComment {
     display: flex;
     justify-content: center;
+    font-family: 'NanumSquare', 'Cafe24',arial;
+    > button {
+      font-family: 'NanumSquare', 'Cafe24',arial;
+    }
   }
 
   @media screen and (max-width: 900px) {

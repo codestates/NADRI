@@ -21,7 +21,7 @@ export const ModalBackdrop = styled.div`
 
 export const LoginModalView = styled.div`
   width: 33rem;
-  height: 41rem;
+  height: 38rem;
   background-color: white;
   border-radius: 10px;
   padding: 35px 80px;
@@ -78,6 +78,7 @@ export const ModalHead = styled.div`
     right: 0;
     font-size: 1.5rem;
     cursor: pointer;
+    font-family: arial;
   }
 
   > h1 {
@@ -124,13 +125,14 @@ export const ModalInput = styled.div`
 
       :focus {
         border: 1px solid #ff7400;
-
       }
     }
   }
 `
 
 export const Oauth = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   > div {
     width: 100%;
     display: flex;
@@ -155,6 +157,28 @@ export const Oauth = styled.div`
       line-height: 3.5rem;
 
     }
+   
+  }
+
+  & > div:first-child {
+    padding: 0.3rem;
+  }
+
+> span {
+  width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 5px;
+    font-size: 20px;
+    /* color: rgb(73, 80, 87); */
+    font-weight: 700;
+    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
+    position: relative;
+    cursor: pointer;
+
     .googlePcLogin{
       width: 100%;
       height: 3.5rem;
@@ -169,29 +193,31 @@ export const Oauth = styled.div`
     .kakaoMobile{
       display: none;
     }
-  }
+}
 
-  & > div:first-child {
-    padding: 0.3rem;
-  }
-
-  & > div:nth-child(2) {
-    box-shadow: none;
-  }
-
-  & > div:last-child {
+  & > span:last-child {
     padding: 0.3rem;
   }
 
   @media (max-width: 650px){
     display: flex;
-
+    justify-content: space-around;
     > div {
       .normalLogin{
         height: 2.5rem;
         line-height: 2.5rem;
       }
-      .googlePcLogin{
+    }
+
+    & > div:first-child {
+    padding: 0.3rem;
+    width: 50%;
+   }
+
+  > span {
+    display: flex;
+    width: 20%;
+    .googlePcLogin{
         display: none;
       }
       .kakaoPcLogin{
@@ -203,20 +229,11 @@ export const Oauth = styled.div`
       .kakaoMobile{
       display: flex;
       }
-    }
+  }
 
-    & > div:first-child {
+  & > span:last-child {
     padding: 0.3rem;
    }
-
-  & > div:nth-child(2) {
-    box-shadow: none;
-    }
-
-  & > div:last-child {
-    padding: 0.3rem;
-   }
-
   }
 
 `

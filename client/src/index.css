@@ -22,7 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-	/* color: black; */
+	font-family: NanumSquare, Cafe24, sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -33,7 +33,6 @@ body {
 	width: 100vw;
 	line-height: 1;
 	overflow-x: hidden;
-	font-family: 'Noto Sans KR', sans-serif;
 }
 ol, ul {
 	list-style: none;

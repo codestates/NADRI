@@ -39,6 +39,15 @@ const PreviewImg = styled.div`
   background-position: center center;
 
   ${(props) => {
+    let img;
+
+    if(typeof props.Img[0] === 'string') {
+      img = props.Img[0]
+    }
+    else if(typeof props.Img[0] === 'object') {
+      img = props.Img[0][0]
+    }
+    
     if(props.Img[0] === undefined) {
       return(
       `
@@ -65,7 +74,7 @@ const PreviewImg = styled.div`
         `
         cursor: grab;
         transition: all 0.3s;
-        background-image: url(${props.Img[0][0]});
+        background-image: url(${img});
         background-size: contain;
         `
       )
@@ -79,7 +88,7 @@ const PreviewImg = styled.div`
 
 
 export default function Preview ({Img, picChange, removeImg}) {
-
+  
   const photoInput = useRef(null);
   const handleClick = () => {
     photoInput.current.click();
