@@ -23,7 +23,7 @@ export default function SignoutCheckModal() {
   return (
     <ModalBackdrop>
       <ModalView>
-        <span>탈퇴처리가 정상적으로 완료되었습니다.</span>
+        <span>탈퇴처리가 정상적으로<br/> 완료되었습니다.</span>
         <div className="buttonContainer">
           <button type="button" onClick={signoutCheckHandler}>확인</button>
         </div>

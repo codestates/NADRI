@@ -8,28 +8,62 @@ const MyPageSideBar = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 10px;
-  width: 20rem;
-  height: 16rem;
+  width: 15vw;
+  height: 52vh;
+  /* height: 16rem; */
   /* margin-left: 15rem; */
   margin: auto;
+  background-color: #dfe3ee;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
 
   > div {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 10rem;
-    height: 2rem;
-    border: 1px solid black;
+    width: 90%;
+    padding: 0.5rem 0.5rem;
+    height: auto;
+    /* border: 1px solid black; */
     border-radius: 10px;
     cursor: pointer;
+    color: #2d1d1d;
+    font-weight: 600;
+  }
+
+  > div:hover {
+    color: #ff7400;
   }
 
   > div:active {
     position: relative;
     top: 2px;
   }
+
+  @media (max-width:900px){
+    flex-direction: row;
+    justify-content: center;
+    width: 82vw;
+    height: auto;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    > div {
+      width: auto;
+      margin: auto;
+    }
+  }
+
+  @media (max-width:700px){
+    width: 90vw;
+
+    > div {
+      margin: 0.2rem;
+    }
+  }  
+
 `
 
 export default function Sidebar({setCurContent}) {

@@ -11,6 +11,7 @@ const FooterContainer = styled.footer`
   background-color: #343a40;
   padding: 2rem 0;
   color: rgb(206, 212, 218);
+  font-family: 'NanumSquare', arial;
 
   a {
     color: rgb(206, 212, 218);
@@ -80,6 +81,7 @@ const Profile = styled.div`
   &>:last-child {
     .name {
       font-size: 16px;
+      margin-right: 0.3rem;
     }
 
     .info {
