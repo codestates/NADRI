@@ -53,10 +53,10 @@ export default function Login () {
     })
     .then((res) => {
       // console.log(res.data.data)
-      const {nickname, createdAt, email, image, oauth} = res.data.data
+      const {id, email, nickname, image, admin, oauth, createdAt} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+        dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(loginModal(LoginModalstate))
         alert('로그인이 완료되었습니다.')
         navigate('/')

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components";
+import { useSelector } from 'react-redux'
 
 const CommentWrapper = styled.div`
   display: flex;
@@ -58,6 +59,7 @@ const InfoAndAlert = styled.div`
 
 export default function Comment({ comment, modComment, delComment }) {
 
+  const curUserInfo = useSelector(state => state.getUserInfo);
   const [edit, setEdit] = useState(false)
   const handleEdit = () => {
     setEdit(!edit)
@@ -80,7 +82,6 @@ export default function Comment({ comment, modComment, delComment }) {
       />
       <div>
         <CommentContentWrapper>
-          {/* 위에서부터 닉네임, 내용, 버튼? */}
           {
             !edit ?
             <div>
@@ -90,7 +91,8 @@ export default function Comment({ comment, modComment, delComment }) {
             : <textarea className='editComment' defaultValue={comment.comment} onChange={handleText}/>
           }
         </CommentContentWrapper>
-        <InfoAndAlert>
+        {curUserInfo.admin || curUserInfo.id === comment.userId ?
+          <InfoAndAlert>
           <span className='test'>{comment.createdAt}</span>
           {!edit ? 
             <span>
@@ -104,6 +106,7 @@ export default function Comment({ comment, modComment, delComment }) {
             </span>
           }
         </InfoAndAlert>
+         : null}
       </div>
     </CommentWrapper>
   );

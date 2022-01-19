@@ -5,6 +5,8 @@ import axios from "axios";
 import qs from "qs";
 import Comment from "./../components/Comment";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { loginModal } from '../redux/actions';
 
 const DetailPageContainer = styled.div`
     width: 100%;
@@ -449,6 +451,9 @@ export default function DetailPage() {
   const [weather, setWeather] = useState(null);
   const [text, setText] = useState("");
   const [distance, setDistance] = useState([0, 0, false]);
+  const curUserInfo = useSelector(state => state.getUserInfo);
+  const LoginModalState = useSelector(state => state.loginReducer);
+  const dispatch = useDispatch()
 
   // 자외선 단계 구분(1,2 / 3-5 / 6,7 / 8~)
   const uviIndex = {
@@ -525,19 +530,25 @@ export default function DetailPage() {
     if (text.length === 0) return null;
 
     // 문자열 전송
-    await axios.post(
+    axios.post(
       `${process.env.REACT_APP_API_URL}/comment/${
         window.location.href.split("/")[4]
       }`,
       { comment: text }
-    );
-
-    const comments = await axios.get(
-      `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
-    );
-
-    setComment(comments.data.data);
-    handleText("");
+    )
+    .then(result => {
+      axios.get(
+        `${process.env.REACT_APP_API_URL}/comment/${window.location.href.split("/")[4]}`
+      )
+      .then(result => {
+        setComment(result.data.data);
+        handleText("");
+      })
+    })
+    .catch(err => {
+      alert('먼저 로그인해야 합니다!')
+      dispatch(loginModal(LoginModalState))
+    })
   };
 
   const favorite = (id) => {
@@ -548,8 +559,8 @@ export default function DetailPage() {
         console.log(result);
       })
       .catch((error) => {
-        alert('err')
-        console.log(error);
+        alert('먼저 로그인해야 합니다!')
+        dispatch(loginModal(LoginModalState))
       });
   };
 
@@ -566,6 +577,7 @@ export default function DetailPage() {
   };
 
   useEffect(async () => {
+    console.log('DETAILINIT', curUserInfo)
     // 현재 페이지 주소 찾기(주소창에 직접 id입력하는 경우 대응)
     const targetId = document.location.href.split("/")[4];
 
@@ -708,13 +720,13 @@ export default function DetailPage() {
 
       // 마커 이미지 임포트
       const markerImg =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        "http://t1.daumcdn.net/mapjsapi/images/2x/marker.png";
 
       for (let i = 0; i < 1; i++) {
         // 마커 이미지 생성
         let markerImage = new kakao.maps.MarkerImage(
           markerImg,
-          new kakao.maps.Size(24, 35)
+          new kakao.maps.Size(29, 42)
         );
 
         new kakao.maps.Marker({
@@ -842,12 +854,23 @@ export default function DetailPage() {
     handlePost('image', tmp)
   }
 
+  const report = () => {
+    axios.post(`${process.env.REACT_APP_API_URL}/post/report`,
+    {url: window.location.href}
+    )
+    .then(result => {
+      alert('신고가 접수되었습니다.')
+    })
+    .catch(err => {
+      alert('접수 중 오류가 발생했습니다.')
+    })
+  }
+
   return (
     <DetailPageContainer>
       {post ? (
         <div>
           <Title>{post.title ? post.title : null}</Title>
-
           <PostContainer>
             <Dropdown>
               <div>
@@ -857,10 +880,10 @@ export default function DetailPage() {
               <div>
                 <ul id='nav'>
                   <li><img src='/img/dropdown.png' />
-                    <ul>
-                      <li><span onClick={editPost}>수정</span></li>
-                      <li><span onClick={() => deletePost(post.id)}>삭제</span></li>
-                      <li><span>신고</span></li>
+                    <ul> 
+                      {curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={editPost}>수정</span></li> : null}
+                      {curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={() => deletePost(post.id)}>삭제</span></li> : null}
+                      <li><span onClick={report}>신고</span></li>
                     </ul>
                   </li>
                 </ul>
@@ -951,7 +974,7 @@ export default function DetailPage() {
                   <input
                     id="textinput"
                     value={text}
-                    placeholder="댓글을 작성해주세요"
+                    placeholder={Object.keys(curUserInfo).length ? "댓글을 작성해 주세요" : '먼저 로그인 해 주세요'}
                     onChange={(e) => handleText(e.target.value)}
                   />
                   <button onClick={sendComment}>전송</button>

@@ -65,11 +65,11 @@ function App() {
       authorizationCode
     })
     .then((result) => {
-      // console.dir(result)
-      const {nickname, createdAt, email, image, oauth} = result.data.data
+      console.dir(result)
+      const {id, email, nickname, image, admin, oauth, createdAt} = result.data.data
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
-      dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+      dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
       // console.log(curAuthState)
       navigate('/')
 
@@ -85,10 +85,10 @@ function App() {
     })
     .then((result) =>{
       // console.dir(result)
-      const {nickname, createdAt, email, image, oauth} = result.data.data
+      const {id, email, nickname, image, admin, oauth, createdAt} = result.data.data
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
-      dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+      dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
       // console.log(curAuthState)
       navigate('/')
     })
