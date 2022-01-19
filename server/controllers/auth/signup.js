@@ -21,13 +21,14 @@ module.exports = async (req, res) => {
       // 클라이언트 단에서 비번을 해싱해서 보내는게 맞지 않을까?
       // 받아온 값으로 bcrypt를 돌린다던가
     
-      nickname, email,
+      nickname,
+      email,
       password: password, // 나중에 실제서비스 올라가면 hashed로 변경
       image: '2111641961096892.jpeg,', // 기본 이미지를 버킷에 넣고 주소 저장하기 (지갑을 지켜주세요...)
       admin: false, // 어드민 권한은 기본적으로 false 주기
       oauth: false, // 일반 회원가입이므로 false
     })
-  
+
     const userData = created.dataValues
     delete userData.password
     console.log('회원가입', userData)

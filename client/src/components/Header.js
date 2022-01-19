@@ -1,8 +1,8 @@
-import React from 'react'
+import {React, useEffect} from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { loginModal, signupModal, authState, gLogIn, kLogIn } from '../redux/actions';
+import { loginModal, signupModal, authState, gLogIn, kLogIn, userInfo } from '../redux/actions';
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPlus, faSignInAlt, faSignOutAlt, faUserCircle, faFile} from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 998;
   background: #fdfdff;
   padding-top: 2rem;
   padding-bottom: 0.5rem;
@@ -226,6 +226,20 @@ export default function Header () {
   const kLoginState = useSelector(state => state.kLoginReducer)
   // console.log('현재 로그인 상태: '+curAuthState)
 
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/auth/me`)
+    .then(result => {
+      if (result.status === 200) {
+        const {nickname, createdAt, email, image, oauth} = result.data.data
+        dispatch(authState(curAuthState))
+        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
+
   function ModalHandler (e) {
     // console.dir(e.currentTarget.classList[2])
     if (e.target.textContent === 'Log In' || e.currentTarget.classList[2] === 'loginIcon') {
@@ -275,7 +289,7 @@ export default function Header () {
             <button>새글 쓰기</button>
             <span className="moblieIcon">
               <div className="iconBox">
-               <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
+                <FontAwesomeIcon icon={faFile} className="postIcon" alt="post" />
               </div>
               <div className="iconText">
               새글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

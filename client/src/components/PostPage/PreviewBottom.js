@@ -4,6 +4,7 @@ import PreviewBottomItem from "./PreviewBottomItem";
 
 const RestImgContainer = styled.div`
   width: 100%;
+  height: 30%;
   display: flex;
   gap: 1rem;
 `

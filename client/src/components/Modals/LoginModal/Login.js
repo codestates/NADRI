@@ -124,18 +124,18 @@ export default function Login () {
           <div onClick={postLogin}>
             <div className="normalLogin">로그인</div>
           </div>
-          <div onClick={onClickGoogle}>
+          <span onClick={onClickGoogle}>
             {/* <button onClick={onClickGoogle}> */}
             <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
             <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
             {/* </button> */}
-          </div>
-          <div onClick={onClickKakao}>
+          </span>
+          <span onClick={onClickKakao}>
             {/* <button onClick={onClickKakao}> */}
-            <img className="kakaoPcLogin" src="/img/kakao_login_large_wide.png" alt="카카오 로그인" />
+            <img className="kakaoPcLogin" src="/img/kakao_login_medium_narrow.png" alt="카카오 로그인" />
             <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
             {/* </button> */}
-          </div>
+          </span>
         </Oauth>
       </LoginModalView>
     </ModalBackdrop>

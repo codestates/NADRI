@@ -24,8 +24,11 @@ const FooterContainer = styled.footer`
 
 
   @media screen and (max-width:900px){
+    padding: 0;
+
     &>:last-child  {
-      margin-left: 0px
+      margin-left: 0px;
+      margin-bottom: 1rem;
     }
   }
 `
@@ -37,6 +40,10 @@ const Logo = styled.div`
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  @media (max-width: 750px){
+    display: none;
   }
 `
 
@@ -54,6 +61,7 @@ const MemberContainer = styled.div`
 
   @media screen and (max-width:900px){
     gap:1rem;
+    height: auto;
 }
 `
 

@@ -34,18 +34,20 @@ module.exports = {
 
   getPostComment: async (req, res) => {
     // 포스트의 public 값 체크해 인증진행도 추가해야 함
-
+    
     // DB 에 찾는 post가 존재하는지 확인
     if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
     const find = await posts.findOne({ where: { id: req.params.id } });
     if (!find) return res.status(400).json({ message: "Bad Request" });
-
+    
     // public 값 체크해 인증 진행하기
     // 비공개 글이면 JWT를 검증해 유저ID가 게시글 유저ID와 같은지 확인
+    
     if (!find.public) {
       const userData = chkValid(req);
+      
       if (!userData) return res.status(401).json({ message: "Invalid Token" });
-      console.log(userData);
+      
 
       if (userData.id !== find.userId) return res.status(400).json({message: 'Not Authorized'})
     }
@@ -53,15 +55,13 @@ module.exports = {
     // DB에서 postId로 필터한 코멘트 찾아 보내기
     // Post에서 댓글 보여주는 데 필요한 nickname, userImage를 포함해야 하므로 Join시켜야 함
     try {
-
+      
       const search = await sequelize.query(`
         SELECT comments.id, comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
       `, { type: QueryTypes.SELECT })
-
-      search.map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
-
       console.log(search)
+      search.map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
 
       res.status(200).json({data: search})
     } catch (err) {
@@ -91,9 +91,9 @@ module.exports = {
         userId: userData.id,
         postId: Number(req.params.id),
         comment: req.body.comment,
+        // image: userData.image
       });
-      // console.log(create.dataValues)
-
+      
       const result = create.dataValues
       result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]
       result.nickname = userData.nickname
@@ -101,6 +101,7 @@ module.exports = {
       
       return res.status(201).json({data: result, message: 'new column created'})
     } catch (err) {
+      console.log(err)
       return res.sendStatus(500)
     }
   },
