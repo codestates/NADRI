@@ -4,8 +4,9 @@ import { useState, useRef, useEffect } from "react";
 
 const PreviewImg = styled.div`
   width: 100%;
-  height: 30rem;
-  border: 1px solid black;
+  height: 70%;
+  // border: 1px solid black;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   border-radius: 10px;
   margin-bottom: 10px;
   position: relative;
@@ -13,8 +14,12 @@ const PreviewImg = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
   cursor: pointer;
+  
+  span {
+    font-size: 1.5vw;
+  }
+
 
   #delImg {
     cursor: pointer;
@@ -32,19 +37,26 @@ const PreviewImg = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
   ${(props) => {
-    if(props.Img[0]=== undefined) {
+    if(props.Img[0] === undefined) {
       return(
       `
-      transition: font-size 0.3s;
-      font-size: 1.5rem;
+      span {
+        font-size: 1.2vw;
+        transition: font-size 0.3s;
+      }
       &:hover {
-        transition: all 0.3s;
-        font-size: 2rem;
-        opacity: 0.5;
+        span {
+          transition: font-size 0.3s;
+          font-size: 1.5vw;
+        }
       }
       &:active {
-        color: white;
+        span {
+          transition: color 0.1s;
+          color: white;
+        }
       }
       `
       )

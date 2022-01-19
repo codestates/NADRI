@@ -19,7 +19,7 @@ const StyledHeader = styled.header`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 998;
   background: #f5f5f6;
   padding-top: 2rem;
   padding-bottom: 0.5rem;

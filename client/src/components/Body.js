@@ -9,6 +9,11 @@ import { Routes, Route, useNavigate, Navigate, BrowserRouter, Link, Switch } fro
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 
+const BodyContainer = styled.div`
+  width: 100vw;
+  height: auto;
+`
+
 const SidebarContainer = styled.span`
 display: flex;
 position: sticky;
@@ -66,7 +71,7 @@ export default function Body () {
   const navigate = useNavigate()
 
   return (
-    <div className='body'>
+    <BodyContainer className='body'>
       <SidebarContainer>
         <button className="backButton" onClick={()=> navigate(-1)}>
           <FontAwesomeIcon icon={faChevronLeft} className="backIcon" />
@@ -79,6 +84,6 @@ export default function Body () {
         <Route path='/detail/:id' element={<DetailPage />} />
         <Route path='/edit/:id' element={<EditPage />} />
       </Routes>
-    </div>
+    </BodyContainer>
   )
 }
