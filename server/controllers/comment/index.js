@@ -22,7 +22,7 @@ module.exports = {
         WHERE comments.userId = ${userData.id} ORDER BY comments.updatedAt DESC
       `)
     
-      testQuery[0].map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
+      testQuery[0].map(e => e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] )
 
       console.log('testQuery', testQuery.length)
 
@@ -61,7 +61,7 @@ module.exports = {
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
       `, { type: QueryTypes.SELECT })
       console.log(search)
-      search.map(e => e.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
+      search.map(e => e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] )
 
       res.status(200).json({data: search})
     } catch (err) {
@@ -95,7 +95,7 @@ module.exports = {
       });
       
       const result = create.dataValues
-      result.image = process.env.AWS_LOCATION + userData.image.split(',')[0]
+      result.image = process.env.AWS_CLOUD_URL + userData.image.split(',')[0]
       result.nickname = userData.nickname
       result.createdAt = '방금 전'
       

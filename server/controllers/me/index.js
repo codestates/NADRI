@@ -1,6 +1,9 @@
-const { chkValid } = require('../tokenFunctions')
+const { mkAccessToken, sendAccessToken, chkValid } = require('../tokenFunctions')
 const { users, posts } = require('../../models');
 const { rmSync } = require('fs');
+const aws = require("aws-sdk");
+aws.config = require("../../config/awsconfig.js");
+const s3 = new aws.S3();
 
 module.exports = {
   getUserInform: (req, res) => {
@@ -37,6 +40,18 @@ module.exports = {
         else path = image.map((img) => img.path)
       }
 
+      console.log('DELETE_IMG', userData.image)
+
+      if (path) {
+        // 이미지가 변경되었으면 이전 이미지를 삭제해야 함.
+        s3.deleteObject({ Bucket: "nadri", Key: userData.image }, (err, data) => {
+          if (err) {
+            throw err;
+          }
+          console.log('s3 deleteObject ', data);
+        });
+      }
+
       const {nickname, password} = req.body
 
       const find = await users.findOne({ where: { email: userData['email'] } })
@@ -46,12 +61,18 @@ module.exports = {
         let imgStr = "";
         path.map((e) => (imgStr += `${e}`));
         find.image = imgStr
-        await find.save()
-        return res.send(imgStr)
+        // await find.save()
+        // return res.send(imgStr)
       }
       await find.save()
-      return res.sendStatus(200)
-      
+
+      console.log(find.dataValues)
+
+      // 변경된 정보를 가지고 토큰을 갱신해 줘야 함.
+      const newAccessToken = mkAccessToken(find.dataValues)
+      sendAccessToken(res, newAccessToken)
+
+      return res.status(200).send(path[0])
     } catch (err) {
       console.log(err)
       return res.sendStatus(500)
@@ -78,7 +99,7 @@ module.exports = {
       })
       console.log('유저포스트')
       console.log(userPost);
-      userPost.map(e => e.dataValues.image = process.env.AWS_LOCATION + e.image.split(',')[0] )
+      userPost.map(e => e.dataValues.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] )
       userPost.map(e => e.dataValues.createdAt = e.dataValues.createdAt.split(' ')[0])
 
       if(userPost.length ===0){

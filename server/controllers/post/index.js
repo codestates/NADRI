@@ -26,7 +26,7 @@ module.exports = {
 
     // 첫 번째 이미지만 보이게 image데이터 매핑
     find.map((point) => {
-      point.image = [process.env.AWS_LOCATION + point.image.split(",")[0]];
+      point.image = [process.env.AWS_CLOUD_URL + point.image.split(",")[0]];
     });
     // console.log(find)
     res.status(200).json({data: find})
@@ -75,13 +75,13 @@ module.exports = {
     // 게시글 이미지 링크 처리
     find.image = find.image.split(",");
     find.image.pop();
-    find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
+    find.image = find.image.map((e) => (e = process.env.AWS_CLOUD_URL + e));
     // AWS_CLOUD_URL
     console.log(find.image)
     
 
     // 유저 이미지 링크 처리
-    find.userImage = `${process.env.AWS_LOCATION}` + find.userImage
+    find.userImage = `${process.env.AWS_CLOUD_URL}` + find.userImage
 
     console.log('FIND', find)
 
@@ -191,11 +191,12 @@ module.exports = {
         // S3버킷에서 파일을 삭제하기. DB업데이트는 body 처리할때 진행
         await find.image.split(",").map((e) => {
           if (!e) return null;
+          console.log('DEL_TARGET',e)
           s3.deleteObject({ Bucket: "nadri", Key: `${e}` }, (err, data) => {
             if (err) {
               throw err;
             }
-            // console.log('s3 deleteObject ', data);
+            console.log('s3 deleteObject ', data);
           });
         })
         // mod['image'] = imgStr
