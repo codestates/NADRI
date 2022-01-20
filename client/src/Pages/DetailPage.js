@@ -39,6 +39,7 @@ const Title = styled.h2`
   text-align: center;
   /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   border-radius: 10px;
+  word-break:break-all;
   /* background-color: #f7f7f7; */
   
   @media screen and (max-width: 900px) {
@@ -389,7 +390,7 @@ const ContentContainer = styled.div`
   background-color: #f9fafc;
 
   .contentText {
-    white-space: pre-wrap;
+   
   }
 
   .contentDesc {
@@ -400,8 +401,9 @@ const ContentContainer = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 1rem; */
-    white-space: pre-line;
+    /* white-space: pre-line; */
     background-color: #fdfdff;
+    word-break:break-all;
 }
 
   .contentToolbar {
@@ -642,13 +644,13 @@ export default function DetailPage() {
       (position) => {
         kakaoInit(
           [position.coords.latitude, position.coords.longitude],
-          [result.lat, result.lng],
+          [Number(result.lat), Number(result.lng)],
           true
         );    
       },
       (error) => {
         console.log("현재 위치 확인이 불가한 상황입니다. 목적지만 표시됩니다.");
-        kakaoInit([result.lat, result.lng], [], false);
+        kakaoInit([Number(result.lat), Number(result.lng)], [], false);
       }
     );
   }, []);
@@ -936,8 +938,8 @@ export default function DetailPage() {
                 <ul id='nav'>
                   <li><img src='/img/dropdown.png' />
                     <ul> 
-                      {curAuthState || curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={editPost}>수정</span></li> : null}
-                      {curAuthState || curUserInfo.admin || curUserInfo.id === post.userId ? <li><span onClick={() => deletePost(post.id)}>삭제</span></li> : null}
+                      {curAuthState && curUserInfo.admin ||curAuthState && curUserInfo.id === post.userId ? <li><span onClick={editPost}>수정</span></li> : null}
+                      {curAuthState && curUserInfo.admin ||curAuthState && curUserInfo.id === post.userId ? <li><span onClick={() => deletePost(post.id)}>삭제</span></li> : null}
                       <li><span onClick={report}>신고</span></li>
                     </ul>
                   </li>
@@ -986,9 +988,9 @@ export default function DetailPage() {
 
                     {weather[(distance[1] / 60).toFixed(0)].rain ? (
                       <div className="informBox">
-                        <div>강수량</div>
+                        <div>강수(mm)</div>
                         <div className='infoContainer'>
-                        {weather[(distance[1] / 60).toFixed(0)].rain['1h'] + 'mm'}
+                        {weather[(distance[1] / 60).toFixed(0)].rain['1h']}
                         </div>
                       </div>
                     ) : (
