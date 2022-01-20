@@ -275,13 +275,17 @@ export default function ChageUserInfo () {
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"></div>
 
-        <div>
-          <label htmlFor="profileImgLabel" onClick={handleClick}>프로필 사진 변경</label>
-          <input type={'file'} name='img' ref={profileImg} onChange={picChange}/>
-          <span className="img-edit-span">
-            <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />
-          </span>
-        </div>
+        {curUserInfo.oauth ? 
+          <label htmlFor="profileImgLabel">프로필 사진 변경이 불가합니다.</label> 
+          :
+          <div>
+            <label>프로필 사진 변경</label>
+            <input type={'file'} name='img' ref={profileImg} onChange={picChange} disalbed/>
+            <span className="img-edit-span">
+              <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} disalbed />
+            </span>
+          </div>
+        }
 
       </div>
 
@@ -293,14 +297,14 @@ export default function ChageUserInfo () {
         </InputUserInfo>
         <InputUserInfo inputs={inputs}>
           <label htmlFor="password">비밀번호</label>
-          <input className="input" value={inputs.password} type={"password"} name="password" onChange={(e) => getUserInfo(e)} />
+          {curUserInfo.oauth ? <input disabled /> : <input className="input" value={inputs.password} type={"password"} name="password" onChange={(e) => getUserInfo(e)} />}
         </InputUserInfo>
         <InputUserInfo inputs={inputs}>
           <label htmlFor="passwordCheck">비밀번호 확인</label>
-          <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}></input>
-          <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>
+          {curUserInfo.oauth ? <input disabled /> : <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}/>}
+          {curUserInfo.oauth ? <button type="button" disabled>변경</button> : <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>}
         </InputUserInfo>
-      <DangerMessage>{dangerMessage}</DangerMessage>
+        <DangerMessage>{dangerMessage}</DangerMessage>
       </InputContainer>
       {
         curSuccessModal ? <SuccessModal changeTarget={changeTarget} setSuccessModal={setSuccessModal} curSuccessModal={curSuccessModal}/>

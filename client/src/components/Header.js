@@ -214,8 +214,6 @@ const HeaderContent = styled.div`
   } 
 `
 
-
-
 export default function Header () {
   const dispatch = useDispatch()
   const navigate = useNavigate()
