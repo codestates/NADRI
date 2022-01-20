@@ -153,6 +153,7 @@ const HeaderContent = styled.div`
   .logoutIcon {
     width:85%;
     height: auto;
+    cursor: pointer;
   }
   .signinIcon {
     width:80%;
