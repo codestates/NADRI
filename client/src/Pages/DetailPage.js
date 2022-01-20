@@ -39,6 +39,7 @@ const Title = styled.h2`
   text-align: center;
   /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   border-radius: 10px;
+  word-break:break-all;
   /* background-color: #f7f7f7; */
   
   @media screen and (max-width: 900px) {
@@ -389,7 +390,7 @@ const ContentContainer = styled.div`
   background-color: #f9fafc;
 
   .contentText {
-    white-space: pre-wrap;
+   
   }
 
   .contentDesc {
@@ -400,8 +401,9 @@ const ContentContainer = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 1rem; */
-    white-space: pre-line;
+    /* white-space: pre-line; */
     background-color: #fdfdff;
+    word-break:break-all;
 }
 
   .contentToolbar {

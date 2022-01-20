@@ -42,6 +42,10 @@ const CommentContentWrapper = styled.div`
     height: auto;
     overflow:visible;
   }
+
+  .UserComment {
+    word-break:break-all;
+  }
 `;
 
 const InfoAndAlert = styled.div`

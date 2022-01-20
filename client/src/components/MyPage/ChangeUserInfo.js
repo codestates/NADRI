@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState, useRef } from "react";
 import {useDispatch, useSelector} from 'react-redux'
-import { changeUserNickname, changeProfile } from "../../redux/actions";
+import { changeUserNickname, changeProfile, userInfo } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import SuccessModal from "../Modals/MyPageModal/SuccessModal";
 
@@ -222,7 +222,7 @@ export default function ChageUserInfo () {
     })
     .then((res) => {
       console.log(res.data)
-      dispatch(changeProfile(res.data))
+      dispatch(changeProfile(res.data.data.image))
       setSuccessModal(!curSuccessModal)
       setChangeTarget(e.target.name)
       navigate('/mypage')
