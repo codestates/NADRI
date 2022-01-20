@@ -4,7 +4,7 @@ const clientID = process.env.KAKAO_CLIENT_ID
 const clientSecret = process.env.KAKAO_CLIENT_SECRET
 const redirectUri = process.env.CLIENT_URI
 const axios = require('axios')
-const { mkAccessToken, sendAccessToken } = require('../tokenFunctions')
+const { mkAccessToken, sendAccessToken, encryptPW } = require('../tokenFunctions')
 // qs 써야함
 const qs = require('qs')
 
@@ -57,7 +57,7 @@ module.exports = {
             where: { email: kakaoUserInfo.data.kakao_account.email },
             defaults: {
                 email: kakaoUserInfo.data.kakao_account.email,
-                password: kakaoUserInfo.data.id,
+                password: encryptPW(String(kakaoUserInfo.data.id)),
                 nickname: kakaoUserInfo.data.kakao_account.profile.nickname,
                 image: kakaoUserInfo.data.kakao_account.profile.profile_image_url,
                 admin: false,

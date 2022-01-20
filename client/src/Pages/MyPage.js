@@ -218,7 +218,7 @@ const UserMainContents = styled.div`
   
     &::-webkit-scrollbar-thumb{
         height: 17%;
-        background-color: #f1eae4;
+        background-color: #a7adba;
         border-radius: 10px;    
     }
   

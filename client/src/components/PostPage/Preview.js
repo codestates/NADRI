@@ -33,8 +33,8 @@ const PreviewImg = styled.div`
     display: none;
   }
   
-  background-image: url(/img/default-image.jpg);
-  background-size: cover;
+  background-image: url(/img/default-image.svg);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 

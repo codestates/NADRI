@@ -175,12 +175,12 @@ export default function PostPage () {
   return (
     <PostContainer>
       <Container>
-        <img id="tack" src="/img/tack.png" />
       <TopContainer>
         <UploadContainer>
           <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
           <PreviewBottom Img={value.image} picChange={picChange} removeImg={removeImg} />
         </UploadContainer>
+        <img id="tack" src="/img/tack.png" />
         <div id="map"></div>
       </TopContainer>
 

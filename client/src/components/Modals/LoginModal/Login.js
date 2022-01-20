@@ -106,7 +106,7 @@ export default function Login () {
 
         <ModalLogo>
           <div>
-            <img className="mainLogo" src="/img/nadri-footer-img.png" alt="메인 로고"/>
+            <img className="mainLogo" src="/img/nadri-header-img.png" alt="메인 로고"/>
             <img className="mobileLogo" src="/img/nadri-logo-small.png" alt="모바일 로고" />
           </div>
         </ModalLogo>

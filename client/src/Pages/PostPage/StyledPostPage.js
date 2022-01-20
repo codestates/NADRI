@@ -12,9 +12,9 @@ export const Container = styled.div`
   padding: 1rem;
   // background-color: #dfe3ee;
   border-radius: 10px;
-  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
+  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
   font-family: 'NanumSquare','Cafe24', arial;
-  background: #f9fafc;
+  background: #eff3fb;
 
   padding: 2rem;
   /* background-color: #dfe3ee;
@@ -24,8 +24,8 @@ export const Container = styled.div`
 
   #tack {
     position: absolute;
-    top: -10px;
-    left: 47.3%;
+    top: 2%;
+    left: 73%;
     width: 2rem;
     height: 2rem;
     z-index: 10;
@@ -35,9 +35,12 @@ export const Container = styled.div`
 
   @media (max-width: 992px) {
     flex-direction: column;
-
+  }
+  
+  @media (max-width: 767px){
+    
     #tack {
-      top: -20px;
+      top: 1%;
       left: 43%;
     }
   }
@@ -76,6 +79,7 @@ export const UploadContainer = styled.div`
   padding: 1rem 2rem;
   border-radius: 10px;
   box-shadow: 3px 3px 4px 3px rgb(180 180 180);
+  background: white;
 
   @media (max-width: 767px) {
     width: 100%;
