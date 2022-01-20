@@ -199,7 +199,7 @@ const UserMainContents = styled.div`
     /* width: 36rem; */
     width: 60vw;
     /* height: 33rem; */
-    height: 52vh;
+    height: 28rem;
     /* border: 1px solid #f1eae4; */
     overflow: auto;
     padding: 1.5rem;
@@ -245,29 +245,29 @@ const UserMainContents = styled.div`
 export default function MyPage() {
   const [curContent, setCurContent] = useState('내 게시글')
   const curUserInfo = useSelector(state => state.getUserInfo);
-  console.log('유저 정보', curUserInfo)
+  // console.log('유저 정보', curUserInfo)
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    console.log('myComment init')
+    // console.log('myComment init')
     axios.get(`${process.env.REACT_APP_API_URL}/comment`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setComments(res.data.data)})
     axios.get(`${process.env.REACT_APP_API_URL}/like`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setLikes(res.data.data)
     })
   }, [])
 
   useEffect(()=> {
-    console.log('myPost init')
+    // console.log('myPost init')
     axios.get(`${process.env.REACT_APP_API_URL}/auth/me/post`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setPosts(res.data.data)
     })
   }, [])
@@ -281,11 +281,11 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      if (comments.length >= 1) return comments.map((comment, idx) => <Link to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
+      if (comments.length >= 1) return comments.map((comment, idx) => <Link key={Math.random()} to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
       else return '댓글이 없습니다'
     }
     else if(curContent === '즐겨찾기') {
-      if (likes.length >= 1) return likes.map((like, idx) => <Link to={`/detail/${like.postId}`}><Comment key={idx} comment={like} /></Link>)
+      if (likes.length >= 1) return likes.map((like, idx) => <Link key={Math.random()} to={`/detail/${like.postId}`}><Comment key={idx} comment={like} /></Link>)
       else return '즐겨찾기한 장소가 없습니다'
     }
   }
@@ -307,7 +307,7 @@ export default function MyPage() {
           <div>{curUserInfo.nickname}</div>
           <div>{curUserInfo.email}</div>
           <div>
-            {console.log(curUserInfo.createdAt)}
+            {/* {console.log(curUserInfo.createdAt)} */}
             {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):
           null}
           </div>
@@ -316,7 +316,7 @@ export default function MyPage() {
 
       </div>
         <div className="user-profile-right">
-          <img className=""user-profile-right-img src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
+          <img className="user-profile-right-img" src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
         </div>
     </UserProfileContainer>
     <UserMainContents>
