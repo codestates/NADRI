@@ -272,9 +272,9 @@ export default function Main () {
       });
       
       const iwContent = `
-      <div class='iwcontent' style='padding: 0.5rem; border-radius=10px; background-color:#f9fafc'>
-        <div className='infoTitle' style='margin-bottom: 0.5rem;'>${title.length > 10 ? title.slice(0, 10) + '...' : title }</div>
-        <div className='infoImg' style="width:16vw; height:12vw; max-width:300px; max-height:225px; overflow: hidden; margin: 0 auto; border-radius: 10px;">
+      <div style='padding: 0.5rem; border-radius=10px; background-color:#f9fafc'>
+        <div style='margin-bottom: 0.5rem;'>${title.length > 10 ? title.slice(0, 10) + '...' : title }</div>
+        <div style="width:16vw; height:12vw; max-width:300px; max-height:225px; overflow: hidden; margin: 0 auto; border-radius: 10px;">
           <img style="width:100%; height:100%; object-fit: cover" src='${image[0]}' alt='이미지' />
         </div>
       </div>

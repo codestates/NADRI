@@ -281,11 +281,11 @@ export default function MyPage() {
       return <ChageUserInfo />
     }
     else if(curContent === '내 댓글') {
-      if (comments.length >= 1) return comments.map((comment, idx) => <Link to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
+      if (comments.length >= 1) return comments.map((comment, idx) => <Link key={Math.random()} to={`/detail/${comment.postId}`}><Comment key={idx} comment={comment} /></Link>)
       else return '댓글이 없습니다'
     }
     else if(curContent === '즐겨찾기') {
-      if (likes.length >= 1) return likes.map((like, idx) => <Link to={`/detail/${like.postId}`}><Comment key={idx} comment={like} /></Link>)
+      if (likes.length >= 1) return likes.map((like, idx) => <Link key={Math.random()} to={`/detail/${like.postId}`}><Comment key={idx} comment={like} /></Link>)
       else return '즐겨찾기한 장소가 없습니다'
     }
   }
@@ -316,7 +316,7 @@ export default function MyPage() {
 
       </div>
         <div className="user-profile-right">
-          <img className=""user-profile-right-img src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
+          <img className="user-profile-right-img" src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
         </div>
     </UserProfileContainer>
     <UserMainContents>

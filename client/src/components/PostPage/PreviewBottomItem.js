@@ -35,10 +35,10 @@ const PreviewImg = styled.div`
       let img;
 
     if(typeof props.Img[0] === 'string') {
-      img = props.Img[0]
+      img = props.Img[1]
     }
     else if(typeof props.Img[0] === 'object') {
-      img = props.Img[0][0]
+      img = props.Img[1][0]
     }
       return (
         `
