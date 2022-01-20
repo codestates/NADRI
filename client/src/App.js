@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { authState, userInfo } from './redux/actions'
 import { useNavigate } from "react-router-dom";
-import Randing from './components/RandingPage/Randing';
+import Landing from './Pages/Landing';
 import { Routes, Route, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
 // axios.defaults.withCredentials = true;
 
@@ -101,12 +101,13 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route path='/randing' element={<Randing />} />
-      </Routes>
-      <Header />
+      {/* <Routes>
+        <Route path='/landing' element={<Landing />} />
+      </Routes> */}
+      <Landing />
+      {/* <Header />
       <Body />
-      <Footer />
+      <Footer /> */}
       {
         LoginModalstate ? <Login />
         : ''

@@ -382,6 +382,7 @@ const BottomContainer = styled.div`
 const ContentContainer = styled.div`
   margin-right: 1rem;
   width: 40vw;
+  height: 100%;
   /* border: 1px solid black; */
   border-radius: 10px;
   padding: 1rem;
@@ -1022,7 +1023,7 @@ export default function DetailPage() {
           </TopContainer>
 
           <BottomContainer>
-            <ContentContainer>
+            <ContentContainer id="asdf">
                 <div className="contentDesc">{post.content ? post.content : null}</div>
             </ContentContainer>
 

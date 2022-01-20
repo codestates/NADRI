@@ -33,10 +33,11 @@ const PreviewImg = styled.div`
     display: none;
   }
   
-  background-image: url(/img/default-image.jpg);
-  background-size: cover;
+  background-image: url(/img/image.png);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+  
 
   ${(props) => {
     let img;

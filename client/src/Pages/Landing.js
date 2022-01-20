@@ -1,6 +1,6 @@
-// import React from "react";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
+// import React from 'react';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import {
   RandingContainer,
   Section,
@@ -11,10 +11,9 @@ import {
   Section1_Left_Img,
   Section2_Right_Img,
   Section3_Left_Img
-} from './styledRanding'
+} from '../components/RandingPage/styledRanding'
 
-
-export default function Randing () {
+export default function Landing () {
   const [scrollY, setScrollY] = useState(0) // 현재 스크롤 위치
   const [initHeight, setInitHeight] = useState(window.innerHeight) // 사용자의 브라우저 높이 값
   const [sectionHeight, setSectionHeight] = useState(initArray()) // section이 시작되는 값이 담긴 배열
@@ -73,9 +72,10 @@ export default function Randing () {
     window.addEventListener('scroll', handleScroll)
     
     // return () => {
-    //   window.removeEventListener("scroll", handleScroll)
+    //   window.removeEventListener('scroll', handleScroll)
     // }
   })
+
 
   return (
     <RandingContainer>
@@ -86,10 +86,10 @@ export default function Randing () {
             나만아는 좋은 곳을 다른 사람과 공유해보세요!
           </p>
           <button>시작하기</button>
-          <img src="img/nadri-logo-small.png"></img>
+          <img src='img/nadri-logo-small.png'></img>
         </Section_Left_Desc>
 
-        <Section0_Right_Img/>
+
       </Section>
       {/* ------------------------------------------------------------------------------------- */}
 
