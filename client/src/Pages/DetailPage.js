@@ -763,7 +763,7 @@ export default function DetailPage() {
 
       // 마커 이미지 임포트
       const markerImg =
-        "http://t1.daumcdn.net/mapjsapi/images/2x/marker.png";
+        "https://t1.daumcdn.net/mapjsapi/images/2x/marker.png";
 
       for (let i = 0; i < 1; i++) {
         // 마커 이미지 생성
@@ -816,7 +816,7 @@ export default function DetailPage() {
         {
           "Accept-Language": "ko",
           "Content-Type": "application/x-www-form-urlencoded",
-          Origin: "http://localhost:3000",
+          Origin: "https://www.nadri.ml",
           withCredentials: false,
         }
       );
@@ -831,7 +831,7 @@ export default function DetailPage() {
           {
             "Accept-Language": "ko",
             "Content-Type": "application/x-www-form-urlencoded",
-            Origin: "http://localhost:3000",
+            Origin: "https://www.nadri.ml",
             withCredentials: false,
           }
         );
@@ -887,7 +887,7 @@ export default function DetailPage() {
 
     const airPol = await axios({
       method: "GET",
-      url: `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_WEATHER_KEY2}&lang=kr`,
+      url: `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_WEATHER_KEY2}&lang=kr`,
       withCredentials: false,
     });
     const air = airPol.data.list
