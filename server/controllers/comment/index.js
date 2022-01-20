@@ -61,7 +61,11 @@ module.exports = {
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
       `, { type: QueryTypes.SELECT })
       console.log(search)
-      search.map(e => e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] )
+      search.map(e => {
+        if(e.image.slice(0,4)!=='http'){
+          e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] 
+        }
+      })
 
       res.status(200).json({data: search})
     } catch (err) {
