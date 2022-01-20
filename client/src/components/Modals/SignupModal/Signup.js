@@ -162,23 +162,23 @@ export default function Signup () {
                 {!chkEmail ?
                 <div>
                   <input autoComplete="off" placeholder='이메일을 입력하세요' onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange} />
-                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증코드</button>
+                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증</button>
                 </div>
                 :
                 <div>
                   <input autoComplete="off" type={"text"} name="email" readOnly />
-                  <button button type="button" disabled>인증코드</button>
+                  <button button type="button" disabled>인증</button>
                 </div>
                 }
                 {!chkEmail ? 
                 <div>
                   <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}/>
-                  <button type="button" onClick={() => verifyCode(userCode)}>인증확인</button>
+                  <button type="button" onClick={() => verifyCode(userCode)}>확인</button>
                 </div>
                 :
                 <div>
                   <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" readOnly />
-                  <button type="button" disabled>인증확인</button>
+                  <button type="button" disabled>확인</button>
                 </div>
                 }
               </div>
