@@ -10,32 +10,6 @@ import axios from 'axios'
 
 const MainContainer = styled.div`
   padding: 3rem 9vw;
-  // width: 100%;
-  // height: 100%;
-  // padding: 3rem 9vw;
-  // display: flex;
-  // justify-content: space-between;
-
-  // #map {
-  //   width: 50%;
-  //   height: 40rem;
-  //   border-radius: 15px;
-  //   z-index: 0;
-  // }
-
-  // @media (max-width: 992px){
-  //   flex-direction: column;
-
-  //   #map {
-  //     width: 100%;
-  //   }
-  // }
-
-  // @media (max-width: 767px) {
-  //   #map {
-  //     height: 30rem;
-  //   }
-  // }
 `
 
 const Container = styled.div`
@@ -45,7 +19,7 @@ const Container = styled.div`
   justify-content: space-between;
   background-color: #f9fafc;
   border-radius: 10px;
-  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
   font-family: 'NanumSquare', 'Cafe24', arial;
 
   position: relative;
@@ -73,15 +47,15 @@ const Container = styled.div`
 `
 
 const MapContainer = styled.div`
-  /* width: 100%; */
-  width: 50vw;
+  // width: 100%;
+  width: 50%;
   padding: 1rem;
 
   #map {
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
     // z-index: 0;
   }
 
@@ -138,8 +112,7 @@ const ContentNav = styled.nav`
 `
 
 const ContentContainer = styled.div`
-  /* width: 50%; */
-  width: 50vw;
+  width: 50%;
   height: 40rem;
   padding: 1rem 1rem 1rem 3rem;
   display: flex;
@@ -329,10 +302,10 @@ export default function Main () {
     <MainContainer id="MainContainer">
       <Container>
         <img id="tack" src="/img/tack.png" />
-      <MapContainer>
+      <MapContainer id="MapContainer">
         <div id="map" />
       </MapContainer>
-
+      
       <ContentContainer id="ContentContainer">
         <ContentNav>
           <select id='categoryId' onChange={optionHandler}>

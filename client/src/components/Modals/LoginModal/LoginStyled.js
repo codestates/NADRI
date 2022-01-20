@@ -30,7 +30,7 @@ export const LoginModalView = styled.div`
   @media (max-width: 650px){
     width: 80vw;
     padding: 35px 30px;
-    height: 60vh;
+    height: 500px;
   }
 `
 
@@ -90,8 +90,9 @@ export const ModalHead = styled.div`
   > p {
     color: #868e96;
     > span {
-      color: hotpink;
+      color: #88ccff;
       cursor: pointer;
+      font-weight: bold;
     }
     > br {
       display: none;
@@ -128,6 +129,10 @@ export const ModalInput = styled.div`
       }
     }
   }
+
+  #dangerMsg {
+    color: red;
+  }
 `
 
 export const Oauth = styled.div`
@@ -144,20 +149,29 @@ export const Oauth = styled.div`
     font-size: 20px;
     /* color: rgb(73, 80, 87); */
     font-weight: 700;
-    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
     position: relative;
     cursor: pointer;
   
     .normalLogin{
       width: 100%;
-      background-color: pink;
+      background-color: #88ccff;
       color: white;
       height: 3.5rem;
       border-radius: 7px;
       line-height: 3.5rem;
-
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
-   
+
+    .normalLogin:active {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  & > span:active {
+    position: relative;
+    top: 2px;
   }
 
   & > div:first-child {
@@ -189,6 +203,7 @@ export const Oauth = styled.div`
     .kakaoPcLogin{
       width: 100%;
       height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
     .kakaoMobile{
       display: none;
@@ -212,7 +227,7 @@ export const Oauth = styled.div`
     & > div:first-child {
     padding: 0.3rem;
     width: 50%;
-   }
+  }
 
   > span {
     display: flex;
@@ -225,9 +240,11 @@ export const Oauth = styled.div`
       }
       .googleMobile{
       display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
       }
       .kakaoMobile{
       display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
       }
   }
 
