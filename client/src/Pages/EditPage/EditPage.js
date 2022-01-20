@@ -158,7 +158,7 @@ export default function EditPage() {
       let blobData = await axios({
         // 응답 전체를 저장
         method: "POST",
-        url: `http://localhost:8080/post/image`,
+        url: `${process.env.REACT_APP_API_URL}/post/image`,
         responseType: "arraybuffer",
         data: { lnk: postData.image[i] },
       });

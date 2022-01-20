@@ -18,9 +18,9 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #f9fafc;
+  /* background-color: #f9fafc; */
   border-radius: 10px;
-  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
+  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
   font-family: 'NanumSquare', 'Cafe24', arial;
 
   position: relative;
@@ -28,8 +28,8 @@ const Container = styled.div`
 
   #tack {
     position: absolute;
-    top: -10px;
-    left: 47.3%;
+    top: 4%;
+    left: 24%;
     width: 2rem;
     height: 2rem;
     z-index: 10;
@@ -42,8 +42,8 @@ const Container = styled.div`
     align-items: center;
 
     #tack {
-      top: -20px;
-      left: 43%;
+      top: 2.5%;
+      left: 42%;
     }
   }
 `
@@ -80,7 +80,7 @@ const MapContainer = styled.div`
 
 const ContentNav = styled.nav`
   /* border: 1px solid black; */
-  border-radius: 30px;
+  border-radius: 10px;
   height: 3rem;
   display: flex;
   justify-content: flex-start;
@@ -89,7 +89,7 @@ const ContentNav = styled.nav`
   padding: 0 2rem;
   margin-bottom: 1rem;
   cursor: grab;
-  background-color: #f7f7f7;
+  background-color: #fdfdff;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   width: 100%;
 
@@ -102,14 +102,14 @@ const ContentNav = styled.nav`
   #categoryId {
     font-family: 'NanumSquare', 'Cafe24', arial;
     :hover{
-      color: #005582;
+      color: #ff7400;
     } 
   }
 
   > select {
     height: 2rem;
     border-radius: 3px;
-    background-color: #f7f7f7;
+    background-color: #fdfdff;
     border:0;
   }
 `
@@ -136,7 +136,7 @@ const ItemContainer = styled.div`
   overflow: auto;
   padding: 1rem;
   border-radius: 10px;
-  background-color: #f9fafc;
+  /* background-color: #f9fafc; */
   /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
   &::-webkit-scrollbar{
     width: 10px;
@@ -144,7 +144,7 @@ const ItemContainer = styled.div`
 
   &::-webkit-scrollbar-thumb{
       height: 17%;
-      background-color: #f1eae4;
+      background-color: #a7adba;
       border-radius: 10px;    
   }
 
@@ -311,8 +311,8 @@ export default function Main () {
   return (
     <MainContainer id="MainContainer">
       <Container>
-        <img id="tack" src="/img/tack.png" />
       <MapContainer id="MapContainer">
+        <img id="tack" src="/img/tack.png" />
         <div id="map" />
       </MapContainer>
       

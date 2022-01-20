@@ -1,4 +1,4 @@
-const { mkAccessToken, sendAccessToken, chkValid } = require('../tokenFunctions')
+const { mkAccessToken, sendAccessToken, chkValid, encryptPW } = require('../tokenFunctions')
 const { users, posts } = require('../../models');
 const { rmSync } = require('fs');
 const aws = require("aws-sdk");
@@ -56,7 +56,7 @@ module.exports = {
 
       const find = await users.findOne({ where: { email: userData['email'] } })
       if (nickname) find.nickname = nickname
-      if (password) find.password = password
+      if (password) find.password = encryptPW(password)
       if (path) {
         let imgStr = "";
         path.map((e) => (imgStr += `${e}`));

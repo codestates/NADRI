@@ -12,7 +12,7 @@ import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 const BodyContainer = styled.div`
   width: 100vw;
   height: auto;
-  background-color: #eff3fb;
+  background: #eff3fb;
 `
 
 const SidebarContainer = styled.span`

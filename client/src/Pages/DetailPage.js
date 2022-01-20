@@ -171,6 +171,7 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
+  background: white;
   /* height: 40vw; */
   @media screen and (max-width: 900px) {
     margin: 0 auto;
@@ -389,6 +390,7 @@ const ContentContainer = styled.div`
   max-width: 800px;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   background-color: #f9fafc;
+  height: 100%;
 
   .contentText {
    
@@ -446,7 +448,8 @@ const CommentListContainer = styled.div`
   }
   
   #textinput:focus {
-    outline: none;
+    outline: 1px solid #ff7400;
+    border: 0;
   }
 
   .writeComment {
@@ -761,7 +764,7 @@ export default function DetailPage() {
 
       // 마커 이미지 임포트
       const markerImg =
-        "http://t1.daumcdn.net/mapjsapi/images/2x/marker.png";
+        "https://t1.daumcdn.net/mapjsapi/images/2x/marker.png";
 
       for (let i = 0; i < 1; i++) {
         // 마커 이미지 생성
@@ -814,7 +817,7 @@ export default function DetailPage() {
         {
           "Accept-Language": "ko",
           "Content-Type": "application/x-www-form-urlencoded",
-          Origin: "http://localhost:3000",
+          Origin: "https://www.nadri.ml",
           withCredentials: false,
         }
       );
@@ -829,7 +832,7 @@ export default function DetailPage() {
           {
             "Accept-Language": "ko",
             "Content-Type": "application/x-www-form-urlencoded",
-            Origin: "http://localhost:3000",
+            Origin: "https://www.nadri.ml",
             withCredentials: false,
           }
         );
@@ -885,7 +888,7 @@ export default function DetailPage() {
 
     const airPol = await axios({
       method: "GET",
-      url: `http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_WEATHER_KEY2}&lang=kr`,
+      url: `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_WEATHER_KEY2}&lang=kr`,
       withCredentials: false,
     });
     const air = airPol.data.list
@@ -951,7 +954,7 @@ export default function DetailPage() {
               <ImgContainer>
                 <MainImg 
                   src={post.image[0]} 
-                  onError={(e) => (e.target.src = `/img/gitHubLogo.png`)} 
+                  onError={(e) => (e.target.src = `/img/default-image.svg`)} 
                   style={{height: post.image.length === 1 ? /*1이면 확장 */'100%' : /*아니면 평소처럼 */null }}
                 />
                 {post && post.image.length === 1 ? 

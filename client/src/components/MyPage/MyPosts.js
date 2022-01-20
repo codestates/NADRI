@@ -64,6 +64,7 @@ export const PostImg = styled.div `
     display: flex;
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
 `
@@ -210,7 +211,7 @@ export default function MyPosts ({post}) {
     <PostContainer>
       <Link to={`/detail/${post.id}`} state={post}>
         <PostImg className="imgContainer">
-        <img className="imgContent" src={`${post.image}`} onError={(e) => e.target.src = `/img/gitHubLogo.png`} />
+        <img className="imgContent" src={`${post.image}`} onError={(e) => e.target.src = `/img/default-image.svg`} />
         </PostImg>
       </Link>
       <PostInfo>
