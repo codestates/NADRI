@@ -11,6 +11,7 @@ const FooterContainer = styled.footer`
   background-color: #343a40;
   padding: 2rem 0;
   color: rgb(206, 212, 218);
+  font-family: 'NanumSquare', arial;
 
   a {
     color: rgb(206, 212, 218);
@@ -20,21 +21,29 @@ const FooterContainer = styled.footer`
   &>:last-child {
     margin-left: 76px;
   }
+
+
+  @media screen and (max-width:900px){
+    padding: 0;
+
+    &>:last-child  {
+      margin-left: 0px;
+      margin-bottom: 1rem;
+    }
+  }
 `
 
 const Logo = styled.div`
   width: 15rem;
   margin: 0;
-
-  > a {
-    width: 20rem;
-    height: auto;
-  }
-
-  > a img {
+  img {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  @media (max-width: 750px){
+    display: none;
   }
 `
 
@@ -49,6 +58,11 @@ const MemberContainer = styled.div`
   align-items: center;
   margin: 2rem 0 1rem;
   border-top: 1px solid rgba(248, 249, 250, 0.1);
+
+  @media screen and (max-width:900px){
+    gap:1rem;
+    height: auto;
+}
 `
 
 const Profile = styled.div`
@@ -75,6 +89,7 @@ const Profile = styled.div`
   &>:last-child {
     .name {
       font-size: 16px;
+      margin-right: 0.3rem;
     }
 
     .info {
@@ -87,42 +102,97 @@ const Profile = styled.div`
   .repo:hover {
     transition: all 0.3s;
     width: 60px;
+    transform: translate(0, -45%);
+  }
+  .repo:active {
+    transition: all 0.3s;
+    position: relative;
+    top: 3px;
+  }
+
+  @media screen and (max-width:900px){
+    margin-top: 0rem;
+   .info{
+     display: none;
+   }
+   .repo:hover {
+    width: 40px;
+    }
   }
 `
 
-function moveTop () {
-  window.screenTop(0, 0)
-}
+
 
 
 
 export default function Footer () {
+
   return (
     <FooterContainer>
       <Logo>
-        <Link to="/">
-          <img src="NADRI.png" alt="footer-logo" />
-        </Link>
+          <img src="/img/nadri-footer-img.png" alt="footer-logo" />
       </Logo>
 
       <MemberContainer>
         <Profile>
-          <div className='repo'><a href='https://github.com/LeeTaeGwan' target={"_blank"}><img src='gitHubLogo.png' alt=''/></a></div>
-          <div><span className='name'>이태관</span> <span className='info'>Front end<br/> freshman1998 @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/LeeTaeGwan' target={"_blank"}>
+              <img src='/img/gitHubLogo.png' alt=''/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              이태관
+            </span> 
+            <span className='info'>
+              Front end<br/> 
+            freshman1998 @ naver.com
+            </span>
+          </div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/LittleBiber' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <div><span className='name'>김상형</span> <span className='info'>Back end<br/> rlatkdgud98 @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/LittleBiber' target={"_blank"}>
+              <img src='/img/gitHubLogo.png'/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              김상형
+            </span> 
+            <span className='info'>
+              Back end<br/> 
+              rlatkdgud98 @ naver.com
+            </span>
+          </div>
         </Profile>
         <Profile>
-          <div className='repo'><a href='https://github.com/racyde' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <div><span className='name'>이상민</span> <span className='info'>Back end<br/> racyde @ naver.com</span></div>
+          <div className='repo'>
+            <a href='https://github.com/racyde' target={"_blank"}>
+              <img src='/img/gitHubLogo.png'/>
+            </a>
+          </div>
+          <div>
+            <span className='name'>
+              이상민
+            </span> 
+            <span className='info'>
+              Back end<br/> 
+              racyde @ naver.com
+            </span>
+          </div>
         </Profile>
       </MemberContainer>
 
       <Profile>
-          <div className='repo'><a href='https://github.com/codestates/NADRI' target={"_blank"}><img src='gitHubLogo.png'/></a></div>
-          <a href='https://github.com/codestates/NADRI' target={"_blank"}>NADRI GitHub Repository</a>
+          <div className='repo'>
+            <a href='https://github.com/codestates/NADRI' target={"_blank"}>
+              <img src='/img/gitHubLogo.png'/>
+            </a>
+          </div>
+          <a href='https://github.com/codestates/NADRI' target={"_blank"}>
+            NADRI GitHub Repository
+          </a>
       </Profile>
     </FooterContainer>
   )

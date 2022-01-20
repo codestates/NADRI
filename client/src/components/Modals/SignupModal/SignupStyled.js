@@ -12,6 +12,8 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0,0,0,0.4);
   text-align: center;
   overflow: scroll;
+  z-index: 999;
+  font-family: 'NanumSquare',arial;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -19,11 +21,17 @@ export const ModalBackdrop = styled.div`
 
 export const SignupModalView = styled.div`
   width: 33rem;
-  height: 50rem;
+  height: 45rem;
   background-color: white;
   border-radius: 10px;
   padding: 35px 80px;
   position: relative;
+
+  @media (max-width: 650px){
+    width: 80vw;
+    padding: 35px 30px;
+    height: 700px;
+  }
 `
 
 export const ModalLogo = styled.div`
@@ -50,25 +58,37 @@ export const ModalHead = styled.div`
     right: 0;
     font-size: 1.5rem;
     cursor: pointer;
+    font-family: arial;
   }
 
   > h1 {
     font-size: 2.3rem;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 1.5rem;
   }
 
   > p {
     color: #868e96;
     > span {
-      color: hotpink;
+      color: #88ccff;
       cursor: pointer;
+      font-weight: bold;
     }
+    > br {
+        display: none;
+      }
+    
+    @media screen and (max-width:650px){
+        > br {
+        display: flex;
+        }
+      }
   }
 `;
 
 export const ModalInput = styled.div`
   margin: 2rem 0 1rem;
+
   label {
     text-align: left;
     display: block;
@@ -83,11 +103,14 @@ export const ModalInput = styled.div`
     outline: none;
     padding-left: 10px;
     margin-bottom: 1rem;
+    /* font-family: 'NanumSquare',arial; */
+    :focus {
+        border: 1px solid #ff7400;
+      }
   }
 
   > form {
     .emailInput {
-      
       >div {
         display: flex;
         justify-content: space-between;
@@ -101,13 +124,25 @@ export const ModalInput = styled.div`
           height: 2.5rem;
           border-radius: 5px;
           cursor: pointer;
+          font-family: 'NanumSquare',arial;
+
+          :hover {
+            color: #ff7400;
+          }
         }
       }
     }
   }
+  
+  #dangerMsg {
+    color: red;
+  }
 `
 
 export const Oauth = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
   > div {
     width: 100%;
     display: flex;
@@ -119,41 +154,110 @@ export const Oauth = styled.div`
     font-size: 20px;
     color: rgb(73, 80, 87);
     font-weight: 700;
-    box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
     position: relative;
     cursor: pointer;
-    img {
-      position: absolute;
-      left: 10px;
-      width:30px;
-    }
-    button {
+
+    .normalSignup{
       width: 100%;
-      height: 100%;
-      border-radius: 5px;
-      font-size: 20px;
-      font-weight: 700;
-      border: 0;
-      outline: 0;
-      color: rgb(73, 80, 87);
+      background-color: #88ccff;
+      color: white;
+      height: 3.5rem;
+      border-radius: 7px;
+      line-height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
   }
 
   & > div:first-child {
-    background-color: pink;
-    color: white;
+    padding: 0.3rem;
   }
 
-  & > div:nth-child(2) {
-    button {
-      background: rgb(255,255,255);
+  > span {
+  width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 5px;
+    font-size: 20px;
+    /* color: rgb(73, 80, 87); */
+    font-weight: 700;
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    position: relative;
+    cursor: pointer;
+
+    .googlePcLogin{
+      width: 100%;
+      height: 3.5rem;
+      
     }
+    .googleMobile{
+      display: none;
+    }
+    .kakaoPcLogin{
+      width: 100%;
+      height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+    }
+    .kakaoMobile{
+      display: none;
+    }
+}
+
+
+& > span:last-child {
+    padding: 0.3rem;
   }
 
-  & > div:last-child {
-    /* background-color: rgb(255, 231, 16) */
-    button{
-      background-color: rgb(255, 231, 16)
+  & > div:active {
+    position: relative;
+    top: 2px;
+  }
+
+  & > span:active {
+    position: relative;
+    top: 2px;
+  }
+
+  @media (max-width: 650px){
+    display: flex;
+    justify-content: space-around;
+
+    > div {
+      .normalSignup{
+        height: 2.5rem;
+        line-height: 2.5rem;
+        font-size: 1rem;
+      }
+    }
+
+    & > div:first-child {
+      padding: 0.3rem;
+      width: 50%;
+    }
+
+  > span {
+    display: flex;
+    width: 20%;
+    .googlePcLogin{
+        display: none;
+      }
+      .kakaoPcLogin{
+        display: none;
+      }
+      .googleMobile{
+      display: flex;
+      }
+      .kakaoMobile{
+      display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+      }
+  }
+
+  & > span:last-child {
+      padding: 0.3rem;
     }
   }
 `

@@ -1,5 +1,6 @@
 const { chkValid } = require("../tokenFunctions");
-const { user_post_likes, posts } = require("../../models");
+const { user_post_likes, posts, sequelize } = require("../../models");
+const { QueryTypes } = require("sequelize");
 
 module.exports = {
   getLike: async (req, res) => {
@@ -13,10 +14,17 @@ module.exports = {
     console.log(userData);
 
     try {
-      const userLike = await user_post_likes.findAll({
-        where: { userId: userData.id },
-      });
-      res.status(200).json({ data: userLike });
+      const userLike = await sequelize.query(`
+        SELECT user_post_likes.postId, posts.title, posts.image, posts.content, posts.address, DATE_FORMAT(posts.createdAt,'%Y-%m-%d') AS createdAt
+        FROM user_post_likes JOIN posts ON user_post_likes.postId = posts.id
+        WHERE user_post_likes.userId = ${userData.id}
+      `)
+
+      userLike[0].map(e => {
+        e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0]
+      })
+      
+      res.status(200).json({ data: userLike[0] });
     } catch (err) {
       res.sendStatus(500);
     }
@@ -33,12 +41,12 @@ module.exports = {
     console.log(userData);
 
     // 파라미터로 받은 postId가 존재하는지 확인
-    console.log(req.params.id);
+    console.log('id', req.params.id);
     if (!req.params.id)
       return res.status(400).json({ message: "Bad Request1" });
 
     // posts에 받은 post가 존재하는지 확인
-    const check = await posts.findeOne({where: {id: req.params.id}})
+    const check = await posts.findOne({where: {id: req.params.id}})
     if (!check) return res.status(400).json({message: 'Bad Request'})
 
     // findOne해서 있으면 제거 없으면 생성해야 함
@@ -50,7 +58,7 @@ module.exports = {
     } else {
       await user_post_likes.create({
         userId: userData.id,
-        postId: req.parmas.id,
+        postId: req.params.id,
       })
       return res.sendStatus(201)
     }

@@ -22,6 +22,8 @@ export default function Login () {
     email: '',
     password: ''
   })
+  const [dangerMessage, setDangerMessage] = useState('')
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -52,17 +54,20 @@ export default function Login () {
       data: {email, password}
     })
     .then((res) => {
-      const {nickname, createdAt, email} = res.data.data
+      // console.log(res.data.data)
+      const {id, email, nickname, image, admin, oauth, createdAt} = res.data.data
       if(res.status = 200) {
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt}))
+        dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(loginModal(LoginModalstate))
-        alert('로그인이 완료되었습니다.')
+        // alert('로그인이 완료되었습니다.') // 여기 모달창으로 바꿔야함
         navigate('/')
       }
     })
     .catch((err) => {
-      alert('잘못된 로그인입니다.')
+      if(err.status = 400){
+        setDangerMessage('잘못된 로그인입니다.')
+      }
       console.log(err)
     })
   }
@@ -89,42 +94,55 @@ export default function Login () {
   }
   
 
+  function handleKeyPress(e) {
+    if(e.key === 'Enter') {
+      postLogin()
+    }
+  }
 
   return (
     <ModalBackdrop onClick={ModalHandler}>
       <LoginModalView onClick={(e) => e.stopPropagation()}>
 
         <ModalLogo>
-          <div><img src="/NADRI.png" /></div>
+          <div>
+            <img className="mainLogo" src="/img/nadri-footer-img.png" alt="메인 로고"/>
+            <img className="mobileLogo" src="/img/nadri-logo-small.png" alt="모바일 로고" />
+          </div>
         </ModalLogo>
 
         <ModalHead>
           <span onClick={ModalHandler}>&#x2716;</span>
           <h1>로그인</h1>
-          <p>회원이 아니신가요? &#xa0;<span onClick={(e) => ModalHandler(e)}>회원가입하기!</span></p>
+          <p>회원이 아니신가요? &#xa0;<br/><span onClick={(e) => ModalHandler(e)}>회원가입하기!</span></p>
         </ModalHead>
 
         <ModalInput>
           <form>
             <label htmlFor="email">이메일</label>
-            <input autoComplete="off" type={"text"} name="email" onChange={onChange}></input>
+            <input autoComplete="off" type={"text"} name="email" onKeyPress={(e) => handleKeyPress(e)} onChange={onChange}></input>
             <label htmlFor="password">비밀번호</label>
-            <input autoComplete="off" type={"password"} name="password" onChange={onChange}></input>
+            <input autoComplete="off" type={"password"} name="password" onKeyPress={(e) => handleKeyPress(e)} onChange={onChange}></input>
           </form>
+          <span id="dangerMsg">{dangerMessage}</span>
         </ModalInput>
-
+        
         <Oauth>
-          <div onClick={postLogin}>로그인</div>
-          <div>
-            <button onClick={onClickGoogle}>
-            <img src="google.png" alt="구글 로그인" />구글 로그인
-            </button>
+          <div onClick={postLogin}>
+            <div className="normalLogin">로그인</div>
           </div>
-          <div>
-            <button onClick={onClickKakao}>
-            <img src="kakao.png" />카카오톡 로그인
-            </button>
-          </div>
+          <span onClick={onClickGoogle}>
+            {/* <button onClick={onClickGoogle}> */}
+            <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
+            <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
+            {/* </button> */}
+          </span>
+          <span onClick={onClickKakao}>
+            {/* <button onClick={onClickKakao}> */}
+            <img className="kakaoPcLogin" src="/img/kakao_login_medium_narrow.png" alt="카카오 로그인" />
+            <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
+            {/* </button> */}
+          </span>
         </Oauth>
       </LoginModalView>
     </ModalBackdrop>

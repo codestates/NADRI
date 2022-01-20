@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 
 const PreviewImg = styled.div`
   width: 100%;
-  height: 30rem;
-  border: 1px solid black;
+  height: 70%;
+  // border: 1px solid black;
+  box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   border-radius: 10px;
   margin-bottom: 10px;
   position: relative;
@@ -13,8 +14,12 @@ const PreviewImg = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
   cursor: pointer;
+  
+  span {
+    font-size: 1.5vw;
+  }
+
 
   #delImg {
     cursor: pointer;
@@ -28,23 +33,39 @@ const PreviewImg = styled.div`
     display: none;
   }
   
-  background-image: url(default-image.jpg);
+  background-image: url(/img/default-image.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+
   ${(props) => {
-    if(props.Img[0]=== undefined) {
+    let img;
+
+    if(typeof props.Img[0] === 'string') {
+      img = props.Img[0]
+    }
+    else if(typeof props.Img[0] === 'object') {
+      img = props.Img[0][0]
+    }
+    
+    if(props.Img[0] === undefined) {
       return(
       `
-      transition: font-size 0.3s;
-      font-size: 1.5rem;
+      span {
+        font-size: 1.2vw;
+        transition: font-size 0.3s;
+      }
       &:hover {
-        transition: all 0.3s;
-        font-size: 2rem;
-        opacity: 0.5;
+        span {
+          transition: font-size 0.3s;
+          font-size: 1.5vw;
+        }
       }
       &:active {
-        color: white;
+        span {
+          transition: color 0.1s;
+          color: white;
+        }
       }
       `
       )
@@ -53,7 +74,7 @@ const PreviewImg = styled.div`
         `
         cursor: grab;
         transition: all 0.3s;
-        background-image: url(${props.Img[0][0]});
+        background-image: url(${img});
         background-size: contain;
         `
       )
@@ -67,7 +88,6 @@ const PreviewImg = styled.div`
 
 
 export default function Preview ({Img, picChange, removeImg}) {
-
   const photoInput = useRef(null);
   const handleClick = () => {
     photoInput.current.click();
@@ -80,8 +100,8 @@ export default function Preview ({Img, picChange, removeImg}) {
       <PreviewImg onClick={handleClick} Img={Img} >
         <span>클릭하여 사진을 추가해보세요!</span>
         <br />
-        <span>사진은 최대 4장까지 추가할 수 있습니다!</span>
-        <input ref={photoInput} type="file" accept="image/*" multiple onChange={picChange} />
+        <span>최대 4장, 5mb까지 추가할 수 있습니다!</span>
+        <input ref={photoInput} type="file" accept=".jpg, .jpeg, .png, .gif" multiple onChange={picChange} />
       </PreviewImg>
     :
       <PreviewImg Img={Img}><span id="delImg" onClick={(e) => removeImg(e, Img[0])}>&#10005;</span></PreviewImg>

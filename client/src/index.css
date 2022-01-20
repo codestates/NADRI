@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;900&display=swap');
 * {
   box-sizing: border-box;
 }
@@ -21,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	font-family: NanumSquare, Cafe24, sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -30,6 +32,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	width: 100vw;
 	line-height: 1;
+	overflow-x: hidden;
 }
 ol, ul {
 	list-style: none;

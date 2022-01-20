@@ -13,6 +13,7 @@ export const ModalBackdrop = styled.div`
   text-align: center;
   overflow: scroll;
   z-index: 999;
+  font-family: 'NanumSquare',arial;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -20,21 +21,47 @@ export const ModalBackdrop = styled.div`
 
 export const LoginModalView = styled.div`
   width: 33rem;
-  height: 41rem;
+  height: 38rem;
   background-color: white;
   border-radius: 10px;
   padding: 35px 80px;
   position: relative;
+
+  @media (max-width: 650px){
+    width: 80vw;
+    padding: 35px 30px;
+    height: 500px;
+  }
 `
 
 export const ModalLogo = styled.div`
   >div {
     width: 20rem;
     margin: 0 auto 1rem;
-    >img {
+    .mainLogo {
       display: block;
       width: 100%;
       height: auto;
+    }
+    .mobileLogo{
+      display: none;
+    }
+  }
+
+  @media (max-width: 650px){
+    >div {
+      display: flex;
+      justify-content: center;
+      width: auto;
+
+      .mainLogo {
+        display: none;
+      }
+      .mobileLogo{
+      display: flex;
+      width: 4rem;
+      height: auto;
+      }
     }
   }
 `
@@ -51,19 +78,29 @@ export const ModalHead = styled.div`
     right: 0;
     font-size: 1.5rem;
     cursor: pointer;
+    font-family: arial;
   }
 
   > h1 {
     font-size: 2.3rem;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 1.5rem;
   }
 
   > p {
     color: #868e96;
     > span {
-      color: hotpink;
+      color: #88ccff;
       cursor: pointer;
+      font-weight: bold;
+    }
+    > br {
+      display: none;
+    }
+    @media screen and (max-width:650px){
+      > br {
+      display: flex;
+      }
     }
   }
 `;
@@ -86,11 +123,21 @@ export const ModalInput = styled.div`
       outline: none;
       padding-left: 10px;
       margin-bottom: 1rem;
+
+      :focus {
+        border: 1px solid #ff7400;
+      }
     }
+  }
+
+  #dangerMsg {
+    color: red;
   }
 `
 
 export const Oauth = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   > div {
     width: 100%;
     display: flex;
@@ -100,42 +147,110 @@ export const Oauth = styled.div`
     margin-bottom: 0.8rem;
     border-radius: 5px;
     font-size: 20px;
-    color: rgb(73, 80, 87);
+    /* color: rgb(73, 80, 87); */
     font-weight: 700;
-    box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
     position: relative;
     cursor: pointer;
-    img {
-      position: absolute;
-      left: 10px;
-      width:30px;
-    }
-    button {
+  
+    .normalLogin{
       width: 100%;
-      height: 100%;
-      border-radius: 5px;
-      font-size: 20px;
-      font-weight: 700;
-      border: 0;
-      outline: 0;
-      color: rgb(73, 80, 87);
+      background-color: #88ccff;
+      color: white;
+      height: 3.5rem;
+      border-radius: 7px;
+      line-height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
+
+    .normalLogin:active {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  & > span:active {
+    position: relative;
+    top: 2px;
   }
 
   & > div:first-child {
-    background-color: pink;
-    color: white;
+    padding: 0.3rem;
   }
 
-  & > div:nth-child(2) {
-    button {
-      background: rgb(255,255,255);
+> span {
+  width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.5rem;
+    margin-bottom: 0.8rem;
+    border-radius: 5px;
+    font-size: 20px;
+    /* color: rgb(73, 80, 87); */
+    font-weight: 700;
+    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
+    position: relative;
+    cursor: pointer;
+
+    .googlePcLogin{
+      width: 100%;
+      height: 3.5rem;
     }
+    .googleMobile{
+      display: none;
+    }
+    .kakaoPcLogin{
+      width: 100%;
+      height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+    }
+    .kakaoMobile{
+      display: none;
+    }
+}
+
+  & > span:last-child {
+    padding: 0.3rem;
   }
 
-  & > div:last-child {
-    button{
-      background-color: rgb(255, 231, 16)
+  @media (max-width: 650px){
+    display: flex;
+    justify-content: space-around;
+    > div {
+      .normalLogin{
+        height: 2.5rem;
+        line-height: 2.5rem;
+      }
     }
+
+    & > div:first-child {
+    padding: 0.3rem;
+    width: 50%;
   }
+
+  > span {
+    display: flex;
+    width: 20%;
+    .googlePcLogin{
+        display: none;
+      }
+      .kakaoPcLogin{
+        display: none;
+      }
+      .googleMobile{
+      display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+      }
+      .kakaoMobile{
+      display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+      }
+  }
+
+  & > span:last-child {
+    padding: 0.3rem;
+   }
+  }
+
 `

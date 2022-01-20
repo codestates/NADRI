@@ -17,6 +17,7 @@ const upload = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'nadri',
+        contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read-write',
         key: function(req, file, cb) {
             cb(null, Math.floor(Math.random() * 1000).toString() + Date.now() + '.' + file.originalname.split('.').pop());
@@ -88,10 +89,10 @@ router.patch(
   controllers.post.patchPost
 );
 router.delete('/post/:id', controllers.post.deletePost)
+router.post('/post/report', controllers.post.reportPost )
 
 router.get("/auth/me", controllers.me.getUserInform);
-router.patch(
-  "/auth/me",
+router.patch("/auth/me",
   upload.fields([
     { name: "profile", maxCount: 1 },
     { name: "nickname", maxCount: 1 },
@@ -101,5 +102,9 @@ router.patch(
 );
 
 // 라우터 입력 끝
+
+// 테스트 라우팅
+router.post('/post/image', controllers.post.getPostImg)
+router.get('/auth/me/post', controllers.me.getUserPost)
 
 module.exports = router;

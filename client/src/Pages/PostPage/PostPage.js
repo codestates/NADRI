@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   PostContainer,
+  Container,
   TopContainer,
   UploadContainer,
   BottomContainer,
@@ -27,31 +28,39 @@ export default function PostPage () {
     image: [],
     title: '',
     content: '',
-    public: false,
+    public: 1, // true
     categoryId: 1,
   });
-
-  const picChange = (event) => { // 이미지를 추가하는 함수
+  
+  const picChange = (event) => {
+    // 이미지를 추가하는 함수
     // 나는 Blob이 싫다
-    const urlArr = [...value.image], image = event.target.files;
-    for (let i = 0; i < image.length; i++) {
-      const imageUrl = URL.createObjectURL(image[i], `${image[i].name}`, {type: `image` });
-      urlArr.push([imageUrl, event.target.files[i]]);
+    let urlArr = [...value.image],
+      image = event.target.files;
+    let inputSize = 0, useSize = 0
+
+    for (let i of image) inputSize += i.size
+
+    urlArr.map(e => useSize += e[1].size)
+
+    if (inputSize + useSize > 5000000) {
+      alert('이미지는 5mb까지 첨부 가능합니다')
+      return null
     }
 
-    handleValue({ id: 'image', value: urlArr });
-    // console.log(value.image)
+    for (let i = 0; i < image.length; i++) {
+      const imageUrl = URL.createObjectURL(image[i], `${image[i].name}`, {
+        type: `image`,
+      });
+      urlArr.push([imageUrl, event.target.files[i]]);
+    }
+    
+    handleValue({ id: "image", value: urlArr });
+
   };
 
   const removeImg = (event, curImg) => {
-    // 이미지를 제거하는 함수
-    // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
-    // 실행만 시키거나 다른 변수에 저장시켜야 함.
-    // 그것도 싫다면 다른 함수를 적용해야 함
-
     URL.revokeObjectURL(event.target.src); // 제거할 링크를 revoke시켜 메모리 낭비를 방지(해야 한다네요)
-    // tmp.splice(event.target.id + 1, 1);
-    // console.log(event.target)
 
     const delImage = curImg
     const newImgArr = value.image.filter(x => {
@@ -62,10 +71,6 @@ export default function PostPage () {
   };
 
   const handleValue = (target) => {
-    // value state를 조정하는 함수. 좌표/주소는 한번에 처리해야 해서 복잡해짐
-    // id가 loc이면 한번에 업데이트
-    // console.log(target)
-
       setValue({
         ...value,
         [`${target.id}`]: target.value,
@@ -79,7 +84,6 @@ export default function PostPage () {
   const submit = async () => {
     // 포스트 게시하는 함수
     const formData = new FormData();
-
     for (let i = 0; i < value.image.length; i++) {
       formData.append('image', value.image[i][1]);
     }
@@ -101,12 +105,14 @@ export default function PostPage () {
     })
       .then((result) => {
         console.log(result);
+        navigate(`/detail/${result.data.id}`) // 리턴된 페이지로 이동
       })
       .catch((error) => {
         console.log(error);
+        alert('문제가 발생했습니다!')
       });
     
-    navigate('/') // 리턴된 페이지로 이동?
+    
   };
 
   useEffect(() => {
@@ -167,9 +173,9 @@ export default function PostPage () {
 
 
   return (
-
     <PostContainer>
-
+      <Container>
+        <img id="tack" src="/img/tack.png" />
       <TopContainer>
         <UploadContainer>
           <Preview Img={value.image} picChange={picChange} removeImg={removeImg} />
@@ -179,46 +185,50 @@ export default function PostPage () {
       </TopContainer>
 
       <BottomContainer>
+
         <TextInputContainer>
-          <input id="title" onChange={(event) => handleValue(event.target)} />
-        
-          <pre><textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} /></pre>
+          <div>
+            <label>Title</label>
+            <input id="title" onChange={(event) => handleValue(event.target)} placeholder="게시글의 제목을 적어주세요!" />
+          </div>
+          <div>
+            <label>Description</label>
+            <textarea id="content" rows="10" cols="50" onChange={(event) => handleValue(event.target)} placeholder="게시글의 내용을 적어주세요!" />
+          </div>
         </TextInputContainer>
 
-        <CheckboxContainer>
-          <div>
-            <button onClick={submit}>업로드</button>
-          </div>
-
-          <div className="checkbox">
-            <input
-              type="checkbox"
-              onClick={() => handleValue({ id: "public", value: !value.public })}
-            />
-            <span>{value.public ? "공개" : "비공개"}</span>
-          </div>
-
-          <div className="category">
+        <CheckboxContainer id="checkboxCOntainer">
+          <div id="category-container">
+            <label>Category</label>
             <select
               className="w150"
               onChange={(e) =>
                 handleValue({ id: "categoryId", value: Number(e.target.value) })
               }
             >
-              <option value={1}>테스트</option>
-              <option value={2}>여행</option>
-              <option value={3}>카페</option>
-              <option value={4}>맛집</option>
-              <option value={5}>산책</option>
+              <option value={1}>여행</option>
+              <option value={2}>카페</option>
+              <option value={3}>맛집</option>
+              <option value={4}>산책</option>
             </select>
           </div>
-
-        <div>
-          <button onClick={() => console.log(value, loc)}>ㅡㅡ</button>
-          <span>{loc.address}</span>
-        </div>
+          <div id="address">
+              <label>주소</label>
+              <span>{loc.address}</span>
+          </div>
+          <div className="checkbox">
+            <label>공개여부 :</label>
+            <input
+              type="checkbox"
+              checked={value.public}
+              onChange={() => handleValue({ id: "public", value: !value.public })}
+            />
+            <span>{value.public ? "공개" : "비공개"}</span>
+          </div>
+            <button id="Btn" onClick={submit} type="button">업로드</button>
       </CheckboxContainer>
       </BottomContainer>
+      </Container>
     </PostContainer>
   );
 }

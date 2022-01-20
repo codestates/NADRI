@@ -5,17 +5,6 @@ module.exports = {
     return queryInterface.bulkInsert("posts", [
       {
         userId: 1,
-        title: '전체보기에서 보이면 안 되는 게시글',
-        image: '3351641435347028.jpeg,',
-        content: '비공개 게시글 테스트',
-        lat: 0,
-        lng: 0,
-        address: '그리고 너는 지옥에 간다',
-        public: 0,
-        categoryId: 1
-      },
-      {
-        userId: 1,
         title: '일광해수욕장 카페 헤이든',
         image: '3351641435347028.jpeg,',
         content: '바다 보면서 커피마시기 좋음',

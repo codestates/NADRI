@@ -73,7 +73,7 @@ module.exports = {
             console.log(aToken)
             console.log('=====kakao result 구간 통과=====')
             sendAccessToken(res, aToken)
-            res.sendStatus(200)
+            res.status(200).json({ data: payLoad })
         })
         .catch((err) => {
             console.log('kakao catch err 입니다')
