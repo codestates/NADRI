@@ -21,7 +21,7 @@ const PreviewImg = styled.div`
   background-image: url(/img/default-image.jpg);
   background-size: cover;
   ${(props) => {
-    if(props.Img[0] && props.Img[1] === undefined) { // 자기 앞에 사진이 있고 자기 자리엔 사진이 없을 경우?
+    if(props.Img[0] && props.Img[1] === undefined) { // 자기 앞에 사진이 있고 자기 자리엔 사진이 없을 경우
       return (
         `
         transition: all 0.3s;
@@ -31,11 +31,19 @@ const PreviewImg = styled.div`
         `
       )
     }
-    else if(props.Img[0] && props.Img[1]) { // 
+    else if(props.Img[0] && props.Img[1]) {
+      let img;
+
+    if(typeof props.Img[0] === 'string') {
+      img = props.Img[0]
+    }
+    else if(typeof props.Img[0] === 'object') {
+      img = props.Img[0][0]
+    }
       return (
         `
         transition: all 0.3s;
-        background-image: url(${props.Img[1][0]});
+        background-image: url(${img});
         background-size: contain;
         `
       )
@@ -89,7 +97,6 @@ export default function PreviewBottom ({allImg, img, picChange, removeImg}) {
   const handleClick = () => {
     photoInput.current.click();
   }
-  
   return (
     <>
       {

@@ -7,35 +7,10 @@ import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 // import DetailPage from "./DetailPage";
+import { useNavigate } from "react-router-dom";
 
 const MainContainer = styled.div`
   padding: 3rem 9vw;
-  // width: 100%;
-  // height: 100%;
-  // padding: 3rem 9vw;
-  // display: flex;
-  // justify-content: space-between;
-
-  // #map {
-  //   width: 50%;
-  //   height: 40rem;
-  //   border-radius: 15px;
-  //   z-index: 0;
-  // }
-
-  // @media (max-width: 992px){
-  //   flex-direction: column;
-
-  //   #map {
-  //     width: 100%;
-  //   }
-  // }
-
-  // @media (max-width: 767px) {
-  //   #map {
-  //     height: 30rem;
-  //   }
-  // }
 `
 
 const Container = styled.div`
@@ -45,7 +20,7 @@ const Container = styled.div`
   justify-content: space-between;
   background-color: #f9fafc;
   border-radius: 10px;
-  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
   font-family: 'NanumSquare', 'Cafe24', arial;
 
   position: relative;
@@ -73,15 +48,15 @@ const Container = styled.div`
 `
 
 const MapContainer = styled.div`
-  /* width: 100%; */
-  width: 50vw;
+  // width: 100%;
+  width: 50%;
   padding: 1rem;
 
   #map {
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    /* box-shadow: 2px 2px 2px 1px rgb(180 180 180); */
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
     // z-index: 0;
   }
 
@@ -138,8 +113,7 @@ const ContentNav = styled.nav`
 `
 
 const ContentContainer = styled.div`
-  /* width: 50%; */
-  width: 50vw;
+  width: 50%;
   height: 40rem;
   padding: 1rem 1rem 1rem 3rem;
   display: flex;
@@ -185,7 +159,7 @@ const ItemContainer = styled.div`
 `
 
 export default function Main () {
-
+  const navigate = useNavigate();
   const [origPost, setOrigPost] = useState([])
   const [points, setPoints] = useState([])
   const handlePoints = (data) => {
@@ -200,14 +174,16 @@ export default function Main () {
     else setOption([option[0], Number(e.target.value)])
   }
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
+  useEffect(async () => {
+    await navigator.geolocation.getCurrentPosition((position) => {
       console.log('위치 확인에 성공하였습니다.')
       kakaoInit([position.coords.latitude, position.coords.longitude], true)
     }, (error) => {
       console.log('현재 위치 확인이 불가한 상황입니다.')
       kakaoInit([37.5655493, 126.9777104], false)
     })
+
+    
   }, []);
 
   useEffect(() => {
@@ -251,11 +227,11 @@ export default function Main () {
     );
 
     // 마커 생성
-    let marker = new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(lat, lng),
-    });
+    // let marker = new kakao.maps.Marker({
+    //   position: new kakao.maps.LatLng(lat, lng),
+    // });
     // 마커를 지도에 표시
-    marker.setMap(map);
+    // marker.setMap(map);
 
     // 모든 게시글 정보를 수신해 거리순으로 정렬
     const postData = await axios.get(`${process.env.REACT_APP_API_URL}/post`)
@@ -276,37 +252,34 @@ export default function Main () {
     handlePoints(sortTarget)
     setOrigPost(sortTarget)
 
-    const points = []
-    
-    postData.data.data.map(e => {
-      const {title, lat, lng} = e
-      points.push({title, latlng: new kakao.maps.LatLng(lat, lng)})
-    })
+    // 백업시작
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
     const imageSize = new kakao.maps.Size(24, 35)
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
+    
+    postData.data.data.map(e => {
+      // 각 게시글의 데이터로 포인트 정보를 배열에 추가 > 그 배열로 인포윈도 추가 
 
-    for (let i of points) {
-      // console.log(i);
+      const {id, title, lat, lng, image} = e
+      // points.push({title, latlng: new kakao.maps.LatLng(lat, lng)})
+      const latlng = new kakao.maps.LatLng(lat, lng)
+
       const marker = new kakao.maps.Marker({
         map,
-        position: i.latlng,
-        // title: i.title,
+        position: latlng,
+        title: title,
         image: markerImage,
       });
-
-      // 인포윈도우 추가하기
-      // 마우스 오버될 때 표시할 인포윈도우
-      // 여기 컴포넌트 들어가려나?
-      // const iwContent = `<div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>`;
-      const testImgUrl = 'https://nadri.s3.ap-northeast-2.amazonaws.com/6131642483890263.jpeg'
+      
       const iwContent = `
-      <div>
-        <div style="padding:5px;">${i.title.length > 10 ? i.title.slice(0, 9) + '...' : i.title }</div>
-        <div"><img src='${testImgUrl}' /></div>
+      <div class='iwcontent' style='padding: 0.5rem; border-radius=10px; background-color:#f9fafc'>
+        <div className='infoTitle' style='margin-bottom: 0.5rem;'>${title.length > 10 ? title.slice(0, 10) + '...' : title }</div>
+        <div className='infoImg' style="width:16vw; height:12vw; max-width:300px; max-height:225px; overflow: hidden; margin: 0 auto; border-radius: 10px;">
+          <img style="width:100%; height:100%; object-fit: cover" src='${image[0]}' alt='이미지' />
+        </div>
       </div>
       `;
-      
+
       const infowindow = new kakao.maps.InfoWindow({
         content : iwContent
       });
@@ -317,22 +290,28 @@ export default function Main () {
           infowindow.open(map, marker);
       });
 
+      // 마커를 클릭하면 페이지로 이동
+      kakao.maps.event.addListener(marker, 'click', function() {
+        navigate(`/detail/${id}`);
+      });
+
       // 마커에 마우스아웃 이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'mouseout', function() {
           // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
           infowindow.close();
       });
-    }
+    })
+    // 백업끝
   }
 
   return (
     <MainContainer id="MainContainer">
       <Container>
         <img id="tack" src="/img/tack.png" />
-      <MapContainer>
+      <MapContainer id="MapContainer">
         <div id="map" />
       </MapContainer>
-
+      
       <ContentContainer id="ContentContainer">
         <ContentNav>
           <select id='categoryId' onChange={optionHandler}>

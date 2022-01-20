@@ -231,13 +231,14 @@ export default function Header () {
     axios.get(`${process.env.REACT_APP_API_URL}/auth/me`)
     .then(result => {
       if (result.status === 200) {
-        const {nickname, createdAt, email, image, oauth} = result.data.data
+        const {id, email, nickname, image, admin, oauth, createdAt } = result.data.data
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt, image, oauth}))
+        dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt }))
       }
     })
     .catch(err => {
-      console.log(err)
+      // console.log(err)
+      return null
     })
   }, [])
 

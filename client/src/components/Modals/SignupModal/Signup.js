@@ -22,6 +22,7 @@ export default function Signup () {
     password: '',
     passwordCheck: ''
   })
+  const [dangerMessage, setDangerMessage] = useState('')
 
   const dispatch = useDispatch()
   const LoginModalstate = useSelector(state => state.loginReducer);
@@ -43,6 +44,7 @@ export default function Signup () {
   // 이메일 검증 단계 추가
   const [code, setCode] = useState(null)
   const [userCode, setUserCode] = useState('')
+
   function sendChkMail (email) {
     if (!email) return alert('이메일을 입력하세요!')
     axios.post(`${process.env.REACT_APP_API_URL}/auth/code`, {email})
@@ -51,6 +53,7 @@ export default function Signup () {
       alert('인증메일이 발송되었습니다.')
     })
   }
+
   function verifyCode (userCode) {
     console.log(userCode, code)
     if (!code) return alert('인증 메일을 먼저 발송하세요')
@@ -62,7 +65,14 @@ export default function Signup () {
   function postSignup () {
     const {email, nickname, password, passwordCheck} = inputs
     
-    if(password !== passwordCheck) return alert("비밀번호를 확인하세요")
+    if(!email || !nickname || !password || !passwordCheck) {
+      return setDangerMessage('필수사항들을 입력해주세요!')
+    }
+
+    if(password !== passwordCheck) {
+      return setDangerMessage('비밀번호를 확인하세요!')
+    }
+    
     // if (Object.values(inputs).some((e) => e === '')) return alert("정보를 전부 입력했는지 확인하세요") 이거 다시 작업해야함
     
     axios({
@@ -75,17 +85,17 @@ export default function Signup () {
     })
     .then((res) => {
       if(res.status === 201) {
-        const {email, nickname, createdAt} = res.data.data
+        const {id, email, nickname, image, admin, oauth, createdAt} = res.data.data
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt}))
+        dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(signupModal(SignupModalstate))
-        alert('회원가입이 완료되었습니다.')
+        alert('회원가입이 완료되었습니다.') // 여기 모달창으로 바꾸기
         navigate('/')
       }
     })
     .catch(err => {
       console.log(err)
-      return alert('오류 발생: 이미 가입하셨는지 확인하세요')
+      setDangerMessage('오류 발생: 이미 가입하셨는지 확인하세요')
     })
   }
   
@@ -156,6 +166,7 @@ export default function Signup () {
             <label htmlFor="password">비밀번호 확인</label>
             <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} onChange={onChange} name="passwordCheck"></input>
           </form>
+          <span id="dangerMsg">{dangerMessage}</span>
         </ModalInput>
 
         <Oauth>
