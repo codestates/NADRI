@@ -42,6 +42,10 @@ const CommentContentWrapper = styled.div`
     height: auto;
     overflow:visible;
   }
+
+  .UserComment {
+    word-break:break-all;
+  }
 `;
 
 const InfoAndAlert = styled.div`
@@ -92,7 +96,7 @@ export default function Comment({ comment, modComment, delComment }) {
             : <textarea className='editComment' defaultValue={comment.comment} onChange={handleText}/>
           }
         </CommentContentWrapper>
-        {curUserInfo.admin || curUserInfo.id === comment.userId || curAuthState ?
+        {curAuthState && curUserInfo.admin || curAuthState && curUserInfo.id === comment.userId ?
           <InfoAndAlert>
           <span className='test'>{comment.createdAt}</span>
           {!edit ? 

@@ -60,7 +60,7 @@ export default function Login () {
         dispatch(authState(curAuthState))
         dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(loginModal(LoginModalstate))
-        alert('로그인이 완료되었습니다.') // 여기 모달창으로 바꿔야함
+        // alert('로그인이 완료되었습니다.') // 여기 모달창으로 바꿔야함
         navigate('/')
       }
     })

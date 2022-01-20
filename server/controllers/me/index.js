@@ -66,14 +66,20 @@ module.exports = {
       }
       await find.save()
 
-      console.log(find.dataValues)
+      
+
+      const result = find.dataValues
+
+      delete result.password;
+
+      console.log(result)
 
       // 변경된 정보를 가지고 토큰을 갱신해 줘야 함.
-      const newAccessToken = mkAccessToken(find.dataValues)
+      const newAccessToken = mkAccessToken(result)
       sendAccessToken(res, newAccessToken)
 
       // return res.status(200).send(path[0])
-      return res.sendStatus(200);
+      return res.status(200).json({data: result});
     } catch (err) {
       console.log(err)
       return res.sendStatus(500)

@@ -19,12 +19,12 @@ module.exports = async (req, res) => {
   if (!userInfo) return res.status(400).json({ message: "Wrong ID" });
 
   // 비밀번호는 검증이 실패하면 오류 반환
-  // const result = verifyPW(req.body.password, userInfo.password)
-  // if (!result)
-  //   return res.status(400).json({ message: "Wrong Password" });
+  const result = verifyPW(req.body.password, userInfo.password)
+  if (!result)
+    return res.status(400).json({ message: "Wrong Password" });
 
   // 로컬용 평문 PW 검증
-  if (userInfo.password !== req.body.password) return res.status(400).json({ message: "Wrong Password" });
+  // if (userInfo.password !== req.body.password) return res.status(400).json({ message: "Wrong Password" });
 
   try {
     // 유저정보가 있으면? > 중요정보를 삭제하고 사인 후 전달

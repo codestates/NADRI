@@ -278,12 +278,12 @@ export default function Header () {
           <img className="mobileImg" src="/img/nadri-logo-small.png" alt="mLogo" />
         </Link>
       </Logo>
-      <Search>
+      {/* <Search>
         <input className='searchBar' type={'text'} />
         <div className='searchLogo'>
           <input type={'image'} src='/img/search.jpg'/>
         </div>
-      </Search>
+      </Search> */}
         {
           curAuthState ?
           <HeaderContent>
