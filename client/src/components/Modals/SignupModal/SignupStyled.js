@@ -30,7 +30,7 @@ export const SignupModalView = styled.div`
   @media (max-width: 650px){
     width: 80vw;
     padding: 35px 30px;
-    height: 80vh;
+    height: 700px;
   }
 `
 
@@ -70,12 +70,14 @@ export const ModalHead = styled.div`
   > p {
     color: #868e96;
     > span {
-      color: hotpink;
+      color: #88ccff;
       cursor: pointer;
+      font-weight: bold;
     }
     > br {
         display: none;
       }
+    
     @media screen and (max-width:650px){
         > br {
         display: flex;
@@ -131,11 +133,16 @@ export const ModalInput = styled.div`
       }
     }
   }
+  
+  #dangerMsg {
+    color: red;
+  }
 `
 
 export const Oauth = styled.div`
   display: flex;
   flex-wrap: wrap;
+
   > div {
     width: 100%;
     display: flex;
@@ -153,12 +160,12 @@ export const Oauth = styled.div`
 
     .normalSignup{
       width: 100%;
-      background-color: pink;
+      background-color: #88ccff;
       color: white;
       height: 3.5rem;
       border-radius: 7px;
       line-height: 3.5rem;
-
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
   }
 
@@ -177,13 +184,14 @@ export const Oauth = styled.div`
     font-size: 20px;
     /* color: rgb(73, 80, 87); */
     font-weight: 700;
-    /* box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px; */
+    // box-shadow: rgb(0 0 0 / 10%) 0px 0px 10px;
     position: relative;
     cursor: pointer;
 
     .googlePcLogin{
       width: 100%;
       height: 3.5rem;
+      
     }
     .googleMobile{
       display: none;
@@ -191,6 +199,7 @@ export const Oauth = styled.div`
     .kakaoPcLogin{
       width: 100%;
       height: 3.5rem;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
     }
     .kakaoMobile{
       display: none;
@@ -207,12 +216,7 @@ export const Oauth = styled.div`
     top: 2px;
   }
 
-  & > span:first-child:active {
-    position: relative;
-    top: 2px;
-  }
-
-  & > span:last-child:active {
+  & > span:active {
     position: relative;
     top: 2px;
   }
@@ -230,11 +234,11 @@ export const Oauth = styled.div`
     }
 
     & > div:first-child {
-    padding: 0.3rem;
-    width: 50%;
-   }
+      padding: 0.3rem;
+      width: 50%;
+    }
 
-   > span {
+  > span {
     display: flex;
     width: 20%;
     .googlePcLogin{
@@ -248,11 +252,12 @@ export const Oauth = styled.div`
       }
       .kakaoMobile{
       display: flex;
+      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
       }
   }
 
   & > span:last-child {
-    padding: 0.3rem;
-   }
+      padding: 0.3rem;
+    }
   }
 `
