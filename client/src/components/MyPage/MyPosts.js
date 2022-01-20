@@ -13,7 +13,7 @@ gap: 2em;
 width: auto;
 /* height: auto; */
 flex-direction: row;
-height: 20vh;
+height: 11rem;
 align-items: center;
 background: #f9fafc;
 box-shadow: 2px 2px 2px 1px rgb(180 180 180);
@@ -182,12 +182,12 @@ export const PostInfo = styled.div`
 }
 
   .desc {
-    height: 7.7vh;
+    height: 4rem;
     width: 100%;
     border-radius: 10px;
     /* border: 1px solid black; */
     padding: 0.2rem 0.5rem 0.2rem 0.5rem;
-    line-height: 1.2;
+    line-height: 1.3;
     text-align: start;
 
     white-space: nowrap;

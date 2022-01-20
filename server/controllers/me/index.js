@@ -72,7 +72,8 @@ module.exports = {
       const newAccessToken = mkAccessToken(find.dataValues)
       sendAccessToken(res, newAccessToken)
 
-      return res.status(200).send(path[0])
+      // return res.status(200).send(path[0])
+      return res.sendStatus(200);
     } catch (err) {
       console.log(err)
       return res.sendStatus(500)
