@@ -168,16 +168,16 @@ const TopContainer = styled.div`
 const ImgContainer = styled.div`
   width: 40vw;
   max-width: 800px;
+  /* height: 600px; */
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
   background: white;
-  /* height: 40vw; */
-  border-radius: 10px;
-  
+  height: 40vw;
   @media screen and (max-width: 900px) {
     margin: 0 auto;
     width: 80vw;
+    height: 60vw;
     margin-bottom: 1rem;
     height: 100%;
   }

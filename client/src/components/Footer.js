@@ -112,11 +112,18 @@ const Profile = styled.div`
 
   @media screen and (max-width:900px){
     margin-top: 0rem;
-   .info{
-     display: none;
-   }
-   .repo:hover {
-    width: 40px;
+    .info{
+      display: none;
+    }
+    .repo:hover {
+      width: 40px;
+      transition: none;
+      transform: translate(0, 0);
+    }
+    .repo:active {
+      transition: none;
+      position: translate(0, 0);
+      top: 0px;
     }
   }
 `

@@ -40,9 +40,10 @@ const Container = styled.div`
   @media (max-width: 992px) {
     flex-direction: column;
     align-items: center;
+    padding-top: 0;
 
     #tack {
-      top: 2.5%;
+      top: -0.5%;
       left: 42%;
     }
   }
@@ -193,9 +194,9 @@ export default function Main () {
   useEffect(() => {
     // console.log('=====test=====')
     // 페이지 로드 시 post정보가 []일때(아직 로딩이 안된 상태) 작동하지 않게
-    if (!points.length) return null
+    // if (!points.length) return null
 
-    console.log('=====test=====')
+    // console.log('=====test=====')
 
     // 여기서 기준을 뭘로 할지를 정해야 함
     // 사실 option 변경되면 작동하니 별 상관은 없을듯
@@ -231,11 +232,11 @@ export default function Main () {
     );
 
     // 마커 생성
-    // let marker = new kakao.maps.Marker({
-    //   position: new kakao.maps.LatLng(lat, lng),
-    // });
+    let marker = new kakao.maps.Marker({
+      position: new kakao.maps.LatLng(lat, lng),
+    });
     // 마커를 지도에 표시
-    // marker.setMap(map);
+    marker.setMap(map);
 
     // 모든 게시글 정보를 수신해 거리순으로 정렬
     const postData = await axios.get(`${process.env.REACT_APP_API_URL}/post`)
