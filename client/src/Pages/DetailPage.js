@@ -183,9 +183,8 @@ const MainImg = styled.img`
   display: flex;
   height: 30vw; // 16:9 하려면 22.5
   max-width: 40vw;
-  /* max-height: 30vw; */
   
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 10px;
   box-shadow: 3px 3px 4px 3px rgb(180 180 180);
   
@@ -616,7 +615,7 @@ export default function DetailPage() {
   };
 
   useEffect(async () => {
-    console.log('DETAILINIT', curUserInfo)
+    // console.log('DETAILINIT', curUserInfo)
     // 현재 페이지 주소 찾기(주소창에 직접 id입력하는 경우 대응)
     const targetId = document.location.href.split("/")[4];
 
@@ -633,7 +632,7 @@ export default function DetailPage() {
     // 데이터 추출 및 state로 저장
     const result = postData.data.data;
     setPost(result);
-    console.log(postData)
+    // console.log(postData)
 
     // 날씨정보 받아오기
     getWeather([result.lat, result.lng]);
@@ -835,10 +834,10 @@ export default function DetailPage() {
 
       let tmapRoute
       if (!walkRoute || walkRoute.statusText === 'No Content') { // 도보경로가 존재하지 않으면(수신하지 않았거나, 데이터가 존재하지 않는 경우)
-        console.log('차량 경로를 안내합니다')
+        // console.log('차량 경로를 안내합니다')
         tmapRoute = carRoute
       } else {
-        console.log('도보 경로를 안내합니다')
+        // console.log('도보 경로를 안내합니다')
         tmapRoute = walkRoute
       }
 

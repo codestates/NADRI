@@ -25,6 +25,8 @@ const ChageUserInfoContainer = styled.div`
       border-radius: 50%;
       margin-bottom: 10px;
 
+      
+
       ${(props) => {
         
         if(props.img) {
@@ -73,10 +75,8 @@ const ChageUserInfoContainer = styled.div`
       } */
 
       label {
-        // 간격 등만 맞추고 border는 안쓸거임
-        /* border: 1px solid black; */
-        border-radius: 5px;
-        font-size: small;
+        font-size: 1rem;
+        cursor: pointer;
       }
     }
   
@@ -274,13 +274,15 @@ export default function ChageUserInfo () {
     <ChageUserInfoContainer img={curUserInfo.image}>
       <div className="user-profile-img-edit">
         <div className="user-profile-picture"></div>
+
         <div>
-          <label htmlFor="profileImgLabel">프로필 사진 변경</label>
+          <label htmlFor="profileImgLabel" onClick={handleClick}>프로필 사진 변경</label>
           <input type={'file'} name='img' ref={profileImg} onChange={picChange}/>
           <span className="img-edit-span">
             <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />
           </span>
         </div>
+
       </div>
 
       <InputContainer>
