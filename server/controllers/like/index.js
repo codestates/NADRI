@@ -21,7 +21,7 @@ module.exports = {
       `)
 
       userLike[0].map(e => {
-        e.image = process.env.AWS_LOCATION + e.image.split(',')[0]
+        e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0]
       })
       
       res.status(200).json({ data: userLike[0] });

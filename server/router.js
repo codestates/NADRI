@@ -89,10 +89,10 @@ router.patch(
   controllers.post.patchPost
 );
 router.delete('/post/:id', controllers.post.deletePost)
+router.post('/post/report', controllers.post.reportPost )
 
 router.get("/auth/me", controllers.me.getUserInform);
-router.patch(
-  "/auth/me",
+router.patch("/auth/me",
   upload.fields([
     { name: "profile", maxCount: 1 },
     { name: "nickname", maxCount: 1 },

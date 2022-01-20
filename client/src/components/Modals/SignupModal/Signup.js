@@ -85,9 +85,9 @@ export default function Signup () {
     })
     .then((res) => {
       if(res.status === 201) {
-        const {email, nickname, createdAt} = res.data.data
+        const {id, email, nickname, image, admin, oauth, createdAt} = res.data.data
         dispatch(authState(curAuthState))
-        dispatch(userInfo({email, nickname, createdAt}))
+        dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(signupModal(SignupModalstate))
         alert('회원가입이 완료되었습니다.') // 여기 모달창으로 바꾸기
         navigate('/')

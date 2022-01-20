@@ -3,17 +3,16 @@
 */
 
 const { QueryTypes } = require("sequelize");
-const { posts, sequelize } = require("../../models");
+const { users, posts, user_post_likes, sequelize } = require("../../models");
 const { chkValid } = require("../tokenFunctions");
 const aws = require("aws-sdk");
 aws.config = require("../../config/awsconfig.js");
 const s3 = new aws.S3();
 const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config()
+require('dotenv').config();
 const axios = require('axios')
-const {Blob} = require('node:buffer') // for real?
-const { Readable } = require('stream');
+const nodemailer = require('nodemailer');
+
 
 module.exports = {
   getAllPost: async (req, res) => {
@@ -27,7 +26,7 @@ module.exports = {
 
     // 첫 번째 이미지만 보이게 image데이터 매핑
     find.map((point) => {
-      point.image = [process.env.AWS_LOCATION + point.image.split(",")[0]];
+      point.image = [process.env.AWS_CLOUD_URL + point.image.split(",")[0]];
     });
     // console.log(find)
     res.status(200).json({data: find})
@@ -45,17 +44,22 @@ module.exports = {
     // 전달받은 파라미터로 포스트가 존재하는지 확인
     const id = req.params.id;
     const userData = chkValid(req)
+    console.log(userData)
 
     let find = await sequelize.query(`
       SELECT id, userId, title, image, content, lat, lng, address, createdAt, public, categoryId,
         (SELECT nickname FROM users WHERE users.id = posts.userId) AS nickname,
         (SELECT image FROM users WHERE users.id = posts.userId) AS userImage,
-        (SELECT COUNT(userId) FROM user_post_likes WHERE user_post_likes.postId = ${id}) AS likes,
-        (SELECT COUNT(userId) FROM user_post_likes WHERE userId = ${userData.id} AND postId = ${id}) AS bookmark
+        (SELECT COUNT(userId) FROM user_post_likes WHERE user_post_likes.postId = ${id}) AS likes
       FROM posts WHERE posts.id = ${id}
-    `,
-      { type: QueryTypes.SELECT }
+    `, { type: QueryTypes.SELECT }
     );
+
+    // 북마크 여부는 로그인에 따라 줄지 말지를 정해야 함.
+    if (userData) {
+      const bookmark = await user_post_likes.findOne({where: {userId: userData.id, postId: id}})
+      find[0].bookmark = Boolean(bookmark)     
+    }
     
     // find가 빈 배열이면 = 없는 포스트면 404를 반환
     if (!find[0]) return res.sendStatus(404);
@@ -66,29 +70,20 @@ module.exports = {
     // public이 false이면 인증정보 확인
     if (!find.public) {
       if (!userData || find.userId !== userData.id) return res.sendStatus(401)
-      // console.log('chkUserID', find.userId !== userData.id)
     }
 
     // 게시글 이미지 링크 처리
     find.image = find.image.split(",");
     find.image.pop();
-    find.image = find.image.map((e) => (e = process.env.AWS_LOCATION + e));
+    find.image = find.image.map((e) => (e = process.env.AWS_CLOUD_URL + e));
     // AWS_CLOUD_URL
     console.log(find.image)
     
 
     // 유저 이미지 링크 처리
-    find.userImage = `${process.env.AWS_LOCATION}` + find.userImage
+    find.userImage = `${process.env.AWS_CLOUD_URL}` + find.userImage
 
-        // // 해당 게시글에 대한 북마크 여부를 확인
-        // const userLike = await sequelize.query(`
-        // SELECT * FROM user_post_likes WHERE userId = ${userData.id} AND postId = ${id}
-        // `, { type: QueryTypes.SELECT })
-
-        // console.log('Like 정보', Boolean(userLike.length))
-        // find.like = Boolean(userLike.length)
-
-        // console.log('RESULT', find)
+    console.log('FIND', find)
 
     // 포스트의 정보 반환
     res.status(200).json({ data: find });
@@ -196,11 +191,12 @@ module.exports = {
         // S3버킷에서 파일을 삭제하기. DB업데이트는 body 처리할때 진행
         await find.image.split(",").map((e) => {
           if (!e) return null;
+          console.log('DEL_TARGET',e)
           s3.deleteObject({ Bucket: "nadri", Key: `${e}` }, (err, data) => {
             if (err) {
               throw err;
             }
-            // console.log('s3 deleteObject ', data);
+            console.log('s3 deleteObject ', data);
           });
         })
         // mod['image'] = imgStr
@@ -284,12 +280,8 @@ module.exports = {
     res.sendStatus(200);
   },
 
-  // 테스트 함수
   getPostImg: async (req, res) => {
-    // console.log(req.body.lnk)
-
     const targetUrl = req.body.lnk
-
     try {
       const blobData = await axios({ // 응답 전체를 저장
         method: 'GET',
@@ -302,5 +294,53 @@ module.exports = {
     } catch (err) {
       res.send(null)
     }
+  },
+
+  reportPost: async (req, res) => {
+    console.log(req.body.url)
+
+    const EMAIL = process.env.NODEMAILER_USER;
+    const EMAIL_PW = process.env.NODEMAILER_PASS;
+
+    const targetEmail = await users.findAll({where: {admin: 1}, raw: true})    
+    console.log(targetEmail)
+
+    let transport = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      secure: true,
+      auth: {
+        user: EMAIL,
+        pass: EMAIL_PW,
+      },
+    });
+
+    await transport.sendMail(
+      {
+        from: 'NADRI Team',
+        to: targetEmail[0].email,
+        subject: '불량 게시글 신고',
+        html: `
+          <div>
+            <h1>불량 게시글 신고</h1>
+            <div>
+              <p>신고 시간: ${new Date()}</p>
+              <p>대상 게시글 주소: <a href='${req.body.url}'>링크</a></p>
+            </div>
+          </div>
+        `,
+      },
+      function (err, info) {
+        //에러 발생시 오류 로그 및 응답 반환
+        if (err) {
+          console.log(err);
+          return res.sendStatus(500)
+        }
+        console.log(`Email Sent: ${info.response}`);
+        transport.close();
+      }
+    )
+    // 응답이 먼저 발송되고 메일은 알아서 보내지게 됨
+    res.sendStatus(200)
   }
 };

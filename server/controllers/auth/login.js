@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     // 유저정보가 있으면? > 중요정보를 삭제하고 사인 후 전달
     const payLoad = userInfo.dataValues;
     delete payLoad.password;
-
+    delete payLoad.updatedAt;
     const aToken = mkAccessToken(payLoad);
     sendAccessToken(res, aToken);
     console.log(payLoad);
