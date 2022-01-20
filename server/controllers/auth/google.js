@@ -4,7 +4,7 @@ const clientID = process.env.GOOGLE_CLIENT_ID
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET
 const redirectUri = process.env.CLIENT_URI
 const axios = require('axios')
-const { mkAccessToken, sendAccessToken } = require('../tokenFunctions')
+const { mkAccessToken, sendAccessToken, encryptPW } = require('../tokenFunctions')
 const qs = require('qs')
 
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
             where: { email: googleUserInfo.data.email },
             defaults: {
                 email: googleUserInfo.data.email,
-                password: googleUserInfo.data.id,
+                password: encryptPW(googleUserInfo.data.id),
                 nickname: googleUserInfo.data.name,
                 image: googleUserInfo.data.picture,
                 admin: false,

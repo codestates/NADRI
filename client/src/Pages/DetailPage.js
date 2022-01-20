@@ -171,6 +171,7 @@ const ImgContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
+  background: white;
   /* height: 40vw; */
   @media screen and (max-width: 900px) {
     margin: 0 auto;
@@ -446,7 +447,8 @@ const CommentListContainer = styled.div`
   }
   
   #textinput:focus {
-    outline: none;
+    outline: 1px solid #ff7400;
+    border: 0;
   }
 
   .writeComment {
@@ -951,7 +953,7 @@ export default function DetailPage() {
               <ImgContainer>
                 <MainImg 
                   src={post.image[0]} 
-                  onError={(e) => (e.target.src = `/img/gitHubLogo.png`)} 
+                  onError={(e) => (e.target.src = `/img/default-image.svg`)} 
                   style={{height: post.image.length === 1 ? /*1이면 확장 */'100%' : /*아니면 평소처럼 */null }}
                 />
                 {post && post.image.length === 1 ? 

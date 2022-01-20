@@ -69,6 +69,7 @@ const ItemImg = styled.div`
 
   transition: transform 0.2s linear;
   transform: scale(1);
+  overflow: hidden;
 
   :hover {
     transition: transform 0.2s linear;
@@ -79,6 +80,7 @@ const ItemImg = styled.div`
   .img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
   /* ${(props) => {
     return(`
@@ -208,7 +210,7 @@ export default function Item ({point}) {
       <ItemContainer id="ItemContainer">
         {/* <div className="imgBox"> */}
         <ItemImg className="imgContainer">
-        <img className="img" src={point.image[0]} onError={(e) => e.target.src = `/img/gitHubLogo.png`} />
+        <img className="img" src={point.image[0]} onError={(e) => e.target.src = `/img/default-image.svg`} />
         </ItemImg>
         {/* <ItemImg className="imgContainer" img={point.image[0]} onError={(e) => e.target.src = `/img/gitHubLogo.png`} /> */}
         {/* </div> */}
