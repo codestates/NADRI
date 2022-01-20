@@ -173,6 +173,8 @@ const ImgContainer = styled.div`
   margin-right: 1rem;
   background: white;
   /* height: 40vw; */
+  border-radius: 10px;
+  
   @media screen and (max-width: 900px) {
     margin: 0 auto;
     width: 80vw;
@@ -816,6 +818,7 @@ export default function DetailPage() {
         {
           "Accept-Language": "ko",
           "Content-Type": "application/x-www-form-urlencoded",
+          Origin: "https://www.nadri.ml",
           withCredentials: false,
         }
       );
@@ -830,6 +833,7 @@ export default function DetailPage() {
           {
             "Accept-Language": "ko",
             "Content-Type": "application/x-www-form-urlencoded",
+            Origin: "https://www.nadri.ml",
             withCredentials: false,
           }
         );

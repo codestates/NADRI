@@ -32,7 +32,7 @@ const ChageUserInfoContainer = styled.div`
         if(props.img) {
           return (
             `
-            background-image: url(https://nadri.s3.ap-northeast-2.amazonaws.com/${props.img});
+            background-image: url(${props.img.slice(0,4) === 'http' ? props.img : 'https://d2wfp1q5b3ikod.cloudfront.net/'+props.img});
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -302,7 +302,7 @@ export default function ChageUserInfo () {
         <InputUserInfo inputs={inputs}>
           <label htmlFor="passwordCheck">비밀번호 확인</label>
           {curUserInfo.oauth ? <input disabled /> : <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}/>}
-          {curUserInfo.oauth ? <button type="button" disabled>변경</button> : <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>}
+          {curUserInfo.oauth ? <button type="button" name="passwordCheck" disabled>변경</button> : <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>}
         </InputUserInfo>
         <DangerMessage>{dangerMessage}</DangerMessage>
       </InputContainer>
