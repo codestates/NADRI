@@ -37,7 +37,6 @@ export default function PostPage () {
     // 나는 Blob이 싫다
     let urlArr = [...value.image],
       image = event.target.files;
-
     let inputSize = 0, useSize = 0
 
     for (let i of image) inputSize += i.size

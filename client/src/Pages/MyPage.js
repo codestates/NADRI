@@ -307,16 +307,14 @@ export default function MyPage() {
           <div>{curUserInfo.nickname}</div>
           <div>{curUserInfo.email}</div>
           <div>
-            {console.log(curUserInfo.createdAt)}
-            {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):
-          null}
+            {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):null}
           </div>
         </div>
       </div>
 
       </div>
         <div className="user-profile-right">
-          <img className=""user-profile-right-img src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
+          <img className="user-profile-right-img" src="/img/mypage-right-icon.png" alt="왼쪽 그림" />
         </div>
     </UserProfileContainer>
     <UserMainContents>
