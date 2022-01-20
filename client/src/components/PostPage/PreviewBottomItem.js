@@ -97,6 +97,7 @@ export default function PreviewBottom ({allImg, img, picChange, removeImg}) {
   const handleClick = () => {
     photoInput.current.click();
   }
+
   return (
     <>
       {

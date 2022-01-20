@@ -10,9 +10,9 @@ export const Container = styled.div`
   width: 100%;
   // border: 1px solid black;
   padding: 1rem;
-  /* background-color: #dfe3ee; */
+  // background-color: #dfe3ee;
   border-radius: 10px;
-  /* box-shadow: 3px 3px 4px 3px rgb(180 180 180); */
+  box-shadow: 3px 3px 4px 3px rgb(180 180 180);
   font-family: 'NanumSquare','Cafe24', arial;
   background: #f9fafc;
 

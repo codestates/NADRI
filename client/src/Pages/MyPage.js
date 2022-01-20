@@ -307,9 +307,7 @@ export default function MyPage() {
           <div>{curUserInfo.nickname}</div>
           <div>{curUserInfo.email}</div>
           <div>
-            {/* {console.log(curUserInfo.createdAt)} */}
-            {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):
-          null}
+            {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):null}
           </div>
         </div>
       </div>

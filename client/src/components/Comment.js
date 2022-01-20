@@ -107,7 +107,7 @@ export default function Comment({ comment, modComment, delComment }) {
             </span>
           }
         </InfoAndAlert>
-         : null}
+        : null}
       </div>
     </CommentWrapper>
   );

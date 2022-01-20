@@ -71,7 +71,7 @@ export const PostImg = styled.div `
 export const PostInfo = styled.div`
   width: 100%;
   cursor: grab;
-
+  color: black;
   .titleAndUptime {
     flex-direction: row;
     display: flex;
@@ -209,9 +209,9 @@ export default function MyPosts ({post}) {
   return (
     <PostContainer>
       <Link to={`/detail/${post.id}`} state={post}>
-       <PostImg className="imgContainer">
+        <PostImg className="imgContainer">
         <img className="imgContent" src={`${post.image}`} onError={(e) => e.target.src = `/img/gitHubLogo.png`} />
-       </PostImg>
+        </PostImg>
       </Link>
       <PostInfo>
         <div className="titleAndUptime">
