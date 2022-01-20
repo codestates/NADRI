@@ -138,7 +138,7 @@ const ItemInfo = styled.div`
     
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.7;
+    line-height: 1.3;
 
     /* white-space: nowrap;글자를 한줄로 모아준다 */
     display: -webkit-box;
@@ -177,6 +177,10 @@ const ItemInfo = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+
+    @media (max-width: 992px) {
+      line-height: 1.1;
+    }
 
     @media (max-width: 767px) {
       text-align: center;

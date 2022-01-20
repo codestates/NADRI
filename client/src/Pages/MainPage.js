@@ -39,6 +39,7 @@ const Container = styled.div`
 
   @media (max-width: 992px) {
     flex-direction: column;
+    align-items: center;
 
     #tack {
       top: -20px;
@@ -62,7 +63,7 @@ const MapContainer = styled.div`
 
   @media (max-width: 992px){
     flex-direction: column;
-    width: 100%;
+    width: 80vw;
 
     #map {
       width: 100%;
@@ -90,6 +91,7 @@ const ContentNav = styled.nav`
   cursor: grab;
   background-color: #f7f7f7;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  width: 100%;
 
   #type {
     font-family: 'NanumSquare', 'Cafe24', arial;   
@@ -119,6 +121,7 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 992px) {
     width: 100%;
@@ -155,6 +158,7 @@ const ItemContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     gap: 2rem;
+    width:80vw;
   }
 `
 
@@ -273,11 +277,11 @@ export default function Main () {
       
       const iwContent = `
       <div style='padding: 0.5rem; border-radius=10px; background-color:#f9fafc'>
-        <div style='margin-bottom: 0.5rem;'>${title.length > 10 ? title.slice(0, 10) + '...' : title }</div>
-        <div style="width:16vw; height:12vw; max-width:300px; max-height:225px; overflow: hidden; margin: 0 auto; border-radius: 10px;">
-          <img style="width:100%; height:100%; object-fit: cover" src='${image[0]}' alt='이미지' />
-        </div>
+      <div style='margin-bottom: 0.5rem;'>${title.length > 10 ? title.slice(0, 10) + '...' : title }</div>
+      <div style="width:16vw; height:12vw; max-width:300px; max-height:225px; overflow: hidden; margin: 0 auto; border-radius: 10px;">
+        <img style="width:100%; height:100%; object-fit: cover" src='${image[0]}' alt='이미지' />
       </div>
+    </div>
       `;
 
       const infowindow = new kakao.maps.InfoWindow({

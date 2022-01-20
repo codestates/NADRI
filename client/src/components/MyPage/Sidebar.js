@@ -11,7 +11,7 @@ const MyPageSideBar = styled.div`
   /* border: 1px solid black; */
   border-radius: 10px;
   width: 15vw;
-  height: 52vh;
+  height: 28rem;
   /* height: 16rem; */
   /* margin-left: 15rem; */
   margin: auto;

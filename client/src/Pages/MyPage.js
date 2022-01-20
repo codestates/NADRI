@@ -199,7 +199,7 @@ const UserMainContents = styled.div`
     /* width: 36rem; */
     width: 60vw;
     /* height: 33rem; */
-    height: 52vh;
+    height: 28rem;
     /* border: 1px solid #f1eae4; */
     overflow: auto;
     padding: 1.5rem;
@@ -245,29 +245,29 @@ const UserMainContents = styled.div`
 export default function MyPage() {
   const [curContent, setCurContent] = useState('내 게시글')
   const curUserInfo = useSelector(state => state.getUserInfo);
-  console.log('유저 정보', curUserInfo)
+  // console.log('유저 정보', curUserInfo)
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    console.log('myComment init')
+    // console.log('myComment init')
     axios.get(`${process.env.REACT_APP_API_URL}/comment`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setComments(res.data.data)})
     axios.get(`${process.env.REACT_APP_API_URL}/like`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setLikes(res.data.data)
     })
   }, [])
 
   useEffect(()=> {
-    console.log('myPost init')
+    // console.log('myPost init')
     axios.get(`${process.env.REACT_APP_API_URL}/auth/me/post`)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setPosts(res.data.data)
     })
   }, [])
@@ -307,7 +307,7 @@ export default function MyPage() {
           <div>{curUserInfo.nickname}</div>
           <div>{curUserInfo.email}</div>
           <div>
-            {console.log(curUserInfo.createdAt)}
+            {/* {console.log(curUserInfo.createdAt)} */}
             {curUserInfo.createdAt ? curUserInfo.createdAt.slice(0,10):
           null}
           </div>
