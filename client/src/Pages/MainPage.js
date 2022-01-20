@@ -10,7 +10,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 
 const MainContainer = styled.div`
-  padding: 3rem 9vw;
+  padding: 1rem 9vw;
 `
 
 const Container = styled.div`

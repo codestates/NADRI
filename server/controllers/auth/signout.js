@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     console.log(rmImgArr)
 
     // OAuth는 이미지를 삭제할 필요가 없으니 서버에 저장된 경우만 
-    if (userData.image.slice(0, 4) !== 'http') {
+    if (userData.image.slice(0, 4) !== 'http' || userData.image !== 'default-profile.png') {
       rmImgArr += userData.image
     }
 

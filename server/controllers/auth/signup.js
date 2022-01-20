@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       nickname,
       email,
       password: hashed, // 나중에 실제서비스 올라가면 hashed로 변경
-      image: '2111641961096892.jpeg,', // 기본 이미지를 버킷에 넣고 주소 저장하기 (지갑을 지켜주세요...)
+      image: 'default-profile.png', // 기본 이미지를 버킷에 넣고 주소 저장하기 (지갑을 지켜주세요...)
       admin: false, // 어드민 권한은 기본적으로 false 주기
       oauth: false, // 일반 회원가입이므로 false
     })

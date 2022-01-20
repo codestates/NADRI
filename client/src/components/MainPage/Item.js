@@ -75,6 +75,10 @@ const ItemImg = styled.div`
     transition: transform 0.2s linear;
       border: none;
       transform: scale(1.5);
+
+      @media (max-width: 767px) {
+        transform: scale(1)
+      }
   }
 
   .img {

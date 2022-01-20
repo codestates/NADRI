@@ -151,8 +151,6 @@ export default function EditPage() {
     );
     postData = postData.data.data;
 
-    // console.log('POST', postData)
-
     const download = [];
     for (let i = 0; i < postData.image.length; i++) {
       let blobData = await axios({

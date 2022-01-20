@@ -173,6 +173,8 @@ const ImgContainer = styled.div`
   margin-right: 1rem;
   background: white;
   /* height: 40vw; */
+  border-radius: 10px;
+  
   @media screen and (max-width: 900px) {
     margin: 0 auto;
     width: 80vw;
