@@ -388,6 +388,7 @@ const ContentContainer = styled.div`
   max-width: 800px;
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   background-color: #f9fafc;
+  height: 100%;
 
   .contentText {
    

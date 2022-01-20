@@ -315,32 +315,36 @@ module.exports = {
       },
     });
 
-    await transport.sendMail(
-      {
-        from: 'NADRI Team',
-        to: targetEmail[0].email,
-        subject: '불량 게시글 신고',
-        html: `
-          <div>
-            <h1>불량 게시글 신고</h1>
+    try {
+      await transport.sendMail(
+        {
+          from: 'NADRI Team',
+          to: targetEmail[0].email,
+          subject: '불량 게시글 신고',
+          html: `
             <div>
-              <p>신고 시간: ${new Date()}</p>
-              <p>대상 게시글 주소: <a href='${req.body.url}'>링크</a></p>
+              <h1>불량 게시글 신고</h1>
+              <div>
+                <p>신고 시간: ${new Date()}</p>
+                <p>대상 게시글 주소: <a href='${req.body.url}'>링크</a></p>
+              </div>
             </div>
-          </div>
-        `,
-      },
-      function (err, info) {
-        //에러 발생시 오류 로그 및 응답 반환
-        if (err) {
-          console.log(err);
-          return res.sendStatus(500)
+          `,
+        },
+        function (err, info) {
+          //에러 발생시 오류 로그 및 응답 반환
+          if (err) {
+            console.log(err);
+            return res.sendStatus(500)
+          }
+          console.log(`Email Sent: ${info.response}`);
+          transport.close();
         }
-        console.log(`Email Sent: ${info.response}`);
-        transport.close();
-      }
-    )
-    // 응답이 먼저 발송되고 메일은 알아서 보내지게 됨
-    res.sendStatus(200)
+      )
+      // 응답이 먼저 발송되고 메일은 알아서 보내지게 됨
+      res.sendStatus(200)
+    } catch(err) {
+      res.sendStatus(500)
+    }
   }
 };
