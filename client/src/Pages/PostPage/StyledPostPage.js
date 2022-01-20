@@ -181,7 +181,8 @@ export const CheckboxContainer = styled.div`
     border-radius: 8px;
     max-width: 80%;
     border: none;
-    background-color: #f6d9d5;
+    // background-color: #f6d9d5;
+    background-color: #88ccff;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     cursor: pointer;
     font-size: 1rem;

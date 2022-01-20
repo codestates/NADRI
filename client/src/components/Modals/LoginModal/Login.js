@@ -22,6 +22,8 @@ export default function Login () {
     email: '',
     password: ''
   })
+  const [dangerMessage, setDangerMessage] = useState('')
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -58,15 +60,14 @@ export default function Login () {
         dispatch(authState(curAuthState))
         dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(loginModal(LoginModalstate))
-        alert('로그인이 완료되었습니다.')
+        alert('로그인이 완료되었습니다.') // 여기 모달창으로 바꿔야함
         navigate('/')
       }
     })
     .catch((err) => {
-      // if(err.status = 400){
-      //   alert('틀렸습니다')
-      // }
-      alert('잘못된 로그인입니다.')
+      if(err.status = 400){
+        setDangerMessage('잘못된 로그인입니다.')
+      }
       console.log(err)
     })
   }
@@ -123,8 +124,9 @@ export default function Login () {
             <label htmlFor="password">비밀번호</label>
             <input autoComplete="off" type={"password"} name="password" onKeyPress={(e) => handleKeyPress(e)} onChange={onChange}></input>
           </form>
+          <span id="dangerMsg">{dangerMessage}</span>
         </ModalInput>
-
+        
         <Oauth>
           <div onClick={postLogin}>
             <div className="normalLogin">로그인</div>

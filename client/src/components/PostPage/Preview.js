@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
 
@@ -88,7 +88,6 @@ const PreviewImg = styled.div`
 
 
 export default function Preview ({Img, picChange, removeImg}) {
-  
   const photoInput = useRef(null);
   const handleClick = () => {
     photoInput.current.click();
