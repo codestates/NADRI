@@ -61,4 +61,5 @@
 ## DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
 
-## [API 문서 (Gitbook Link)](https://localhost-5.gitbook.io/nadri/api/auth)
+## [API 문서 (Gitbook Link)](https://localhost2.gitbook.io/nadri-api)
+<!-- (https://localhost-5.gitbook.io/nadri/api/auth) -->
