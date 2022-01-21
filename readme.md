@@ -1,7 +1,5 @@
 # 프로젝트 소개
 
-![nadri-footer-img](https://user-images.githubusercontent.com/84123052/150582617-456ea4d8-63a4-41d8-bb3a-3b7c2531cd1a.png)
-
 ![nadri-header-img](https://user-images.githubusercontent.com/84123052/150582631-f87713fc-5456-453e-a4f6-0f98da716e4a.png)
 
 ## 🚌 NADRI
