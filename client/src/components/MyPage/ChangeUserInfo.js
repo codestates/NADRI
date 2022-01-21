@@ -302,7 +302,7 @@ export default function ChageUserInfo () {
         <InputUserInfo inputs={inputs}>
           <label htmlFor="passwordCheck">비밀번호 확인</label>
           {curUserInfo.oauth ? <input disabled /> : <input type={"password"} value={inputs.passwordCheck} name="passwordCheck" onChange={(e) => getUserInfo(e)}/>}
-          {curUserInfo.oauth ? <button type="button" name="passwordCheck" disabled>변경</button> : <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>}
+          {curUserInfo.oauth ? <button type="button" disabled>변경</button> : <button type="button" name="passwordCheck" onClick={changePassword}>변경</button>}
         </InputUserInfo>
         <DangerMessage>{dangerMessage}</DangerMessage>
       </InputContainer>

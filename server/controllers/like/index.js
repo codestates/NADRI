@@ -50,7 +50,7 @@ module.exports = {
     if (!check) return res.status(400).json({message: 'Bad Request'})
 
     // findOne해서 있으면 제거 없으면 생성해야 함
-    const like = await user_post_likes.findOne({where: {postId: req.params.id}})
+    const like = await user_post_likes.findOne({where: {postId: req.params.id, userId: userData.id}})
 
     if (like) {
       await like.destroy()
