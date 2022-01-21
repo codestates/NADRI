@@ -17,7 +17,7 @@ height: 11rem;
 align-items: center;
 background: #f9fafc;
 box-shadow: 2px 2px 2px 1px rgb(180 180 180);
-
+cursor: pointer;
   & {
     .imgContainer {
       transition: transform 0.2s linear;
@@ -213,6 +213,7 @@ export const PostInfo = styled.div`
 export default function MyPosts ({post}) {
 
   return (
+    
     <PostContainer>
       <Link to={`/detail/${post.id}`} state={post}>
         <PostImg className="imgContainer">
