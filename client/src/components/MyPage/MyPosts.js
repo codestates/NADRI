@@ -17,6 +17,7 @@ height: 11rem;
 align-items: center;
 background: #f9fafc;
 box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+cursor: pointer;
 
   & {
     .imgContainer {
@@ -76,7 +77,7 @@ export const PostImg = styled.div `
 
 export const PostInfo = styled.div`
   width: 100%;
-  cursor: grab;
+  /* cursor: grab; */
   color: black;
   .titleAndUptime {
     flex-direction: row;
@@ -213,12 +214,13 @@ export const PostInfo = styled.div`
 export default function MyPosts ({post}) {
 
   return (
-    <PostContainer>
       <Link to={`/detail/${post.id}`} state={post}>
+    <PostContainer>
+        <div>
         <PostImg className="imgContainer">
         <img className="imgContent" src={`${post.image}`} onError={(e) => e.target.src = `/img/default-image.svg`} />
         </PostImg>
-      </Link>
+        </div>
       <PostInfo>
         <div className="titleAndUptime">
           <div className="title">{post.title}</div>
@@ -229,5 +231,6 @@ export default function MyPosts ({post}) {
         <div className="desc">{post.content}</div>
       </PostInfo>
     </PostContainer>
+      </Link>
   )
 }
