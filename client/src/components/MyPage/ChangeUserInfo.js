@@ -39,7 +39,7 @@ const ChageUserInfoContainer = styled.div`
             `
           )
         } else {
-          console.log(props.img)
+          // console.log(props.img)
           return (
             `
             background-image: url(/img/gitHubLogo.png);
@@ -224,7 +224,7 @@ export default function ChageUserInfo () {
       headers: { 'content-type': 'multipart/form-data' },
     })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(changeProfile(res.data.data.image))
       setSuccessModal(!curSuccessModal)
       setChangeTarget(e.target.name)
@@ -283,9 +283,9 @@ export default function ChageUserInfo () {
           :
           <div>
             <label>프로필 사진 변경</label>
-            <input type={'file'} name='img' ref={profileImg} onChange={picChange} disalbed/>
+            <input type={'file'} accept='image/*' name='img' ref={profileImg} onChange={picChange}/>
             <span className="img-edit-span">
-              <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} disalbed />
+              <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />
             </span>
           </div>
         }

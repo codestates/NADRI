@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
     console.log(rmImgArr)
 
     // OAuth는 이미지를 삭제할 필요가 없으니 서버에 저장된 경우만 
-    if (userData.image.slice(0, 4) !== 'http' || userData.image !== '2201642736516031.png') {
+    if (userData.image.slice(0, 4) !== 'http' && userData.image !== 'default-profile.png') {
       rmImgArr += userData.image
     }
 
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     
     await rmImgArr.split(',').map((e) => {
       if (!e) return null;
-      // console.log('DEL_TARGET',e)
+      console.log('DEL_TARGET',e)
       s3.deleteObject({ Bucket: "nadri", Key: `${e}` }, (err, data) => {
         if (err) {
           throw err;
