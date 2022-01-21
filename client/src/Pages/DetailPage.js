@@ -168,14 +168,16 @@ const TopContainer = styled.div`
 const ImgContainer = styled.div`
   width: 40vw;
   max-width: 800px;
+  /* height: 600px; */
   display: flex;
   flex-direction: column;
   margin-right: 1rem;
-  background: white;
-  /* height: 40vw; */
+  /* background: white; */
+  height: 40vw;
   @media screen and (max-width: 900px) {
     margin: 0 auto;
     width: 80vw;
+    height: 60vw;
     margin-bottom: 1rem;
     height: 100%;
   }
@@ -185,6 +187,7 @@ const MainImg = styled.img`
   display: flex;
   height: 30vw; // 16:9 하려면 22.5
   max-width: 40vw;
+  background: white;
   
   object-fit: cover;
   border-radius: 10px;
@@ -600,7 +603,7 @@ export default function DetailPage() {
       .post(`${process.env.REACT_APP_API_URL}/like/${id}`)
       .then((result) => {
         handlePost('bookmark', !post.bookmark)
-        console.log(result);
+        // console.log(result);
       })
       .catch((error) => {
         // alert('먼저 로그인해야 합니다!')

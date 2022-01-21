@@ -104,12 +104,12 @@ export default function PostPage () {
       headers: { 'content-type': 'multipart/form-data' },
     })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate(`/detail/${result.data.id}`) // 리턴된 페이지로 이동
       })
       .catch((error) => {
         console.log(error);
-        alert('문제가 발생했습니다!')
+        alert(error.response.data.message)
       });
     
     
@@ -117,7 +117,7 @@ export default function PostPage () {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log('위치 확인에 성공하였습니다.')
+      // console.log('위치 확인에 성공하였습니다.')
       kakaoInit([position.coords.latitude, position.coords.longitude], true)
     }, (error) => {
       console.log('현재 위치 확인이 불가한 상황입니다.')

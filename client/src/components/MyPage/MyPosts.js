@@ -31,6 +31,10 @@ box-shadow: 2px 2px 2px 1px rgb(180 180 180);
       transition: all 0.2s linear;
       border:none;
       transform: scale(1.4);
+
+      @media (max-width:650px){
+        transform: scale(1)
+      }
     }
   }
 
@@ -65,6 +69,7 @@ export const PostImg = styled.div `
     width: 100%;
     height: 100%;
     object-fit: cover;
+
   }
 
 `

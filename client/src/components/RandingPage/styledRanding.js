@@ -6,7 +6,11 @@ export const RandingContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  section:nth-child(2n) {
+  section:nth-child(2) {
+    background-color: #F2F2F2;
+  }
+
+  section:nth-child(4) {
     background-color: #F2F2F2;
   }
 `
@@ -18,7 +22,7 @@ export const Section = styled.section`
     ${props.initHeight}px
     `)
   }};
-  border: 1px solid black;
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +35,6 @@ export const ImgSection = styled.section`
     ${props.initHeight}px;
     `)
   }};
-  border: 1px solid black;
 `
 
 const move_Bus = keyframes`
@@ -315,20 +318,19 @@ export const TrickImg = styled.div`
   }}
 `
 
-export const TrickSection = styled.div`
+export const TrickSection = styled.section`
   width: 100%;
   height: ${(props) => {
     return(`
     ${props.initHeight}px
     `)
   }};
-  border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
-export const LastSection = styled.div`
+export const LastSection = styled.section`
   width: 100%;
   height: ${(props) => {
     return(`
@@ -336,7 +338,6 @@ export const LastSection = styled.div`
     `)
   }};
   font-size: 2rem;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;

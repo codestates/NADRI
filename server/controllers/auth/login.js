@@ -22,15 +22,12 @@ module.exports = async (req, res) => {
   const result = verifyPW(req.body.password, userInfo.password)
   if (!result)
     return res.status(400).json({ message: "Wrong Password" });
-
-  // 로컬용 평문 PW 검증
-  // if (userInfo.password !== req.body.password) return res.status(400).json({ message: "Wrong Password" });
-
+  
   try {
-    // 유저정보가 있으면? > 중요정보를 삭제하고 사인 후 전달
+    // 유저정보가 있으면 중요정보를 삭제하고 사인 후 전달
     const payLoad = userInfo.dataValues;
     delete payLoad.password;
-    delete payLoad.updatedAt;
+    
     const aToken = mkAccessToken(payLoad);
     sendAccessToken(res, aToken);
     console.log(payLoad);

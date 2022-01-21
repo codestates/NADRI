@@ -240,7 +240,7 @@ export const Oauth = styled.div`
       }
       .googleMobile{
       display: flex;
-      box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px;
+      /* box-shadow: rgb(0 0 0 / 10%) 5px 5px 10px; */
       }
       .kakaoMobile{
       display: flex;

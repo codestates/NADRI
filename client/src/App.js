@@ -65,7 +65,7 @@ function App() {
       authorizationCode
     })
     .then((result) => {
-      console.dir(result)
+      // console.dir(result)
       const {id, email, nickname, image, admin, oauth, createdAt} = result.data.data
       setAccessToken(result.data.accessToken)
       dispatch(authState(curAuthState))
