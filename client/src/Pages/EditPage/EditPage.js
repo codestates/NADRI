@@ -87,13 +87,13 @@ export default function EditPage() {
     // splice함수 실행한 값을 할당하면 그 제거된 값만 저장된다.
     // 실행만 시키거나 다른 변수에 저장시켜야 함.
     // 그것도 싫다면 다른 함수를 적용해야 함
-    console.log(removeTarget)
-    console.log(value.image)
+    // console.log(removeTarget)
+    // console.log(value.image)
     URL.revokeObjectURL(removeTarget[0]); // 먼저 blob 의 링크를 revoke
     const newImgArr = value.image.filter((e) => {
       return e !== removeTarget;
     });
-    console.log(newImgArr)
+    // console.log(newImgArr)
     handleValue({ id: "image", value: [...newImgArr] });
   };
 
@@ -134,7 +134,7 @@ export default function EditPage() {
       headers: { "content-type": "multipart/form-data" },
     })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate(`/detail/${endPoint}`); // 리턴된 페이지로 이동
       })
       .catch((error) => {
@@ -169,7 +169,7 @@ export default function EditPage() {
         postData.image[i].split("/")[3],
         { type: blobData.data.type }
       );
-      console.log(convertFile);
+      // console.log(convertFile);
       let imgUrl = URL.createObjectURL(convertFile);
       download.push([imgUrl, convertFile]);
     }

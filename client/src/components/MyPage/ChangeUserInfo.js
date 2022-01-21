@@ -39,7 +39,7 @@ const ChageUserInfoContainer = styled.div`
             `
           )
         } else {
-          console.log(props.img)
+          // console.log(props.img)
           return (
             `
             background-image: url(/img/gitHubLogo.png);
@@ -224,7 +224,7 @@ export default function ChageUserInfo () {
       headers: { 'content-type': 'multipart/form-data' },
     })
     .then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(changeProfile(res.data.data.image))
       setSuccessModal(!curSuccessModal)
       setChangeTarget(e.target.name)

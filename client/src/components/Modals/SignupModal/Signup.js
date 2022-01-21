@@ -39,7 +39,7 @@ export default function Signup () {
       ...inputs,
       [name]: value
     })
-    console.log(inputs)
+    // console.log(inputs)
   }
 
   // 이메일 검증 단계 추가
@@ -59,7 +59,7 @@ export default function Signup () {
   }
 
   function verifyCode (userCode) {
-    console.log(userCode, code)
+    // console.log(userCode, code)
     if (!code) return setDangerMessage('인증 메일을 먼저 발송하세요!')
 
     if (userCode !== code) return setDangerMessage('인증코드가 일치하지 않습니다!')
@@ -103,7 +103,7 @@ export default function Signup () {
       }
     })
     .catch(err => {
-      console.log(err.response)
+      // console.log(err.response)
       if (err.response) {
         setDangerMessage(err.response.data)
       } else {
