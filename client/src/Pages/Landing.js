@@ -10,7 +10,13 @@ import {
   Section0_Right_Img,
   Section1_Left_Img,
   Section2_Right_Img,
-  Section3_Left_Img
+  Section3_Left_Img,
+  ImgSection,
+  LastImg,
+  FinalImg,
+  TrickImg,
+  TrickSection,
+  LastSection
 } from '../components/RandingPage/styledRanding'
 
 export default function Landing () {
@@ -18,8 +24,10 @@ export default function Landing () {
   const [initHeight, setInitHeight] = useState(window.innerHeight) // 사용자의 브라우저 높이 값
   const [sectionHeight, setSectionHeight] = useState(initArray()) // section이 시작되는 값이 담긴 배열
   const [curSection, setCurSection] = useState(0) // 현재 랜딩 Section
+  const sectionWidth = window.innerWidth
+  // console.log(sectionHeight)
 
-  // [975, 1950, 2925, 3900]
+  // [975, 1950, 2925, 3900, ]
   function calcCurSection() {
     // console.log(sectionHeight[2]) // 2925
     // console.log(scrollY + sectionHeight[1]) // 1950 + Y
@@ -52,7 +60,7 @@ export default function Landing () {
   function initArray() {
     let init = [];
 
-    for(let i = 1; i < 5; i++) {
+    for(let i = 1; i < 8; i++) {
       init.push(initHeight * i)
     }
 
@@ -61,6 +69,7 @@ export default function Landing () {
 
   function handleScroll() {
     setScrollY(window.scrollY)
+    
   }
 
   useEffect(() => {
@@ -79,20 +88,21 @@ export default function Landing () {
 
   return (
     <RandingContainer>
-
+      {/* 1------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
         <Section_Left_Desc>
           <p>
             나만아는 좋은 곳을 다른 사람과 공유해보세요!
           </p>
+          <span>NADIR</span>
+          {/* 여기 바로시작하기 넣고 손가락 넣은다음에 계속 애니메이션 */}
           <button>시작하기</button>
+          {/* 마우스 호버를 땟을 때 서서히 원래 자리로 가도록 하기 */}
           <img src='img/nadri-logo-small.png'></img>
         </Section_Left_Desc>
-
-
       </Section>
-      {/* ------------------------------------------------------------------------------------- */}
 
+      {/* 2------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}> {/* section의 길이를 세팅하기 위한 프롭스 */}
         <Section1_Left_Img scrollY={scrollY} sectionHeight={sectionHeight[1]} initHeight={initHeight} curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
 
@@ -103,8 +113,7 @@ export default function Landing () {
         </Section_Right_Desc>
       </Section>
 
-      {/* ------------------------------------------------------------------------------------- */}
-
+      {/* 3------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
         <Section_Left_Desc>
           <p>
@@ -114,8 +123,7 @@ export default function Landing () {
         <Section2_Right_Img curSection={curSection}/>
       </Section>
 
-      {/* ------------------------------------------------------------------------------------- */}
-
+      {/* 4------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
         <Section3_Left_Img curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
         <Section_Right_Desc>
@@ -125,8 +133,29 @@ export default function Landing () {
         </Section_Right_Desc>
       </Section>
 
-      {/* ------------------------------------------------------------------------------------- */}
-      <Section initHeight={initHeight}></Section>
+      {/* 5------------------------------------------------------------------------------------ */}
+      <ImgSection initHeight={initHeight}>
+        <LastImg img={'/img/asdf.jpg'} sectionHeight={sectionHeight}  scrollY={scrollY} initHeight={initHeight} />
+      </ImgSection>
+
+      {/* 6------------------------------------------------------------------------------------ */}
+      <ImgSection initHeight={initHeight}>
+        <FinalImg scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
+      </ImgSection >
+
+      <TrickSection initHeight={initHeight}>
+        <TrickImg scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
+      </TrickSection>
+
+      {/* 7------------------------------------------------------------------------------------ */}
+      <LastSection initHeight={initHeight}>
+        <p>
+          나들이 한번 떠나보시겠어요?<br />
+          머시기 머시기 야야야
+        </p>
+        <button>시작하기</button>
+      </LastSection>
+      
     
     </RandingContainer>
   )

@@ -5,10 +5,14 @@ import styled, {css, keyframes } from "styled-components";
 export const RandingContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  section:nth-child(2n) {
+    background-color: #F2F2F2;
+  }
 `
 
 export const Section = styled.section`
-  width: 100vw;
+  width: 100%;
   height: ${(props) => {
     return(`
     ${props.initHeight}px
@@ -18,6 +22,16 @@ export const Section = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+export const ImgSection = styled.section`
+  width: 100%;
+  height: ${(props) => {
+    return(`
+    ${props.initHeight}px;
+    `)
+  }};
+  border: 1px solid black;
 `
 
 const move_Bus = keyframes`
@@ -152,32 +166,35 @@ export const Section_Right_Desc = styled.div`
 `
 
 export const Section_Left_Desc = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   width: 50%;
-  height: 50%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20%;
+  gap: 10%;
 
   p {
     font-size: 2vw;
   }
 
-  button {
-    width: 20%;
-    height: 10%;
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: white;
-    transition: all 1s;
+  span {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 3px;
   }
 
-  button:hover {
-    transition: all 1s;
-    background-color: blue;
+  button {
+    width: 20%;
+    height: 5rem;
+    border-radius: 20px;
+    background-color: #88ccff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
     color: white;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   }
 
   button:hover ~ img {
@@ -188,9 +205,166 @@ export const Section_Left_Desc = styled.div`
     animation-direction: alternate;
   }
 
+  button:active {
+    position: relative;
+    top: 2px;
+  }
+
   img {
     width: 15%;
     height: auto;
     transform: translate(-100%);
+  }
+`
+
+export const LastImg = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(${(props) => {
+    return (`
+      ${props.img}
+    `)
+  }});
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  ${(props) => {
+    const {scrollY, initHeight, sectionHeight} = props
+    // console.log(((scrollY-(sectionHeight[2]))/initHeight))
+    if(scrollY >= sectionHeight[2]) { // 마지막 section에 왔을 때 효과 실행
+
+      return (`
+        width: ${((scrollY-(sectionHeight[2]))/initHeight)*100}%;
+        height: ${((scrollY-(sectionHeight[2]))/initHeight)*100}%;
+      `)
+    }
+  }};
+
+  ${(props) => {
+    const {scrollY, initHeight, sectionHeight} = props
+    
+    if(scrollY >= sectionHeight[4]) {
+      return (`
+        display: none;
+      `)
+    }
+
+    if(scrollY >= sectionHeight[3]) {
+      return (`
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        bottom: 0;
+      `)
+    }
+  }}
+`
+
+export const FinalImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url('/img/풍경.png');
+  position: relative;
+
+  ${(props) => {
+    const {scrollY, initHeight, sectionHeight} = props
+
+    if(scrollY >= sectionHeight[5]) {
+      return (`
+        position: fixed;
+        top: 25%;
+        left: 25%;
+        width: 80%;
+        height: 80%;
+        display: none;
+      `)
+    }
+
+    if(scrollY >= sectionHeight[4]) {
+      console.log((((scrollY-sectionHeight[4])/initHeight*0.5)*100)/2)
+      return (`
+        position: fixed;
+        top: ${(((scrollY-sectionHeight[4])/initHeight*0.3)*100)/2}%; // 하 진짜 어지럽네
+        left: ${(((scrollY-sectionHeight[4])/initHeight*0.3)*100)/2}%;
+        width: ${100-(((scrollY-sectionHeight[4])/initHeight)*0.3)*100}%;
+        height: ${100-(((scrollY-sectionHeight[4])/initHeight)*0.3)*100}%;
+      `)
+    }
+  }}
+`
+
+export const TrickImg = styled.div`
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-image: url('/img/풍경.png');
+  ${(props) => {
+    const {scrollY, initHeight, sectionHeight} = props
+    if(scrollY >= sectionHeight[5]) {
+
+      return(`
+        width: 70%;
+        height: 70%;
+        display: block;
+      `)
+    }
+  }}
+`
+
+export const TrickSection = styled.div`
+  width: 100%;
+  height: ${(props) => {
+    return(`
+    ${props.initHeight}px
+    `)
+  }};
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const LastSection = styled.div`
+  width: 100%;
+  height: ${(props) => {
+    return(`
+    ${props.initHeight}px
+    `)
+  }};
+  font-size: 2rem;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+
+  button {
+    width: 20%;
+    height: 5rem;
+    border-radius: 20px;
+    background-color: #88ccff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    color: white;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+  }
+
+  button:hover ~ img {
+    animation-name: ${move_Bus};
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+  button:active {
+    position: relative;
+    top: 2px;
   }
 `

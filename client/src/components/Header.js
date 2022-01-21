@@ -96,10 +96,8 @@ const Search = styled.div`
 `
 
 const HeaderContent = styled.div`
-  width: 20rem;
-  display: flex;
-  justify-content: center;
-  font-size: 1.2rem;
+  width: 25rem;
+  justify-content: space-around;
 
   a {
     color: black;
