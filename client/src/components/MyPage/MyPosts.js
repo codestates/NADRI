@@ -230,5 +230,6 @@ export default function MyPosts ({post}) {
         <div className="desc">{post.content}</div>
       </PostInfo>
     </PostContainer>
+    
   )
 }
