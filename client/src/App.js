@@ -100,7 +100,6 @@ function App() {
   // console.log('구글 로그인 클릭 상태: '+gLoginState)
   
   const landingUrl = window.location.href.slice(-7)
-  console.log(landingUrl)
   return (
     <div className="App">
 
