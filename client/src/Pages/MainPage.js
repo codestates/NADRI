@@ -181,7 +181,7 @@ export default function Main () {
 
   useEffect(async () => {
     await navigator.geolocation.getCurrentPosition((position) => {
-      console.log('위치 확인에 성공하였습니다.')
+      // console.log('위치 확인에 성공하였습니다.')
       kakaoInit([position.coords.latitude, position.coords.longitude], true)
     }, (error) => {
       console.log('현재 위치 확인이 불가한 상황입니다.')
@@ -212,7 +212,7 @@ export default function Main () {
     })
 
     if (option[0] === 'id' || option[0] === 'likes') {
-      console.log('큰값이 앞으로')
+      // console.log('큰값이 앞으로')
       sortTarget.reverse()
     }
 

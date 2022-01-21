@@ -602,7 +602,7 @@ export default function DetailPage() {
       .post(`${process.env.REACT_APP_API_URL}/like/${id}`)
       .then((result) => {
         handlePost('bookmark', !post.bookmark)
-        console.log(result);
+        // console.log(result);
       })
       .catch((error) => {
         // alert('먼저 로그인해야 합니다!')
