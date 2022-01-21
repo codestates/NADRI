@@ -36,15 +36,22 @@ const CommentContentWrapper = styled.div`
     /* max-width: 340px; */
     /* height: 6.25em; */
     /* border: none; */
-    width: 300px;
+    /* width: 300px; */
+    /* width: auto; */
+    width: 30vw;
     resize: none;
-    width: auto;
     height: auto;
     overflow:visible;
   }
 
   .UserComment {
     word-break:break-all;
+  }
+
+  @media (max-width:900px){
+    .editComment {
+      width: 55vw;
+    }
   }
 `;
 
