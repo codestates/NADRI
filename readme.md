@@ -1,7 +1,5 @@
 # 프로젝트 소개
 
-![nadri-footer-img](https://user-images.githubusercontent.com/84123052/150582617-456ea4d8-63a4-41d8-bb3a-3b7c2531cd1a.png)
-
 ![nadri-header-img](https://user-images.githubusercontent.com/84123052/150582631-f87713fc-5456-453e-a4f6-0f98da716e4a.png)
 
 ## 🚌 NADRI
@@ -63,4 +61,5 @@
 ## DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
 
-## [API 문서 (Gitbook Link)](https://localhost-5.gitbook.io/nadri/api/auth)
+## [API 문서 (Gitbook Link)](https://localhost2.gitbook.io/nadri-api)
+<!-- (https://localhost-5.gitbook.io/nadri/api/auth) -->
