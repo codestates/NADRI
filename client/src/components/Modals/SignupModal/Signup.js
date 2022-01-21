@@ -103,8 +103,12 @@ export default function Signup () {
       }
     })
     .catch(err => {
-      console.log(err)
-      setDangerMessage('이미 가입하셨는지 확인하세요!')
+      console.log(err.response)
+      if (err.response) {
+        setDangerMessage(err.response.data)
+      } else {
+        setDangerMessage('서버 에러가 발생했습니다!')
+      }
     })
   }
   
