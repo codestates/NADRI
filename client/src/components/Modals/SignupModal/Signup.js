@@ -167,7 +167,7 @@ export default function Signup () {
                 :
                 <div>
                   <input autoComplete="off" type={"text"} name="email" readOnly />
-                  <button button type="button" disabled>인증</button>
+                  <button type="button" disabled>인증</button>
                 </div>
                 }
                 {!chkEmail ? 

@@ -42,7 +42,7 @@ module.exports = {
 
       console.log('DELETE_IMG', userData.image)
 
-      if (path) {
+      if (userData.image !== '2201642736516031.png') {
         // 이미지가 변경되었으면 이전 이미지를 삭제해야 함.
         s3.deleteObject({ Bucket: "nadri", Key: userData.image }, (err, data) => {
           if (err) {
@@ -61,8 +61,6 @@ module.exports = {
         let imgStr = "";
         path.map((e) => (imgStr += `${e}`));
         find.image = imgStr
-        // await find.save()
-        // return res.send(imgStr)
       }
       await find.save()
 
