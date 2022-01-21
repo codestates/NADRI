@@ -38,8 +38,11 @@ module.exports = {
         else path = image.map((img) => img.path)
       }
 
-      if (userData.image !== '2201642736516031.png') { // 기본이미지 아닐때만 삭제
+      console.log('WEAG', userData.image)
+
+      if (userData.image !== 'default-profile.png') { // 기본이미지 아닐때만 삭제
         // 이미지가 변경되었으면 이전 이미지를 삭제해야 함.
+        console.log('이미지삭제:' , userData.image)
         s3.deleteObject({ Bucket: "nadri", Key: userData.image }, (err, data) => {
           if (err) {
             throw err;

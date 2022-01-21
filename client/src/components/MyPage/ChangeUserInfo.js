@@ -283,9 +283,9 @@ export default function ChageUserInfo () {
           :
           <div>
             <label>프로필 사진 변경</label>
-            <input type={'file'} name='img' ref={profileImg} onChange={picChange} disalbed/>
+            <input type={'file'} accept='image/*' name='img' ref={profileImg} onChange={picChange}/>
             <span className="img-edit-span">
-              <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} disalbed />
+              <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />
             </span>
           </div>
         }

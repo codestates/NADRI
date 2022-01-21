@@ -19,13 +19,12 @@ module.exports = async (req, res) => {
 
   try {
     const hashed = encryptPW(password)
-    console.log('hashPW', hashed)
 
     const created = await users.create({
       nickname,
       email,
       password: hashed,
-      image: '2201642736516031.png', // 기본 이미지를 버킷에 넣고 주소 저장하기
+      image: 'default-profile.png', // 기본 이미지를 버킷에 넣고 주소 저장하기
       admin: false, // 어드민 권한은 기본적으로 false 주기
       oauth: false, // 일반 회원가입이므로 false
     })
