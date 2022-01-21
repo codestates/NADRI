@@ -12,7 +12,7 @@ const s3 = new aws.S3();
 // const upload = multer({ dest: "uploads/" });
 
 // S3에 업로드하기 (지갑을 지켜주세요)
-// 사용하려면 config폴더에 awsconfig파일이 있어야 합니다(이미 3퍼 넘게 써버림 ㅎㅎ;)
+// 사용하려면 config폴더에 awsconfig파일이 있어야 합니다
 const upload = multer({
     storage: multerS3({
         s3: s3,
@@ -89,7 +89,7 @@ router.patch(
   controllers.post.patchPost
 );
 router.delete('/post/:id', controllers.post.deletePost)
-router.post('/post/report', controllers.post.reportPost )
+router.post('/post/report', controllers.post.reportPost)
 
 router.get("/auth/me", controllers.me.getUserInform);
 router.patch("/auth/me",
@@ -101,10 +101,9 @@ router.patch("/auth/me",
   controllers.me.patchUserInform
 );
 
-// 라우터 입력 끝
-
-// 테스트 라우팅
 router.post('/post/image', controllers.post.getPostImg)
 router.get('/auth/me/post', controllers.me.getUserPost)
+
+// 라우터 입력 끝
 
 module.exports = router;

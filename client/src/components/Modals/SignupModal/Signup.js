@@ -23,6 +23,7 @@ export default function Signup () {
     passwordCheck: ''
   })
   const [dangerMessage, setDangerMessage] = useState('')
+  const [chkEmail, setChkEmail] = useState(false)
 
   const dispatch = useDispatch()
   const LoginModalstate = useSelector(state => state.loginReducer);
@@ -46,20 +47,26 @@ export default function Signup () {
   const [userCode, setUserCode] = useState('')
 
   function sendChkMail (email) {
-    if (!email) return alert('이메일을 입력하세요!')
+    if (!email) return setDangerMessage('이메일을 입력하세요!')
     axios.post(`${process.env.REACT_APP_API_URL}/auth/code`, {email})
     .then(result => {
       setCode(result.data.code)
-      alert('인증메일이 발송되었습니다.')
+      setDangerMessage('인증메일이 발송되었습니다.')
+    })
+    .catch(err => {
+      setDangerMessage('이메일 발송에 실패했습니다!')
     })
   }
 
   function verifyCode (userCode) {
     console.log(userCode, code)
-    if (!code) return alert('인증 메일을 먼저 발송하세요')
+    if (!code) return setDangerMessage('인증 메일을 먼저 발송하세요!')
 
-    if (userCode !== code) return alert('일치하지 않습니다!')
-    else return alert('인증이 완료되었습니다!')
+    if (userCode !== code) return setDangerMessage('인증코드가 일치하지 않습니다!')
+    else {
+      setChkEmail(true)
+      setDangerMessage('이메일 확인이 완료되었습니다.')
+    }
   }
 
   function postSignup () {
@@ -72,6 +79,8 @@ export default function Signup () {
     if(password !== passwordCheck) {
       return setDangerMessage('비밀번호를 확인하세요!')
     }
+
+    if (!chkEmail) return setDangerMessage('이메일 확인을 먼저 진행해 주세요!')
     
     // if (Object.values(inputs).some((e) => e === '')) return alert("정보를 전부 입력했는지 확인하세요") 이거 다시 작업해야함
     
@@ -94,8 +103,12 @@ export default function Signup () {
       }
     })
     .catch(err => {
-      console.log(err)
-      setDangerMessage('오류 발생: 이미 가입하셨는지 확인하세요')
+      console.log(err.response)
+      if (err.response) {
+        setDangerMessage(err.response.data)
+      } else {
+        setDangerMessage('서버 에러가 발생했습니다!')
+      }
     })
   }
   
@@ -150,14 +163,28 @@ export default function Signup () {
           <form>
               <div className="emailInput">
                 <label htmlFor="email">이메일</label>
+                {!chkEmail ?
                 <div>
-                  <input autoComplete="off" onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange}></input>
-                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증코드</button>
+                  <input autoComplete="off" placeholder='이메일을 입력하세요' onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange} />
+                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증</button>
                 </div>
+                :
                 <div>
-                  <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}></input>
-                  <button type="button" onClick={() => verifyCode(userCode)}>인증확인</button>
+                  <input autoComplete="off" type={"text"} name="email" readOnly />
+                  <button type="button" disabled>인증</button>
                 </div>
+                }
+                {!chkEmail ? 
+                <div>
+                  <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}/>
+                  <button type="button" onClick={() => verifyCode(userCode)}>확인</button>
+                </div>
+                :
+                <div>
+                  <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" readOnly />
+                  <button type="button" disabled>확인</button>
+                </div>
+                }
               </div>
             <label htmlFor="nickname">닉네임</label>
             <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"text"} name="nickname" onChange={onChange}></input>

@@ -7,8 +7,7 @@ const s3 = new aws.S3();
 
 module.exports = {
   getUserInform: (req, res) => {
-    // 인증정보가 있는지 확인
-    // if (!req.cookies['authorization']) return res.status(400).json({message: 'Bad Request'})
+    // 새로고침 시 정보요청을 받으므로 쿠키 확인이 안될 시 HTTP 204를 반환
     if (!req.cookies['authorization']) return res.status(204).json({message: 'No Data'})
     // 인증정보가 유효한지 확인
     const userData = chkValid(req)
@@ -16,7 +15,6 @@ module.exports = {
 
     // 데이터 반환
     try{
-      delete userData.updatedAt
       res.status(200).json({data: userData})
     } catch (err) {
       res.sendStatus(500)
@@ -40,9 +38,7 @@ module.exports = {
         else path = image.map((img) => img.path)
       }
 
-      console.log('DELETE_IMG', userData.image)
-
-      if (path) {
+      if (userData.image !== '2201642736516031.png') { // 기본이미지 아닐때만 삭제
         // 이미지가 변경되었으면 이전 이미지를 삭제해야 함.
         s3.deleteObject({ Bucket: "nadri", Key: userData.image }, (err, data) => {
           if (err) {
@@ -54,6 +50,13 @@ module.exports = {
 
       const {nickname, password} = req.body
 
+      // 변경할 닉네임으로 이미 등록된 유저가 있는지 확인하기
+      if (nickname) {
+        const chkNickname = await users.findOne({where: {nickname}})
+        if (chkNickname) return res.status(400).json({message: 'Already used nickname. Try another one'})
+      }
+
+      // 데이터베이스에 반영
       const find = await users.findOne({ where: { email: userData['email'] } })
       if (nickname) find.nickname = nickname
       if (password) find.password = encryptPW(password)
@@ -61,12 +64,8 @@ module.exports = {
         let imgStr = "";
         path.map((e) => (imgStr += `${e}`));
         find.image = imgStr
-        // await find.save()
-        // return res.send(imgStr)
       }
       await find.save()
-
-      
 
       const result = find.dataValues
 

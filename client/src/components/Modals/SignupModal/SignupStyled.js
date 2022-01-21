@@ -30,7 +30,7 @@ export const SignupModalView = styled.div`
   @media (max-width: 650px){
     width: 80vw;
     padding: 35px 30px;
-    height: 700px;
+    height: 650px;
   }
 `
 

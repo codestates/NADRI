@@ -50,10 +50,11 @@ const Logo = styled.div`
 
   @media screen and (max-width:650px){
     .pcImg {
-      display: none;
+      display: flex;
+      width: 80%  
     }
     .mobileImg {
-      display: block;
+      //display: block;  주석처리
       width: 40px;
       height: auto;
     }
@@ -96,9 +97,9 @@ const Search = styled.div`
 `
 
 const HeaderContent = styled.div`
-  width: 20rem;
+  width: 25rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   font-size: 1.2rem;
 
   a {
@@ -213,8 +214,6 @@ const HeaderContent = styled.div`
     }
   } 
 `
-
-
 
 export default function Header () {
   const dispatch = useDispatch()

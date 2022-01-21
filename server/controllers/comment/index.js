@@ -11,7 +11,6 @@ module.exports = {
     // 인증정보가 검증되는지 확인
     const userData = chkValid(req);
     if (!userData) return res.status(401).json({ message: "Invalid Token" });
-    // console.log(userData);
 
     // DB에서 userId로 필터한 코멘트 찾아 보내기
     try {
@@ -38,30 +37,31 @@ module.exports = {
     // DB 에 찾는 post가 존재하는지 확인
     if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
     const find = await posts.findOne({ where: { id: req.params.id } });
-    if (!find) return res.status(400).json({ message: "Bad Request" });
+    if (!find) return res.status(400).json({ message: "Post Not Found" });
     
-    // public 값 체크해 인증 진행하기
+    // public 값 체크해 인증 진행
     // 비공개 글이면 JWT를 검증해 유저ID가 게시글 유저ID와 같은지 확인
-    
     if (!find.public) {
       const userData = chkValid(req);
       
-      if (!userData) return res.status(401).json({ message: "Invalid Token" });
+      if (!userData) return res.status(400).json({ message: "Invalid Token" });
       
-
       if (userData.id !== find.userId) return res.status(400).json({message: 'Not Authorized'})
     }
 
     // DB에서 postId로 필터한 코멘트 찾아 보내기
     // Post에서 댓글 보여주는 데 필요한 nickname, userImage를 포함해야 하므로 Join시켜야 함
     try {
-      
       const search = await sequelize.query(`
         SELECT comments.id, comments.userId, comments.postId, comments.comment, DATE_FORMAT(comments.createdAt,'%Y.%m.%d') AS createdAt, users.nickname, users.image
         FROM comments JOIN users ON comments.userId = users.id WHERE comments.postId = ${req.params.id}
       `, { type: QueryTypes.SELECT })
-      console.log(search)
-      search.map(e => e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] )
+      
+      search.map(e => {
+        if(e.image.slice(0,4) !== 'http'){
+          e.image = process.env.AWS_CLOUD_URL + e.image.split(',')[0] 
+        }
+      })
 
       res.status(200).json({data: search})
     } catch (err) {
@@ -72,16 +72,16 @@ module.exports = {
   postComment: async (req, res) => {
     // 인증정보 있는지 확인
     if (!req.cookies["authorization"])
-      return res.status(400).json({ message: "Invalid Token" });
+      return res.status(400).json({ message: "Bad Request" });
 
     // 인증정보가 검증되는지 확인
     const userData = chkValid(req);
     if (!userData)
       return res.status(400).json({ message: "Invalid Token" });
-    // console.log(userData);
 
     // DB 에 찾는 post가 존재하는지 확인
     if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
+
     const find = await posts.findOne({ where: { id: req.params.id } });
     if (!find) return res.status(400).json({ message: "Bad Request" });
 
@@ -91,7 +91,6 @@ module.exports = {
         userId: userData.id,
         postId: Number(req.params.id),
         comment: req.body.comment,
-        // image: userData.image
       });
       
       const result = create.dataValues
@@ -109,20 +108,19 @@ module.exports = {
   modifyComment: async (req, res) => {
     // 인증정보 있는지 확인
     if (!req.cookies["authorization"])
-      return res.status(400).json({ message: "Invalid Token" });
+      return res.status(400).json({ message: "Bad Request" });
 
     // 인증정보가 검증되는지 확인
     const userData = chkValid(req);
     if (!userData)
       return res.status(400).json({ message: "Invalid Token" });
-    console.log(userData);
 
     // 파라미터로 받은 commentId가 존재하는지 확인
     console.log(req.params.id)
-    if (!req.params.id) return res.status(400).json({ message: "Bad Request1" });
+    if (!req.params.id) return res.status(400).json({ message: "Bad Request" });
 
     const find = await comments.findOne({where: {id: req.params.id}})
-    if (!find) res.status(400).json({ message: "Bad Request2" })
+    if (!find) res.status(400).json({ message: "Bad Request" })
 
     console.log(find.dataValues)
 
@@ -134,7 +132,7 @@ module.exports = {
         })
         return res.sendStatus(200)
       } else {
-        return res.status(400).json({ message: "Bad Request3" });
+        return res.status(400).json({ message: "Bad Request" });
       }
     } catch (err) {
       res.sendStatus(500)
@@ -144,7 +142,7 @@ module.exports = {
   deleteComment: async (req, res) => {
     // 인증정보 있는지 확인
     if (!req.cookies["authorization"])
-      return res.status(400).json({ message: "Invalid Token" });
+      return res.status(400).json({ message: "Bad Request" });
 
     // 인증정보가 검증되는지 확인
     const userData = chkValid(req);
@@ -154,10 +152,10 @@ module.exports = {
     // 파라미터로 받은 commentId가 존재하는지 확인
     console.log(req.params.id);
     if (!req.params.id)
-      return res.status(400).json({ message: "Bad Request1" });
+      return res.status(400).json({ message: "Bad Request" });
 
     const find = await comments.findOne({ where: { id: req.params.id } });
-    if (!find) return res.status(400).json({ message: "Bad Request2" });
+    if (!find) return res.status(400).json({ message: "Bad Request" });
 
     try {
       // modify와 마찬가지로 Admin이거나 유저 본인이면 삭제 OK
@@ -167,7 +165,7 @@ module.exports = {
         })
         return res.sendStatus(200)
       } else {
-        return res.status(400).json({ message: "Bad Request3" });
+        return res.status(400).json({ message: "Bad Request" });
       }
     } catch (err) {
       res.sendStatus(500)

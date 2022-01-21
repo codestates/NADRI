@@ -3,10 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-}
-@font-face {
-  font-family: Cafe24;
-  src: url('./styles/fonts/Cafe24Ssurroundair.woff');
+  background: #eff3fb;
 }
 @font-face {
   font-family: NanumSquare;
