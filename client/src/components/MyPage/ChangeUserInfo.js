@@ -205,6 +205,9 @@ export default function ChageUserInfo () {
       setChangeTarget(e.target.name)
       navigate('/mypage')
     })
+    .catch(err => {
+      setDangerMessage('이미 사용중인 닉네임입니다.')
+    })
   }
 
   const profileImg = useRef(null)

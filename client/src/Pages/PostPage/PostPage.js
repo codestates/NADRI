@@ -109,7 +109,7 @@ export default function PostPage () {
       })
       .catch((error) => {
         console.log(error);
-        alert('문제가 발생했습니다!')
+        alert(error.response.data.message)
       });
     
     

@@ -17,14 +17,12 @@ module.exports = {
   sendAccessToken: (res, accessToken) => {
     console.log(accessToken)
     res.cookie('authorization', accessToken, {
-      // 이거...맞나?
       sameSite:'none',
       secure: true,
       httpOnly: true
     });
   },
   chkValid: (req) => {
-    // console.log(req.cookies);
     const authorization = req.cookies['authorization'];
     if (!authorization) return null;
     try {
