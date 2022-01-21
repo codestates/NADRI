@@ -409,6 +409,8 @@ const ContentContainer = styled.div`
     /* white-space: pre-line; */
     background-color: #fdfdff;
     word-break:break-all;
+    line-height: 2;
+    letter-spacing: 0.5px;
 }
 
   .contentToolbar {
