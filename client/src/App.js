@@ -11,9 +11,13 @@ import { authState, userInfo } from './redux/actions'
 import { useNavigate } from "react-router-dom";
 import Landing from './Pages/Landing';
 import { Routes, Route, Navigate, BrowserRouter, Link, Switch } from 'react-router-dom';
+import SuccessSignupModal from './components/Modals/SignupModal/SuccessSignupModal';
+import SuccessLoginModal from './components/Modals/LoginModal/SuccessLoginModal'
+
 // axios.defaults.withCredentials = true;
 
 function App() {
+  
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
@@ -24,8 +28,7 @@ function App() {
 
   const gLoginState = useSelector(state => state.gLoginReducer)
   const kLoginState = useSelector(state => state.kLoginReducer)
-  const loginState = useSelector(state => state.loginReducer)
-
+  const LoginState = useSelector(state => state.changeAuthState)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -96,9 +99,10 @@ function App() {
       console.log('카카오 get액세스토큰 catch Err')
     })
   }
-
+  const [signupSuccessModal, setSignupSuccessModal] = useState(false)
+  const [loginSuccessModal, setLoginSuccessModal] = useState(false)
+  console.log(loginSuccessModal)
   // console.log('구글 로그인 클릭 상태: '+gLoginState)
-  
   const landingUrl = window.location.href.slice(-7)
   return (
     <div className="App">
@@ -115,11 +119,19 @@ function App() {
       }
       
       {
-        LoginModalstate ? <Login />
+        LoginModalstate ? <Login loginSuccessModal={loginSuccessModal} setLoginSuccessModal={setLoginSuccessModal}/>
         : ''
       }
       {
-        SignupModalstate ? <Signup />
+        SignupModalstate ? <Signup setSignupSuccessModal={setSignupSuccessModal} signupSuccessModal={signupSuccessModal} />
+        : ''
+      }
+      {
+        signupSuccessModal ? <SuccessSignupModal loginSuccessModal={loginSuccessModal} setLoginSuccessModal={setLoginSuccessModal} />
+        : ''
+      }
+      {
+        loginSuccessModal  ? <SuccessLoginModal loginSuccessModal={loginSuccessModal} setLoginSuccessModal={setLoginSuccessModal} />
         : ''
       }
     </div>

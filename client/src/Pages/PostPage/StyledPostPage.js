@@ -4,6 +4,27 @@ export const PostContainer = styled.div`
   padding: 3rem 9vw;
   width: 100%;
   height: 100%;
+
+  #loadingContainer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    width: 100%;
+    border: 1px solid black;
+    background-color: black;
+    opacity: .5;
+
+    img {
+      
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
 `
 
 export const Container = styled.div`
@@ -121,7 +142,8 @@ export const TextInputContainer = styled.div`
   
   #title:focus {
     outline:none;
-    border: 1px solid #ff7400;
+    border: 2px solid #88ccff;
+    box-shadow: none;
   }
 
   textarea {
@@ -138,8 +160,9 @@ export const TextInputContainer = styled.div`
   }
 
   textarea:focus {
-    outline: none;
-    border: 1px solid #ff7400;
+    outline:none;
+    border: 2px solid #88ccff;
+    box-shadow: none;
   }
 
   @media (max-width: 767px) {
@@ -185,16 +208,13 @@ export const CheckboxContainer = styled.div`
     border-radius: 8px;
     max-width: 80%;
     border: none;
-    // background-color: #f6d9d5;
     background-color: #88ccff;
     box-shadow: 2px 2px 2px 1px rgba(180, 180, 180);
     cursor: pointer;
     font-size: 1rem;
     font-family: 'NanumSquare', arial;
-  }
-
-  #Btn:active {
-    box-shadow: 4px 4px 4px 1px rgba(180, 180, 180);
+    color: white;
+    font-weight: bold;
   }
 
   #Btn:active {

@@ -18,10 +18,6 @@ align-items: center;
 background: #f9fafc;
 box-shadow: 2px 2px 2px 1px rgb(180 180 180);
 cursor: pointer;
-<<<<<<< HEAD
-=======
-
->>>>>>> 817c379e2aa6417e37c76619aa6123cf57d4664f
   & {
     .imgContainer {
       transition: transform 0.2s linear;

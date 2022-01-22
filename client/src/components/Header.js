@@ -99,7 +99,7 @@ const Search = styled.div`
 const HeaderContent = styled.div`
   width: 25rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   font-size: 1.2rem;
 
   a {
@@ -125,7 +125,6 @@ const HeaderContent = styled.div`
       transition: all 0.2s;
       cursor: pointer;
       transform: scale(1.1);
-      color: #ff7400;
       // box-shadow: 
       // inset 3px 3px 3px 0px rgba(200, 200, 200, 0.2), 
       // 2px 2px 2px 0px rgba(0, 0, 0, 0.1),
@@ -146,6 +145,7 @@ const HeaderContent = styled.div`
   .loginIcon {
     width:70%;
     height: auto;
+    cursor: pointer;
   }
   .mypageIcon {
     width:85%;
@@ -159,6 +159,7 @@ const HeaderContent = styled.div`
   .signinIcon {
     width:80%;
     height: auto;
+    cursor: pointer;
   }
   .postIcon {
     width:65%;
@@ -188,6 +189,8 @@ const HeaderContent = styled.div`
   }
 
   @media screen and (max-width:900px) {
+    justify-content: flex-end;
+    gap: 1rem;
     button {
       display: none;
     }
@@ -215,7 +218,7 @@ const HeaderContent = styled.div`
   } 
 `
 
-export default function Header () {
+export default function Header ({loginSuccessModal, setLoginSuccessModal}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -258,6 +261,7 @@ export default function Header () {
     )
     .then((res) => {
       dispatch(authState(curAuthState))
+      // setLoginSuccessModal(!loginSuccessModal)
       // console.log(curAuthState)
       if(gLoginState===true){
         dispatch(gLogIn(gLoginState))

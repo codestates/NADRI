@@ -13,6 +13,8 @@ import {
 import Preview from "../../components/PostPage/Preview";
 import PreviewBottom from "../../components/PostPage/PreviewBottom";
 import {useNavigate} from 'react-router-dom'
+import FailModal from "../../components/Modals/PostPageModal/FailModal";
+import FailImgModal from "../../components/Modals/PostPageModal/FailImgModal";
 
 export default function PostPage () {
   const navigate = useNavigate()
@@ -31,6 +33,8 @@ export default function PostPage () {
     public: 1, // true
     categoryId: 1,
   });
+
+  const [failModal, setFailModal] = useState(false)
   
   const picChange = (event) => {
     // 이미지를 추가하는 함수
@@ -56,7 +60,6 @@ export default function PostPage () {
     }
     
     handleValue({ id: "image", value: urlArr });
-
   };
 
   const removeImg = (event, curImg) => {
@@ -82,6 +85,16 @@ export default function PostPage () {
   }
 
   const submit = async () => {
+    setIsLoading(true)
+    if(!value.title || !value.content) {
+      setFailModal(!failModal)
+      return;
+    }
+    if(value.image.length === 0) {
+      console.log(fillImg)
+      setFillImg(true)
+      return;
+    }
     // 포스트 게시하는 함수
     const formData = new FormData();
     for (let i = 0; i < value.image.length; i++) {
@@ -105,6 +118,7 @@ export default function PostPage () {
     })
       .then((result) => {
         // console.log(result);
+        setIsLoading(false)
         navigate(`/detail/${result.data.id}`) // 리턴된 페이지로 이동
       })
       .catch((error) => {
@@ -114,7 +128,7 @@ export default function PostPage () {
     
     
   };
-
+  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       // console.log('위치 확인에 성공하였습니다.')
@@ -126,7 +140,7 @@ export default function PostPage () {
   }, []);
 
   const geocoder = new kakao.maps.services.Geocoder();
-
+  
   // 주소 받아오는 함수
   const setAddress = (locData) => {
     geocoder.coord2Address(
@@ -170,8 +184,8 @@ export default function PostPage () {
     setAddress(new kakao.maps.LatLng(lat, lng))
     
   }
-
-
+  const [fillImg, setFillImg] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   return (
     <PostContainer>
       <Container>
@@ -229,6 +243,21 @@ export default function PostPage () {
       </CheckboxContainer>
       </BottomContainer>
       </Container>
+      {
+        failModal ? <FailModal setFailModal={setFailModal}/>
+        : ''
+      }
+      {
+        fillImg ? <FailImgModal fillImg={fillImg} setFillImg={setFillImg}/>
+        : ''
+      }
+      {
+        isLoading ? 
+        <div id="loadingContainer">
+          <img src='/img/loading.svg' />
+        </div>
+        : ''
+      }
     </PostContainer>
   );
 }

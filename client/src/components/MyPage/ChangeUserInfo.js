@@ -143,6 +143,7 @@ const InputUserInfo = styled.div`
   button:active {
     position: relative;
     top: 2px;
+    box-shadow: 2px 2px 0 rgb(0, 0, 0, 0.3);
   }
 
   @media (max-width:700px){
@@ -279,7 +280,7 @@ export default function ChageUserInfo () {
         <div className="user-profile-picture"></div>
 
         {curUserInfo.oauth ? 
-          <label htmlFor="profileImgLabel">프로필 사진 변경이 불가합니다.</label> 
+          <label htmlFor="profileImgLabel">소셜 로그인은 프로필 사진 변경이 불가합니다.</label> 
           :
           <div>
             <label>프로필 사진 변경</label>

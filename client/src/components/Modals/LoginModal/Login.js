@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 axios.defaults.withCredentials = true;
 
-export default function Login () {
+export default function Login ({setLoginSuccessModal, loginSuccessModal}) {
   const [inputs, setInputs] = useState({
     email: '',
     password: ''
@@ -57,10 +57,10 @@ export default function Login () {
       // console.log(res.data.data)
       const {id, email, nickname, image, admin, oauth, createdAt} = res.data.data
       if(res.status = 200) {
+        dispatch(loginModal(LoginModalstate))
         dispatch(authState(curAuthState))
         dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
-        dispatch(loginModal(LoginModalstate))
-        // alert('로그인이 완료되었습니다.') // 여기 모달창으로 바꿔야함
+        setLoginSuccessModal(!loginSuccessModal)
         navigate('/')
       }
     })
@@ -83,13 +83,15 @@ export default function Login () {
 
   const onClickGoogle = async () => {
     // console.log(e)
-    dispatch(gLogIn(gLoginState))
+    await dispatch(loginModal(LoginModalstate))
+    await dispatch(gLogIn(gLoginState))
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
     // window.location.href = '/';
   };
 
   const onClickKakao = async () => {
-    dispatch(kLogIn(kLoginState))
+    await dispatch(loginModal(LoginModalstate))
+    await dispatch(kLogIn(kLoginState))
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
   

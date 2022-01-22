@@ -12,10 +12,12 @@ import {
 import {connectAdvanced, useDispatch, useSelector} from 'react-redux'
 import { signupModal, loginModal, authState, userInfo, gLogIn, kLogIn} from '../../../redux/actions';
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import SuccessSignupModal from '../SignupModal/SuccessSignupModal'
 
-export default function Signup () {
+export default function Signup ({setSignupSuccessModal, signupSuccessModal}) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [inputs, setIntputs] = useState({
     email: '',
     nickname: '',
@@ -23,13 +25,13 @@ export default function Signup () {
     passwordCheck: ''
   })
   const [dangerMessage, setDangerMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [chkEmail, setChkEmail] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const dispatch = useDispatch()
   const LoginModalstate = useSelector(state => state.loginReducer);
   const SignupModalstate = useSelector(state => state.signupReducer);
   const curAuthState = useSelector(state => state.changeAuthState);
-  // const curUserInfo = useSelector(state => state.getUserInfo);
   const gLoginState = useSelector(state => state.gLoginReducer);
   const kLoginState = useSelector(state => state.kLoginReducer);
 
@@ -47,31 +49,43 @@ export default function Signup () {
   const [userCode, setUserCode] = useState('')
 
   function sendChkMail (email) {
+    setSuccessMessage('')
+    setDangerMessage('')
+    setIsLoading(true)
+    setCode(null)
     if (!email) return setDangerMessage('이메일을 입력하세요!')
     axios.post(`${process.env.REACT_APP_API_URL}/auth/code`, {email})
     .then(result => {
       setCode(result.data.code)
-      setDangerMessage('인증메일이 발송되었습니다.')
+      setSuccessMessage('인증메일이 발송되었습니다.')
     })
     .catch(err => {
       setDangerMessage('이메일 발송에 실패했습니다!')
     })
   }
 
-  function verifyCode (userCode) {
+  async function verifyCode (userCode) {
     // console.log(userCode, code)
+    setSuccessMessage('')
+    setDangerMessage('')
     if (!code) return setDangerMessage('인증 메일을 먼저 발송하세요!')
 
     if (userCode !== code) return setDangerMessage('인증코드가 일치하지 않습니다!')
+    
     else {
-      setChkEmail(true)
-      setDangerMessage('이메일 확인이 완료되었습니다.')
+        setChkEmail(true)
+
+      await setTimeout(() => {
+        setSuccessMessage('이메일 확인이 완료되었습니다.')
+      }, 1000);
+      
     }
   }
 
   function postSignup () {
     const {email, nickname, password, passwordCheck} = inputs
-    
+    setSuccessMessage('')
+    setDangerMessage('')
     if(!email || !nickname || !password || !passwordCheck) {
       return setDangerMessage('필수사항들을 입력해주세요!')
     }
@@ -98,7 +112,7 @@ export default function Signup () {
         dispatch(authState(curAuthState))
         dispatch(userInfo({id, email, nickname, image, admin, oauth, createdAt}))
         dispatch(signupModal(SignupModalstate))
-        alert('회원가입이 완료되었습니다.') // 여기 모달창으로 바꾸기
+        setSignupSuccessModal(!signupSuccessModal)
         navigate('/')
       }
     })
@@ -122,12 +136,14 @@ export default function Signup () {
   }
 
   const onClickGoogle = async () => {
-    dispatch(gLogIn(gLoginState))
+    await dispatch(loginModal(LoginModalstate))
+    await dispatch(gLogIn(gLoginState))
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/google`;
   };
 
   const onClickKakao = async () => {
-    dispatch(kLogIn(kLoginState))
+    await dispatch(loginModal(LoginModalstate))
+    await dispatch(kLogIn(kLoginState))
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/kakao`;
   }
 
@@ -148,68 +164,83 @@ export default function Signup () {
       verifyCode(userCode)
     }
   }
-
+  // console.log(isLoading && (!successMessage||!dangerMessage) && !code && (!chkEmail))
+  console.log('1 '+Boolean(isLoading))
+  console.log('2 '+ Boolean(!code))
+  console.log('3 '+ Boolean(chkEmail))
+  
   return (
-    <ModalBackdrop onClick={ModalHandler}>
-      <SignupModalView onClick={(e) => e.stopPropagation()}>
-
-        <ModalHead>
-          <span onClick={ModalHandler}>&#x2716;</span>
-          <h1>회원가입</h1>
-          <p>이미 회원이신가요? &#xa0;<br/><span onClick={(e) => ModalHandler (e)}>로그인하기!</span></p>
-        </ModalHead>
-
-        <ModalInput>
-          <form>
-              <div className="emailInput">
-                <label htmlFor="email">이메일</label>
-                {!chkEmail ?
-                <div>
-                  <input autoComplete="off" placeholder='이메일을 입력하세요' onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange} />
-                  <button type="button" onClick={() => sendChkMail(inputs.email)} >인증</button>
+        <ModalBackdrop onClick={ModalHandler}>
+        <SignupModalView onClick={(e) => e.stopPropagation()}>
+  
+          <ModalHead>
+            <span onClick={ModalHandler}>&#x2716;</span>
+            <h1>회원가입</h1>
+            <p>이미 회원이신가요? &#xa0;<br/><span onClick={(e) => ModalHandler (e)}>로그인하기!</span></p>
+          </ModalHead>
+  
+          <ModalInput>
+            <form>
+                <div className="emailInput">
+                  <label htmlFor="email">이메일</label>
+                  {!chkEmail ?
+                  <div>
+                    <input autoComplete="off" placeholder='이메일을 입력하세요' onKeyPress={(e) => handleSendChkMail(e)} type={"text"} name="email" onChange={onChange} />
+                    <button type="button" onClick={() => sendChkMail(inputs.email)} >인증</button>
+                  </div>
+                  :
+                  <div>
+                    <input autoComplete="off" type={"text"} name="email" readOnly />
+                    <button type="button" disabled>인증</button>
+                  </div>
+                  }
+                  {!chkEmail ? 
+                  <div>
+                    <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}/>
+                    <button type="button" onClick={() => verifyCode(userCode)}>확인</button>
+                  </div>
+                  :
+                  <div>
+                    <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" readOnly />
+                    <button type="button" disabled>확인</button>
+                  </div>
+                  }
                 </div>
-                :
-                <div>
-                  <input autoComplete="off" type={"text"} name="email" readOnly />
-                  <button type="button" disabled>인증</button>
-                </div>
-                }
-                {!chkEmail ? 
-                <div>
-                  <input autoComplete="off" onKeyPress={(e) => handleverifyCode(e)} type={"password"} placeholder="인증번호를 입력하세요" onChange={(e) => setUserCode(e.target.value)}/>
-                  <button type="button" onClick={() => verifyCode(userCode)}>확인</button>
-                </div>
-                :
-                <div>
-                  <input autoComplete="off" type={"password"} placeholder="인증번호를 입력하세요" readOnly />
-                  <button type="button" disabled>확인</button>
-                </div>
-                }
-              </div>
-            <label htmlFor="nickname">닉네임</label>
-            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"text"} name="nickname" onChange={onChange}></input>
-            <label htmlFor="password">비밀번호</label>
-            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} name="password" onChange={onChange}></input>
-            <label htmlFor="password">비밀번호 확인</label>
-            <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} onChange={onChange} name="passwordCheck"></input>
-          </form>
-          <span id="dangerMsg">{dangerMessage}</span>
-        </ModalInput>
-
-        <Oauth>
-          <div onClick={postSignup}>
-            <div className="normalSignup">회원가입</div>
-          </div>
-          <span onClick={onClickGoogle}>
-            <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
-            <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
-          </span>
-          <span onClick={onClickKakao}>
-            <img className="kakaoPcLogin" src="/img/kakao_login_medium_narrow.png" alt="카카오 로그인" />
-            <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
-          </span>
-        </Oauth>
-      </SignupModalView>
-    </ModalBackdrop>
+              <label htmlFor="nickname">닉네임</label>
+              <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"text"} name="nickname" onChange={onChange}></input>
+              <label htmlFor="password">비밀번호</label>
+              <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} name="password" onChange={onChange}></input>
+              <label htmlFor="password">비밀번호 확인</label>
+              <input autoComplete="off" onKeyPress={(e) => handleKeyPress(e)} type={"password"} onChange={onChange} name="passwordCheck"></input>
+            </form>
+            <div id="loadingContainer">
+            {
+              isLoading && !code ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
+              : ''
+            }
+            {
+              chkEmail && !successMessage ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
+              : ''
+            }
+            <span id="dangerMsg">{dangerMessage}</span>
+            <span id="successMsg">{successMessage}</span>
+            </div>
+          </ModalInput>
+  
+          <Oauth>
+            <div onClick={postSignup}>
+              <div className="normalSignup">회원가입</div>
+            </div>
+            <span onClick={onClickGoogle}>
+              <img className="googlePcLogin" src="/img/btn_google_signin_light_normal_web@2x.png" alt="구글 로그인" />
+              <img className="googleMobile" src="/img/btn_google_light_normal_ios.svg" alt="구글m" />
+            </span>
+            <span onClick={onClickKakao}>
+              <img className="kakaoPcLogin" src="/img/kakao_login_medium_narrow.png" alt="카카오 로그인" />
+              <img className="kakaoMobile" src="/img/kakaolink_btn_small.png" alt="카카오m"/>
+            </span>
+          </Oauth>
+        </SignupModalView>
+      </ModalBackdrop>
   )
 }

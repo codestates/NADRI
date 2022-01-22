@@ -125,7 +125,7 @@ export const ModalInput = styled.div`
       margin-bottom: 1rem;
 
       :focus {
-        border: 1px solid #ff7400;
+        border: 2px solid #88ccff;;
       }
     }
   }

@@ -30,8 +30,7 @@ max-height: 3rem;
 }
 
 .backButton{
-  width: 70%;
-  height: 70%;
+  width: 100%;
   background: rgb(255,255,255);
   border-radius: 25px;
   border: 0px solid black;

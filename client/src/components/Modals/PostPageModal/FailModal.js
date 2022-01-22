@@ -3,10 +3,10 @@ import React from "react";
 import styled from "styled-components";
 import { ModalBackdrop } from "../LoginModal/LoginStyled";
 import { useNavigate } from "react-router-dom";
-import { authState } from '../../../redux/actions/index'
 import {useDispatch, useSelector} from 'react-redux'
 import {useState} from 'react'
 import SignoutCheckModal from '../SignoutModal/SignoutCheck'
+import { signupModal, loginModal, authState, userInfo, gLogIn, kLogIn} from '../../../redux/actions';
 
 axios.defaults.withCredentials = true;
 
@@ -66,39 +66,27 @@ export const ModalView = styled.div`
   }
 `
 
-export default function SignoutModal({signOutHandler}) {
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const curAuthState = useSelector(state => state.changeAuthState);
-  const [signoutCheck, setSignoutCheck] = useState(false)
-
-  function signoutCheckHandler() {
-    setSignoutCheck(true)
+export default function FailModal({setFailModal}) {
+  const [state, setState] = useState(true)
+  function test() {
+    setState(false)
+    setFailModal(false)
   }
-
-  function SignoutPost () {
-    axios.delete(`${process.env.REACT_APP_API_URL}/auth/signout`)
-    .then((res) => {
-      signoutCheckHandler()
-    })
-  }
-
   return (
     <div>
-    <ModalBackdrop onClick={signOutHandler}>
+      {
+        state ?
+        <ModalBackdrop onClick={test}>
       <ModalView onClick={(e) => e.stopPropagation()}>
-        <span>정말 회원 탈퇴하시겠습니까?</span>
+        <span>제목과 내용을 적어주세요!</span>
         <div className="buttonContainer">
-          <button type="button" onClick={signOutHandler}>취소</button>
-          <button type="button" onClick={SignoutPost}>회원 탈퇴</button>
+          <button onClick={test}>확인</button>
         </div>
       </ModalView>
     </ModalBackdrop>
-    {
-      signoutCheck ? <SignoutCheckModal />
-      : ''
-    }
+    :
+    ''
+      }
     </div>
   )
 }

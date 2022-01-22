@@ -344,7 +344,7 @@ const Forecast = styled.div`
   .infoContainer{
     padding-top: 0.4rem;
     max-width: 150px;
-    font-size: 2rem;
+    font-size: 1.9rem;
     overflow: hidden;
     margin: 0 auto;
     
@@ -394,10 +394,6 @@ const ContentContainer = styled.div`
   box-shadow: 2px 2px 2px 1px rgb(180 180 180);
   background-color: #f9fafc;
   height: 100%;
-
-  .contentText {
-   
-  }
 
   .contentDesc {
     /* border: 1px solid black;
@@ -449,12 +445,12 @@ const CommentListContainer = styled.div`
     margin-top: 1rem;
     padding-left: 10px;
     border-radius: 10px;
-    border: 1px solid gray;
+    border: 1px solid #c9c9c9;
+    outline: none;
   }
   
   #textinput:focus {
-    outline: 1px solid #ff7400;
-    border: 0;
+    border: 2px solid #88ccff;
   }
 
   .writeComment {
@@ -466,6 +462,8 @@ const CommentListContainer = styled.div`
       width: 100px;
       height: 2rem;
       margin: 16px 0 0 1rem;
+      color: white;
+      font-weight: bold;
       font-family: 'NanumSquare', 'Cafe24',arial;
       border-radius: 8px;
       border: none;
@@ -577,7 +575,6 @@ export default function DetailPage() {
   const sendComment = async () => {
     // 문자열 비었으면 전송X
     if (text.length === 0) return null;
-
     // 문자열 전송
     axios.post(
       `${process.env.REACT_APP_API_URL}/comment/${
@@ -928,7 +925,11 @@ export default function DetailPage() {
       alert('접수 중 오류가 발생했습니다.')
     })
   }
-
+  function commentEnter(e) {
+    if(e.key === 'Enter') {
+      sendComment()
+    }
+  }
   return (
     <DetailPageContainer>
       {post ? (
@@ -1031,7 +1032,7 @@ export default function DetailPage() {
           </TopContainer>
 
           <BottomContainer>
-            <ContentContainer id="asdf">
+            <ContentContainer>
                 <div className="contentDesc">{post.content ? post.content : null}</div>
             </ContentContainer>
 
@@ -1054,6 +1055,7 @@ export default function DetailPage() {
                     value={text}
                     placeholder={Object.keys(curUserInfo).length ? "댓글을 작성해 주세요" : '먼저 로그인 해 주세요'}
                     onChange={(e) => handleText(e.target.value)}
+                    onKeyPress={(e) => commentEnter(e)}
                   />
                   <button onClick={sendComment}>전송</button>
                 </div>

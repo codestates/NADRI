@@ -87,7 +87,7 @@ export const ModalHead = styled.div`
 `;
 
 export const ModalInput = styled.div`
-  margin: 2rem 0 1rem;
+  margin: 2rem 0 0;
 
   label {
     text-align: left;
@@ -105,8 +105,8 @@ export const ModalInput = styled.div`
     margin-bottom: 1rem;
     /* font-family: 'NanumSquare',arial; */
     :focus {
-        border: 1px solid #ff7400;
-      }
+      border: 2px solid #88ccff;;
+      }y
   }
 
   > form {
@@ -125,17 +125,41 @@ export const ModalInput = styled.div`
           border-radius: 5px;
           cursor: pointer;
           font-family: 'NanumSquare',arial;
-
-          :hover {
-            color: #ff7400;
-          }
+          background-color: #88ccff;
+          color: white;
+          font-weight: bold;
+          border: none;
+          box-shadow: rgb(0 0 0 / 10%) 2px 5px 10px;
+        }
+        > button:active {
+          position: relative;
+          top: 2px;
         }
       }
     }
+    &>:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  #loadingContainer {
+    width: 100%;
+    height: 3rem;
   }
   
   #dangerMsg {
-    color: red;
+    display: inline-block;
+    font-weight: 700;
+    color: #ff3b30;
+    letter-spacing: 1px;
+    margin: 1rem 0;
+  }
+  #successMsg {
+    display: inline-block;
+    color: #13ce66;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 1rem 0;
   }
 `
 
