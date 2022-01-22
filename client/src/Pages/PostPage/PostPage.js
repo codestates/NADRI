@@ -33,8 +33,6 @@ export default function PostPage () {
     public: 1, // true
     categoryId: 1,
   });
-
-  const [failModal, setFailModal] = useState(false)
   
   const picChange = (event) => {
     // 이미지를 추가하는 함수
@@ -185,7 +183,11 @@ export default function PostPage () {
     
   }
   const [fillImg, setFillImg] = useState(false)
+  const [failModal, setFailModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  console.log(fillImg)
+  console.log(failModal)
+  console.log()
   return (
     <PostContainer>
       <Container>
@@ -252,7 +254,7 @@ export default function PostPage () {
         : ''
       }
       {
-        isLoading ? 
+        isLoading && failModal && fillImg ? 
         <div id="loadingContainer">
           <img src='/img/loading.svg' />
         </div>

@@ -215,11 +215,11 @@ export default function Signup ({setSignupSuccessModal, signupSuccessModal}) {
             </form>
             <div id="loadingContainer">
             {
-              isLoading && !code ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
+              isLoading && !code && !successMessage && !dangerMessage ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
               : ''
             }
             {
-              chkEmail && !successMessage ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
+              chkEmail && !successMessage && !dangerMessage ? <img src='/img/loading.svg' style={{margin: '0', width: '40px', 'justifyContent': 'center'}}/>
               : ''
             }
             <span id="dangerMsg">{dangerMessage}</span>

@@ -45,6 +45,7 @@ const CommentContentWrapper = styled.div`
   }
 
   .UserComment {
+    line-height: 1.2rem;
     word-break:break-all;
   }
 
