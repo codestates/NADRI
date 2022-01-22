@@ -101,7 +101,7 @@ function App() {
   }
   const [signupSuccessModal, setSignupSuccessModal] = useState(false)
   const [loginSuccessModal, setLoginSuccessModal] = useState(false)
-  console.log(loginSuccessModal)
+  // console.log(loginSuccessModal)
   // console.log('구글 로그인 클릭 상태: '+gLoginState)
   const landingUrl = window.location.href.slice(-7)
   return (

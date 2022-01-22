@@ -288,7 +288,7 @@ export const FinalImg = styled.div`
     }
 
     if(scrollY >= sectionHeight[4]) {
-      console.log((((scrollY-sectionHeight[4])/initHeight*0.5)*100)/2)
+      // console.log((((scrollY-sectionHeight[4])/initHeight*0.5)*100)/2)
       return (`
         position: fixed;
         top: ${(((scrollY-sectionHeight[4])/initHeight*0.3)*100)/2}%; // 하 진짜 어지럽네

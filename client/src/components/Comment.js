@@ -46,6 +46,7 @@ const CommentContentWrapper = styled.div`
 
   .UserComment {
     word-break:break-all;
+    line-height: 1.2rem;
   }
 
   @media (max-width:900px){
