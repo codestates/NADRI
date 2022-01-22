@@ -165,9 +165,9 @@ export default function Signup ({setSignupSuccessModal, signupSuccessModal}) {
     }
   }
   // console.log(isLoading && (!successMessage||!dangerMessage) && !code && (!chkEmail))
-  console.log('1 '+Boolean(isLoading))
-  console.log('2 '+ Boolean(!code))
-  console.log('3 '+ Boolean(chkEmail))
+  // console.log('1 '+Boolean(isLoading))
+  // console.log('2 '+ Boolean(!code))
+  // console.log('3 '+ Boolean(chkEmail))
   
   return (
         <ModalBackdrop onClick={ModalHandler}>

@@ -89,7 +89,7 @@ export default function PostPage () {
       return;
     }
     if(value.image.length === 0) {
-      console.log(fillImg)
+      // console.log(fillImg)
       setFillImg(true)
       return;
     }
