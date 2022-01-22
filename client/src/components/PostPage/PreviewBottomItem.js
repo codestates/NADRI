@@ -10,14 +10,24 @@ const PreviewImg = styled.div`
   border-radius: 10px;
   position: relative;
 
-  img {
+  #inputIcon {
     display: none;
-    width: 2.5rem;
+    width: 2.5vw;
     position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+    right: 1vw;
+    bottom: 1vw;
     cursor: pointer;
   }
+
+  #inputBtn {
+    display: none;
+  }
+
+  #inputIcon:active {
+    border-radius: 50%;
+    background-color: white;
+  }
+
   background-image: url(/img/default-image.svg);
   background-size: contain;
   ${(props) => {
@@ -25,7 +35,7 @@ const PreviewImg = styled.div`
       return (
         `
         transition: all 0.3s;
-        img {
+        #inputIcon {
           display: block;
         }
         `
@@ -52,23 +62,13 @@ const PreviewImg = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
 
-
-
-  #inputBtn {
-    display: none;
-  }
-
-  #inputIcon:active {
-    border-radius: 50%;
-    background-color: white;
-  }
-
   #delBtn {
     cursor: pointer;
     position: absolute;
     top: 0;
     right: 0.5rem;
-    font-size: 2.5rem;
+    // font-size: 2.5rem;
+    font-size: 2.5vw;
   }
 
   #inputBackground {
