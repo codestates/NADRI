@@ -91,7 +91,7 @@ export default function PostPage () {
       return;
     }
     if(value.image.length === 0) {
-      console.log(fillImg)
+      // console.log(fillImg)
       setFillImg(true)
       return;
     }
@@ -252,7 +252,7 @@ export default function PostPage () {
         : ''
       }
       {
-        isLoading ? 
+        isLoading && failModal && fillImg ? 
         <div id="loadingContainer">
           <img src='/img/loading.svg' />
         </div>
