@@ -5,6 +5,7 @@ import {
   RandingContainer,
   Section,
   leftContainer,
+  First_Desc,
   Section_Left_Desc,
   Section_Right_Desc,
   Section1_Left_Img,
@@ -92,24 +93,29 @@ export default function Landing () {
     <RandingContainer>
       {/* 1------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
-        <Section_Left_Desc>
+        <First_Desc>
           <p>
             나만아는 좋은 곳을 다른 사람과 공유해보세요!
           </p>
           <span>NADIR</span>
           {/* 여기 바로시작하기 넣고 손가락 넣은다음에 계속 애니메이션 */}
-          <button className='Btn'><Link to={'/'}>시작하기</Link></button>
+          <Link to={'/'}><button className='Btn'>시작하기</button></Link>
           <img id='moveBus' src='img/nadri-logo-small.png' />
-        </Section_Left_Desc>
+        </First_Desc>
       </Section>
 
       {/* 2------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}> {/* section의 길이를 세팅하기 위한 프롭스 */}
-        <Section1_Left_Img scrollY={scrollY} sectionHeight={sectionHeight[1]} initHeight={initHeight} curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
+        <Section1_Left_Img scrollY={scrollY} sectionHeight={sectionHeight[1]} initHeight={initHeight} curSection={curSection}>
+          <img src='landingImg/posting.gif'></img>
+        </Section1_Left_Img>
 
         <Section_Right_Desc>
+          <h1>
+            나만아는 장소 공유!
+          </h1>
           <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit tempora aliquid exercitationem perspiciatis, laboriosam minus aliquam eum eius temporibus quod?
+          다른사람들은 잘 모르는 나만의 이야기가 담긴 장소를<br /> 지도와 카테고리별로 분류하고 공유해보세요!
           </p>
         </Section_Right_Desc>
       </Section>
@@ -117,26 +123,36 @@ export default function Landing () {
       {/* 3------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
         <Section_Left_Desc>
+          <h1>
+            좋아요 기능을 사용하여 가고싶은 곳을 저장하세요!
+          </h1>
           <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit tempora aliquid exercitationem perspiciatis, laboriosam minus aliquam eum eius temporibus quod?
+          마음에드는 게시글에 좋아요를 눌러 즐겨찾기에 저장해보세요!
           </p>
         </Section_Left_Desc>
-        <Section2_Right_Img curSection={curSection}/>
+        <Section2_Right_Img curSection={curSection}>
+          <img src='landingImg/like.gif'></img>
+        </Section2_Right_Img>
       </Section>
 
       {/* 4------------------------------------------------------------------------------------ */}
       <Section initHeight={initHeight}>
-        <Section3_Left_Img curSection={curSection} /> {/* section2의 길이를 세팅하기 위한 프롭스 */}
+        <Section3_Left_Img curSection={curSection}>
+          <img src='landingImg/check.gif'></img>
+        </Section3_Left_Img> {/* section2의 길이를 세팅하기 위한 프롭스 */}
         <Section_Right_Desc>
+          <h1>
+            출발하기전 여행지의 상태를 확인하세요!
+          </h1>
           <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit tempora aliquid exercitationem perspiciatis, laboriosam minus aliquam eum eius temporibus quod?
+          마음에드는 게시글에 좋아요를 눌러 즐겨찾기에 저장해보세요!
           </p>
         </Section_Right_Desc>
       </Section>
 
       {/* 5------------------------------------------------------------------------------------ */}
       <ImgSection initHeight={initHeight}>
-        <LastImg img={'/img/asdf.jpg'} sectionHeight={sectionHeight}  scrollY={scrollY} initHeight={initHeight} />
+        <LastImg img={'/landingImg/forest.png'} sectionHeight={sectionHeight}  scrollY={scrollY} initHeight={initHeight} />
       </ImgSection>
 
       {/* 6------------------------------------------------------------------------------------ */}
@@ -151,9 +167,9 @@ export default function Landing () {
       {/* 7------------------------------------------------------------------------------------ */}
       <LastSection initHeight={initHeight}>
         <p>
-          나들이 한번 떠나보시겠어요?
+          NADRI와 함께 나들이 한번 떠나보시겠어요?!
         </p>
-        <button><Link to={'/'}>시작하기</Link></button>
+        <Link to={'/'}><button className='Btn'>시작하기</button></Link>
       </LastSection>
       
       {/* <Footer /> */}

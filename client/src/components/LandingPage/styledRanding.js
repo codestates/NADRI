@@ -98,16 +98,86 @@ const disappear = keyframes`
 `
 // -------------------------------------------------------------- //
 
+export const First_Desc = styled.div`
+    width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10%;
+  // border: 1px solid black;
+
+  h1 {
+    font-size: 2vw;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  p {
+    font-size: 1.5vw;
+    line-height: 1.5;
+  }
+
+  span {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+
+  .Btn {
+    width: 15vw;
+    height: 4.5vw;
+    font-size: 2vw;
+    border-radius: 20px;
+    background-color: #88ccff;
+    cursor: pointer;
+    border: none;
+    color: white;
+    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    a {
+      color: white;
+    }
+  }
+
+  .Btn:active {
+    position: relative;
+    top: 2px;
+  }
+  .Btn:hover ~ img {
+    // animation-name: ${move_Bus};
+    // animation-duration: 1s;
+    // animation-timing-function: ease-in-out;
+    // animation-iteration-count: infinite;
+    // animation-direction: alternate;
+    position: relative;
+    left: 100%;
+  }
+
+  img {
+    width: 15%;
+    height: auto;
+    transform: translate(-100%);
+    transition: all 1.5s ease;
+    position: relative;
+    left: 0;
+  }
+`
+
 export const Section1_Left_Img = styled.div`
     width: 40%;
     height: 80%;
-    background-image: url(Oauth.gif);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
     transition: all 1s;
     box-shadow: -2px 2px 2px 2px rgb(180 180 180);
     border-radius: 15px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 15px;
+    }
 
   ${(props) => {
     const {curSection, sectionHeight, scrollY, initHeight} = props // 처음 내려올 때 애니메이션 실행, curSection이 0이면 초기화
@@ -129,15 +199,19 @@ export const Section1_Left_Img = styled.div`
 `
 
 export const Section2_Right_Img = styled.div`
-  width: 40%;
-  height: 80%;
-  background-image: url(Oauth.gif);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  transition: all 1s;
-  box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+width: 40%;
+height: 80%;
+transition: all 1s;
+box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+border-radius: 15px;
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   border-radius: 15px;
+}
 
   ${(props) => {
   const {curSection} = props
@@ -158,15 +232,19 @@ export const Section2_Right_Img = styled.div`
 `
 
 export const Section3_Left_Img = styled.div`
-  width: 40%;
-  height: 80%;
-  background-image: url(Oauth.gif);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  transition: all 1s;
-  box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+width: 40%;
+height: 80%;
+transition: all 1s;
+box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+border-radius: 15px;
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   border-radius: 15px;
+}
 
   ${(props) => {
     const {curSection} = props
@@ -185,15 +263,25 @@ export const Section3_Left_Img = styled.div`
 `
 
 export const Section_Right_Desc = styled.div`
-  width: 50%;
-  // height: 50%;
-  // border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  p {
-    font-size: 2vw;
-  }
+width: 50%;
+height: 80%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 10%;
+// border: 1px solid black;
+
+h1 {
+  font-size: 2vw;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 1.5vw;
+  line-height: 1.5;
+}
 `
 
 export const Section_Left_Desc = styled.div`
@@ -206,52 +294,15 @@ export const Section_Left_Desc = styled.div`
   gap: 10%;
   // border: 1px solid black;
 
-  p {
+  h1 {
     font-size: 2vw;
-  }
-
-  span {
-    font-size: 3rem;
     font-weight: bold;
-    letter-spacing: 3px;
+    line-height: 1.5;
   }
 
-  .Btn {
-    width: 15vw;
-    height: 4.5vw;
-    border-radius: 20px;
-    background-color: #88ccff;
-    cursor: pointer;
-    border: none;
-    box-shadow: 2px 2px 2px 1px rgb(180 180 180);
-    font-size: 2vw;
-    a {
-      color: white;
-    }
-  }
-
-  .Btn:hover ~ img {
-    // animation-name: ${move_Bus};
-    // animation-duration: 1s;
-    // animation-timing-function: ease-in-out;
-    // animation-iteration-count: infinite;
-    // animation-direction: alternate;
-    position: relative;
-    left: 100%;
-  }
-
-  .Btn:active {
-    position: relative;
-    top: 2px;
-  }
-
-  img {
-    width: 15%;
-    height: auto;
-    transform: translate(-100%);
-    transition: all 1.5s ease;
-    position: relative;
-    left: 0;
+  p {
+    font-size: 1.5vw;
+    line-height: 1.5;
   }
 `
 
@@ -379,7 +430,7 @@ export const LastSection = styled.section`
   align-items: center;
   gap: 100px;
 
-  button {
+  .Btn {
     width: 15vw;
     height: 4.5vw;
     font-size: 2vw;
@@ -394,15 +445,7 @@ export const LastSection = styled.section`
     }
   }
 
-  button:hover ~ img {
-    animation-name: ${move_Bus};
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
-
-  button:active {
+  .Btn:active {
     position: relative;
     top: 2px;
   }
