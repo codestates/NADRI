@@ -226,8 +226,7 @@ img {
   }};
 
   @media (max-width: 992px) {
-    height: 50%;
-    
+    height: 50%
   }
 `
 
@@ -264,7 +263,7 @@ img {
 
 export const Section_Right_Desc = styled.div`
 width: 50%;
-height: 80%;
+height: auto;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -285,25 +284,25 @@ p {
 `
 
 export const Section_Left_Desc = styled.div`
-  width: 50%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10%;
-  // border: 1px solid black;
+width: 50%;
+height: 80%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 10%;
+// border: 1px solid black;
 
-  h1 {
-    font-size: 2vw;
-    font-weight: bold;
-    line-height: 1.5;
-  }
+h1 {
+  font-size: 2vw;
+  font-weight: bold;
+  line-height: 1.5;
+}
 
-  p {
-    font-size: 1.5vw;
-    line-height: 1.5;
-  }
+p {
+  font-size: 1.5vw;
+  line-height: 1.5;
+}
 `
 
 export const LastImg = styled.div`
