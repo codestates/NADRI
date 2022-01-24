@@ -283,7 +283,7 @@ export default function ChageUserInfo () {
           <label htmlFor="profileImgLabel">소셜 로그인은 프로필 사진 변경이 불가합니다.</label> 
           :
           <div>
-            <label>프로필 사진 변경</label>
+            <label onClick={handleClick}>프로필 사진 변경</label>
             <input type={'file'} accept='image/*' name='img' ref={profileImg} onChange={picChange}/>
             <span className="img-edit-span">
               <img className="img-edit-icon" src="/img/edit.png" onClick={handleClick} />

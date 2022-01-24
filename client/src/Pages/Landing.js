@@ -7,7 +7,6 @@ import {
   leftContainer,
   Section_Left_Desc,
   Section_Right_Desc,
-  Section0_Right_Img,
   Section1_Left_Img,
   Section2_Right_Img,
   Section3_Left_Img,
@@ -99,7 +98,7 @@ export default function Landing () {
           </p>
           <span>NADIR</span>
           {/* 여기 바로시작하기 넣고 손가락 넣은다음에 계속 애니메이션 */}
-          <button id='Btn'><Link to={'/'}>시작하기</Link></button>
+          <button className='Btn'><Link to={'/'}>시작하기</Link></button>
           <img id='moveBus' src='img/nadri-logo-small.png' />
         </Section_Left_Desc>
       </Section>

@@ -335,7 +335,7 @@ export default function Main () {
             </select>
         </ContentNav>
 
-          <ItemContainer id="test">
+          <ItemContainer>
             {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
           </ItemContainer>
       </ContentContainer>

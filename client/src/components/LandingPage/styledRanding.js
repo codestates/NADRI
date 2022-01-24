@@ -13,6 +13,14 @@ export const RandingContainer = styled.div`
   section:nth-child(4) {
     background-color: #F2F2F2;
   }
+
+  @media (max-width: 992px) {
+    & section:nth-child(3) {
+      & >:first-child {
+        height: auto;
+      }
+    }
+  }
 `
 
 export const Section = styled.section`
@@ -24,8 +32,18 @@ export const Section = styled.section`
   }};
   
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    &:nth-child(3) {
+      flex-direction: column-reverse;
+      justify-content: space-round;
+    }
+  }
 `
 
 export const ImgSection = styled.section`
@@ -79,20 +97,10 @@ const disappear = keyframes`
   }
 `
 // -------------------------------------------------------------- //
-export const Section0_Right_Img = styled.div`
-      width: 50%;
-      height: 50%;
-      border: 1px solid black;
-      background-image: url(/img/default-image.jpg);
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-`
 
 export const Section1_Left_Img = styled.div`
-    width: 43%;
+    width: 40%;
     height: 80%;
-    margin: 0 2rem;
     background-image: url(Oauth.gif);
     background-size: cover;
     background-repeat: no-repeat;
@@ -114,19 +122,22 @@ export const Section1_Left_Img = styled.div`
       `)
     }
   }};
+
+  @media (max-width: 992px) {
+    height: 50%
+  }
 `
 
 export const Section2_Right_Img = styled.div`
-width: 43%;
-height: 80%;
-margin: 0 2rem;
-background-image: url(Oauth.gif);
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center center;
-transition: all 1s;
-box-shadow: 2px 2px 2px 2px rgb(180 180 180);
-border-radius: 15px;
+  width: 40%;
+  height: 80%;
+  background-image: url(Oauth.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: all 1s;
+  box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+  border-radius: 15px;
 
   ${(props) => {
   const {curSection} = props
@@ -139,19 +150,23 @@ border-radius: 15px;
     `)
   }
   }};
+
+  @media (max-width: 992px) {
+    height: 50%;
+    
+  }
 `
 
 export const Section3_Left_Img = styled.div`
-width: 43%;
-height: 80%;
-margin: 0 2rem;
-background-image: url(Oauth.gif);
-background-size: cover;
-background-repeat: no-repeat;
-background-position: center center;
-transition: all 1s;
-box-shadow: -2px 2px 2px 2px rgb(180 180 180);
-border-radius: 15px;
+  width: 40%;
+  height: 80%;
+  background-image: url(Oauth.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: all 1s;
+  box-shadow: -2px 2px 2px 2px rgb(180 180 180);
+  border-radius: 15px;
 
   ${(props) => {
     const {curSection} = props
@@ -163,11 +178,15 @@ border-radius: 15px;
       `)
     }
   }};
+
+  @media (max-width: 992px) {
+    height: 50%
+  }
 `
 
 export const Section_Right_Desc = styled.div`
   width: 50%;
-  height: 50%;
+  // height: 50%;
   // border: 1px solid black;
   display: flex;
   justify-content: center;
@@ -197,31 +216,31 @@ export const Section_Left_Desc = styled.div`
     letter-spacing: 3px;
   }
 
-  #Btn {
-    width: 20%;
-    height: 5rem;
+  .Btn {
+    width: 15vw;
+    height: 4.5vw;
     border-radius: 20px;
     background-color: #88ccff;
-    font-size: 1.5rem;
     cursor: pointer;
     border: none;
     box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    font-size: 2vw;
     a {
       color: white;
     }
   }
 
-  #Btn:hover ~ img {
+  .Btn:hover ~ img {
     // animation-name: ${move_Bus};
     // animation-duration: 1s;
     // animation-timing-function: ease-in-out;
     // animation-iteration-count: infinite;
     // animation-direction: alternate;
     position: relative;
-    left: 500px;
+    left: 100%;
   }
 
-  #Btn:active {
+  .Btn:active {
     position: relative;
     top: 2px;
   }
@@ -361,11 +380,11 @@ export const LastSection = styled.section`
   gap: 100px;
 
   button {
-    width: 20%;
-    height: 5rem;
+    width: 15vw;
+    height: 4.5vw;
+    font-size: 2vw;
     border-radius: 20px;
     background-color: #88ccff;
-    font-size: 1.5rem;
     cursor: pointer;
     border: none;
     color: white;
