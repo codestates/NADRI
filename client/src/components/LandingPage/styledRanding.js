@@ -370,6 +370,9 @@ export const LastSection = styled.section`
     border: none;
     color: white;
     box-shadow: 2px 2px 2px 1px rgb(180 180 180);
+    a {
+      color: white;
+    }
   }
 
   button:hover ~ img {
