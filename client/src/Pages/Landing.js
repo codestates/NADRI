@@ -17,7 +17,10 @@ import {
   TrickImg,
   TrickSection,
   LastSection
-} from '../components/RandingPage/styledRanding'
+} from '../components/LandingPage/styledRanding';
+import Footer from '../components/Footer'
+import { Link } from 'react-router-dom';
+
 
 export default function Landing () {
   const [scrollY, setScrollY] = useState(0) // 현재 스크롤 위치
@@ -96,9 +99,8 @@ export default function Landing () {
           </p>
           <span>NADIR</span>
           {/* 여기 바로시작하기 넣고 손가락 넣은다음에 계속 애니메이션 */}
-          <button>시작하기</button>
-          {/* 마우스 호버를 땟을 때 서서히 원래 자리로 가도록 하기 */}
-          <img src='img/nadri-logo-small.png'></img>
+          <button id='Btn'><Link to={'/'}>시작하기</Link></button>
+          <img id='moveBus' src='img/nadri-logo-small.png' />
         </Section_Left_Desc>
       </Section>
 
@@ -150,13 +152,12 @@ export default function Landing () {
       {/* 7------------------------------------------------------------------------------------ */}
       <LastSection initHeight={initHeight}>
         <p>
-          나들이 한번 떠나보시겠어요?<br />
-          머시기 머시기 야야야
+          나들이 한번 떠나보시겠어요?
         </p>
-        <button>시작하기</button>
+        <button><Link to={'/'}>시작하기</Link></button>
       </LastSection>
       
-    
+      {/* <Footer /> */}
     </RandingContainer>
   )
 }

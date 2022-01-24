@@ -7,7 +7,7 @@ import Item from "../components/MainPage/Item";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 // import DetailPage from "./DetailPage";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const MainContainer = styled.div`
   padding: 1rem 9vw;
@@ -170,6 +170,7 @@ export default function Main () {
   const handlePoints = (data) => {
     setPoints(data)
   }
+  // const {pathName} = useLocation()
 
   // 옵션은 [type, categoryId] 형식으로 저장
   const [option, setOption] = useState(['distance', 5])
@@ -180,6 +181,7 @@ export default function Main () {
   }
 
   useEffect(async () => {
+    window.scrollTo(0, 0)
     await navigator.geolocation.getCurrentPosition((position) => {
       // console.log('위치 확인에 성공하였습니다.')
       kakaoInit([position.coords.latitude, position.coords.longitude], true)
@@ -333,7 +335,7 @@ export default function Main () {
             </select>
         </ContentNav>
 
-          <ItemContainer>
+          <ItemContainer id="test">
             {points.length > 0 ? points.map((point) => <Item key={point.id} point={point}/>) : null}
           </ItemContainer>
       </ContentContainer>
