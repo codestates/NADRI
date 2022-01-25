@@ -152,6 +152,8 @@ export default function Landing () {
         </Section_Right_Desc>
       </Section>
 
+
+
       {/* 5------------------------------------------------------------------------------------ */}
       <ImgSection initHeight={initHeight}>
         <LastImg img={'/landingImg/forest.png'} sectionHeight={sectionHeight}  scrollY={scrollY} initHeight={initHeight} />
@@ -159,11 +161,11 @@ export default function Landing () {
 
       {/* 6------------------------------------------------------------------------------------ */}
       <ImgSection initHeight={initHeight}>
-        <FinalImg scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
+        <FinalImg img={'/landingImg/풍경.png'} scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
       </ImgSection >
 
       <TrickSection initHeight={initHeight}>
-        <TrickImg scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
+        <TrickImg img={'/landingImg/풍경.png'} scrollY={scrollY} initHeight={initHeight} sectionHeight={sectionHeight} />
       </TrickSection>
 
       {/* 7------------------------------------------------------------------------------------ */}

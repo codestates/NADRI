@@ -355,7 +355,11 @@ export const FinalImg = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  background-image: url('/img/풍경.png');
+  background-image: url(${(props) => {
+    return (`
+      ${props.img}
+    `)
+  }});
   position: relative;
 
   ${(props) => {
@@ -389,7 +393,11 @@ export const TrickImg = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  background-image: url('/img/풍경.png');
+  background-image: url(${(props) => {
+    return (`
+      ${props.img}
+    `)
+  }});
   ${(props) => {
     const {scrollY, initHeight, sectionHeight} = props
     if(scrollY >= sectionHeight[5]) {
