@@ -144,7 +144,8 @@ export const First_Desc = styled.div`
     position: relative;
     top: 2px;
   }
-  .Btn:hover ~ img {
+
+  a:hover ~ img {
     // animation-name: ${move_Bus};
     // animation-duration: 1s;
     // animation-timing-function: ease-in-out;
