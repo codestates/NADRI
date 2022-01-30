@@ -17,9 +17,11 @@
 - 이미지를 최대 4장까지 업로드할 수 있습니다.
 
 ## 프로젝트 멤버
-- 김상형
-- 이상민
-- 이태관
+|이름|파트|깃허브|
+|------|---|---|
+|김상형|Back-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/LittleBiber)|
+|이상민|Back-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/racyde)|
+|이태관|Front-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/LeeTaeGwan)|
 
 ## 사용 스택
 <div>
