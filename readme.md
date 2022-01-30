@@ -58,7 +58,9 @@
 ## 📊 DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
 
-## 👉 [WiKi](https://github.com/codestates/NADRI/wiki)
+## 👉 [Wiki](https://github.com/codestates/NADRI/wiki)
+
+## 👉 [Notion](https://codestates.notion.site/16-localHost-NADRI-4250da31af2e4a7ab4b5d1a7dae65c13)
 
 ## 👉 [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
 
