@@ -16,7 +16,7 @@
 - 마이페이지에서 마음에 들었던 휴식처를 모아 확인할 수 있습니다.
 - 이미지를 최대 4장까지 업로드할 수 있습니다.
 
-## 프로젝트 멤버
+## 🧑🏻‍💻프로젝트 멤버
 |이름|파트|깃허브|
 |------|---|---|
 |김상형|Back-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/LittleBiber)|
