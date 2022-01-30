@@ -16,7 +16,7 @@
 - 마이페이지에서 마음에 들었던 휴식처를 모아 확인할 수 있습니다.
 - 이미지를 최대 4장까지 업로드할 수 있습니다.
 
-## 🧑🏻‍💻프로젝트 멤버
+## 🧑🏻‍💻 프로젝트 멤버
 |이름|파트|깃허브|
 |------|---|---|
 |김상형|Back-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/LittleBiber)|
@@ -55,13 +55,14 @@
 ## 아키텍쳐 다이어그램
 ![Diagram](https://user-images.githubusercontent.com/77206786/150637159-a3f5ee81-8403-4f43-83fe-e451bf3332cd.png)
 
-
-## [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
-
-## [플로우 차트 (Miro Link)](https://miro.com/app/board/uXjVOYL1SGM=/?invite_link_id=579220943873)
-
 ## DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
 
-## [API 문서 (Gitbook Link)](https://localhost2.gitbook.io/nadri-api)
+## 👉 [WiKi](https://github.com/codestates/NADRI/wiki)
+
+## 👉 [와이어프레임 (Figma Link)](https://www.figma.com/file/GTGdlQ4ZfyX4zflv3qW1qX/NADRI?node-id=0%3A1)
+
+## 👉 [플로우 차트 (Miro Link)](https://miro.com/app/board/uXjVOYL1SGM=/?invite_link_id=579220943873)
+
+## 👉 [API 문서 (Gitbook Link)](https://localhost2.gitbook.io/nadri-api)
 <!-- (https://localhost-5.gitbook.io/nadri/api/auth) -->
