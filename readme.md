@@ -23,7 +23,7 @@
 |이상민|Back-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/racyde)|
 |이태관|Front-end|[<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">](https://github.com/LeeTaeGwan)|
 
-## 사용 스택
+## 🛠 사용 스택
 <div>
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">    
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">    
@@ -52,10 +52,10 @@
 <img src="https://img.shields.io/badge/nodemailer-22A3D7?style=for-the-badge&logo=nodemailer&logoColor=white">  
 </div>
 
-## 아키텍쳐 다이어그램
+## 🏰 아키텍쳐 다이어그램
 ![Diagram](https://user-images.githubusercontent.com/77206786/150637159-a3f5ee81-8403-4f43-83fe-e451bf3332cd.png)
 
-## DB 스키마
+## 📊 DB 스키마
 ![DB 스키마](https://user-images.githubusercontent.com/77206786/147798405-b74959b1-76aa-4a05-af98-53ca05a34156.png)
 
 ## 👉 [WiKi](https://github.com/codestates/NADRI/wiki)
